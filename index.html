@@ -64,17 +64,17 @@
             <span>&ensp;Home</span>
         </a>
         
-        <a href="/about">
+        <a href="/about/">
             <i class="fa-solid fa-id-card fa-fw"></i>
             <span>&ensp;About</span>
         </a>
         
-        <a href="/archives">
+        <a href="/archives/">
             <i class="fa-solid fa-box-archive fa-fw"></i>
             <span>&ensp;Archives</span>
         </a>
         
-        <a href="/categories">
+        <a href="/categories/">
             <i class="fa-solid fa-bookmark fa-fw"></i>
             <span>&ensp;Categories</span>
         </a>
@@ -103,7 +103,7 @@
                 </div>
             </a>
             
-            <a href="/about">
+            <a href="/about/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-id-card fa-fw"></i>
@@ -112,7 +112,7 @@
                 </div>
             </a>
             
-            <a href="/archives">
+            <a href="/archives/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-box-archive fa-fw"></i>
@@ -121,7 +121,7 @@
                 </div>
             </a>
             
-            <a href="/categories">
+            <a href="/categories/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-bookmark fa-fw"></i>
@@ -219,7 +219,7 @@
         
         <span class="tag">
             
-            <a href="/tags/SOD/" style="color: #00bcd4">
+            <a href="/tags/SOD/" style="color: #ffa2c4">
                 SOD
             </a>
         </span>
@@ -279,8 +279,8 @@
 </div>
 
 <div class="post">
-    <a href="/2023/04/11/%E5%83%8F%E7%B4%A0%E7%BA%A7%E5%85%89%E5%9C%BA%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B/">
-        <h2 class="post-title">像素级光场显著性检测</h2>
+    <a href="/2023/04/11/PFSNet/">
+        <h2 class="post-title">Pyramidal Feature Shrinking for Salient Object Detection</h2>
     </a>
     <div class="category-and-date">
         
@@ -305,7 +305,7 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <p>在一个统一的框架中识别干净的标签且有效的整合光场线索之间的关系。将学习描述为光场内特征融合流和场景间相关流的联合优化，以生成预测，首先引入一个像素遗忘引导融合模块，以相互增强光场特征，并利用迭代过程中的像素一致性来识别噪声像素，再引入跨场景噪声惩罚损失，以更好地反映训练数据的潜在结构，并使学习对噪声保持不变。</p>
+            <p>提出了一种金字塔型特征收缩网络(PFSNet) ，其目的是将相邻的特征节点按照层层收缩的方式进行聚合，从而使聚合后的特征融合有效的细节和语义，丢弃干扰信息。特别地，提出了一种金字塔收缩译码器(PSD) ，以渐近的方式分层聚合相邻特征。此外，我们提出了一个相邻融合模块(AFM)来进行相邻特征之间的空间增强，以动态加权特征和自适应融合适当的信息。此外，利用基于主干提取特征的尺度感知富集模块(SEM)获取丰富的尺度信息，生成具有扩张卷积的不同初始特征。</p>
 
             
         </div>
@@ -319,13 +319,13 @@
         
         <span class="tag">
             
-            <a href="/tags/SOD/" style="color: #ff7d73">
+            <a href="/tags/SOD/" style="color: #00bcd4">
                 SOD
             </a>
         </span>
         
     </div>
-    <a href="/2023/04/11/%E5%83%8F%E7%B4%A0%E7%BA%A7%E5%85%89%E5%9C%BA%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B/" class="go-post">阅读全文</a>
+    <a href="/2023/04/11/PFSNet/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
@@ -379,6 +379,106 @@
 </div>
 
 <div class="post">
+    <a href="/2023/04/11/%E5%83%8F%E7%B4%A0%E7%BA%A7%E5%85%89%E5%9C%BA%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B/">
+        <h2 class="post-title">像素级光场显著性检测</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/SOD/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                SOD
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/11
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>在一个统一的框架中识别干净的标签且有效的整合光场线索之间的关系。将学习描述为光场内特征融合流和场景间相关流的联合优化，以生成预测，首先引入一个像素遗忘引导融合模块，以相互增强光场特征，并利用迭代过程中的像素一致性来识别噪声像素，再引入跨场景噪声惩罚损失，以更好地反映训练数据的潜在结构，并使学习对噪声保持不变。</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/SOD/" style="color: #00a596">
+                SOD
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2023/04/11/%E5%83%8F%E7%B4%A0%E7%BA%A7%E5%85%89%E5%9C%BA%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/04/11/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E7%89%B9%E5%BE%81%E6%93%8D%E4%BD%9C%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%95%88%E7%9A%84RGBD%E6%98%BE%E8%91%97%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">
+        <h2 class="post-title">基于深度质量的特征操作实现高效的RGBD显著目标检测</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/SOD/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                SOD
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/11
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>基于RGBD显著目标检测模型在减少模型参数时，模型精度通常会下降，且受到深度质量的影响。本文设计了一种基于深度质量的特征操作(DQFM)：利用低级RGB和深度特征的对齐，以及深度流的整体关注来明确控制和增强跨模态融合。这是一个轻量化模型。高质量的深度图通常具有一些与相应RGB图像对齐的边界</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/SOD/" style="color: #03a9f4">
+                SOD
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2023/04/11/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E7%89%B9%E5%BE%81%E6%93%8D%E4%BD%9C%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%95%88%E7%9A%84RGBD%E6%98%BE%E8%91%97%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/04/11/%E5%A4%9A%E5%B0%BA%E5%BA%A6%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87Transformer/">
         <h2 class="post-title">Multi-Scale High-Resolution Vision Transformer for Semantic Segmentation</h2>
     </a>
@@ -419,21 +519,21 @@
         
         <span class="tag">
             
-            <a href="/tags/High-Resolution-Vision/" style="color: #ff7d73">
+            <a href="/tags/High-Resolution-Vision/" style="color: #00bcd4">
                 High-Resolution Vision
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Transformer/" style="color: #ffa2c4">
+            <a href="/tags/Transformer/" style="color: #00bcd4">
                 Transformer
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Segmentation/" style="color: #03a9f4">
+            <a href="/tags/Segmentation/" style="color: #00bcd4">
                 Segmentation
             </a>
         </span>
@@ -483,63 +583,13 @@
         
         <span class="tag">
             
-            <a href="/tags/COD/" style="color: #ffa2c4">
+            <a href="/tags/COD/" style="color: #03a9f4">
                 COD
             </a>
         </span>
         
     </div>
     <a href="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/04/11/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E7%89%B9%E5%BE%81%E6%93%8D%E4%BD%9C%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%95%88%E7%9A%84RGBD%E6%98%BE%E8%91%97%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">
-        <h2 class="post-title">基于深度质量的特征操作实现高效的RGBD显著目标检测</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/SOD/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                SOD
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/11
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>基于RGBD显著目标检测模型在减少模型参数时，模型精度通常会下降，且受到深度质量的影响。本文设计了一种基于深度质量的特征操作(DQFM)：利用低级RGB和深度特征的对齐，以及深度流的整体关注来明确控制和增强跨模态融合。这是一个轻量化模型。高质量的深度图通常具有一些与相应RGB图像对齐的边界</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/SOD/" style="color: #00bcd4">
-                SOD
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2023/04/11/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E8%B4%A8%E9%87%8F%E7%9A%84%E7%89%B9%E5%BE%81%E6%93%8D%E4%BD%9C%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%95%88%E7%9A%84RGBD%E6%98%BE%E8%91%97%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
@@ -583,14 +633,14 @@
         
         <span class="tag">
             
-            <a href="/tags/Transformer/" style="color: #03a9f4">
+            <a href="/tags/Transformer/" style="color: #ff7d73">
                 Transformer
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Segmentation/" style="color: #ff7d73">
+            <a href="/tags/Segmentation/" style="color: #00bcd4">
                 Segmentation
             </a>
         </span>
@@ -640,70 +690,13 @@
         
         <span class="tag">
             
-            <a href="/tags/Liunx/" style="color: #00a596">
+            <a href="/tags/Liunx/" style="color: #00bcd4">
                 Liunx
             </a>
         </span>
         
     </div>
     <a href="/2022/10/07/Liunx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/04/07/day_one/">
-        <h2 class="post-title">深度学习面试(一)</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="category">
-            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                深度学习
-            </a>
-        </span>
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2022/4/7
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>U-Net的业务场景，DenseUNet和ResNet</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #03a9f4">
-                深度学习
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #00a596">
-                面试
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/04/07/day_one/" class="go-post">阅读全文</a>
 </div>
 
 

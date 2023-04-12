@@ -66,17 +66,17 @@
             <span>&ensp;Home</span>
         </a>
         
-        <a href="/about">
+        <a href="/about/">
             <i class="fa-solid fa-id-card fa-fw"></i>
             <span>&ensp;About</span>
         </a>
         
-        <a href="/archives">
+        <a href="/archives/">
             <i class="fa-solid fa-box-archive fa-fw"></i>
             <span>&ensp;Archives</span>
         </a>
         
-        <a href="/categories">
+        <a href="/categories/">
             <i class="fa-solid fa-bookmark fa-fw"></i>
             <span>&ensp;Categories</span>
         </a>
@@ -105,7 +105,7 @@
                 </div>
             </a>
             
-            <a href="/about">
+            <a href="/about/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-id-card fa-fw"></i>
@@ -114,7 +114,7 @@
                 </div>
             </a>
             
-            <a href="/archives">
+            <a href="/archives/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-box-archive fa-fw"></i>
@@ -123,7 +123,7 @@
                 </div>
             </a>
             
-            <a href="/categories">
+            <a href="/categories/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-bookmark fa-fw"></i>
@@ -187,7 +187,7 @@
     <div class="content" v-pre>
         <h1 id="Disentangled-High-Quality-Salient-Object-Detection"><a href="#Disentangled-High-Quality-Salient-Object-Detection" class="headerlink" title="Disentangled High Quality Salient Object Detection"></a><center>Disentangled High Quality Salient Object Detection</center></h1><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>将高分辨率SOD任务分解为低分辨率显著性分类网络(LRSCN)和高分辨细化网络(HRRN),作为一项逐像素分类任务，LRSCN旨在以低分辨率来捕获足够的语义，以识别明确的显著，背景和不确定区域。HRRN是一项回归任务，旨在准确提炼不明确区域中的像素的显著性值。</p>
 <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>一种好的高分辨率显著目标检测方法不仅要准确地检测出整个显著目标，还要预测显著目标的精确边界。基于低分辨率设计的SOD模型无法直接套用到高分辨率图像中，最主要的原因就是，低分辨的方法往往是将识别和定位两个过程使用一个过程实现，而对于高分辨率图像最为重要的是对于边界的精确分割。对于显著区域的定位我们可以通过扩大感受野来获取足够的语义，但是由于高分辨的特性，这将使得内存的使用大大的增加，此时往往采用下采样操作，但是下采样操作不可避免地会使得结构信息丢失。这种解决问题的思路也就是导致低分辨的SOD模型直接迁移至高分辨率图像中会出现边界模糊的原因。如下图所示</p>
-<h3 id="模型结果对比"><a href="#模型结果对比" class="headerlink" title="模型结果对比"></a><center>模型结果对比</center></h3><div align="center"><img src="image\低分辨率SOD模型.PNG"></div>
+<h3 id="模型结果对比"><a href="#模型结果对比" class="headerlink" title="模型结果对比"></a><center>模型结果对比</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/低分辨率SOD模型.PNG"></div>
 从上图可以发现，显著像素点可以分为以下三类：
 
 <blockquote>
@@ -198,22 +198,22 @@
 </ul>
 </blockquote>
 <p>理想的 SOD 方法应有效识别图像中明确的显着区域和背景区域，并准确计算不确定区域中像素的显着性值，以保持清晰的目标边界。也就是一个回归任务加一个分类任务。<br>将高分辨率显着对象检测分离为低分辨率显着性分类网络(LRSCN)和高分辨率细化网络(HRRN).LRSCN旨在以低分辨率捕获足够的语义并将像素分类为三个不同的集合以供以后处理.HRRN旨在准确提炼不确定区域中像素的显着性值,以在GPU内存有限的情况下以高分辨率保持清晰的对象边界.如上所述,HRRN 需要高分辨率图像中的结构细节。然而，广泛使用的低分辨率显着性数据集通常在注释质量方面存在一些问题,几乎不可能从这些有缺陷的数据集中直接获得足够的对象边界细节来训练高分辨率网络。在最近的工作中，Zeng 等人。提出通过使用具有准确注释的高分辨率图像来训练他们的 SOD 网络。然而，如此高质量的图像标注需要大量的人工成本。在我们的论文中,我们认为没有必要在网络训练中使用这种精确注释的高分辨率图像.通过在训练过程中引入不确定性，我们的 HRRN 可以仅使用标注不佳的低分辨率训练数据集很好地解决高分辨率细化任务。</p>
-<h3 id="模型方法"><a href="#模型方法" class="headerlink" title="模型方法"></a>模型方法</h3><h3 id="HRRN-High-Resolution-Network-Framework"><a href="#HRRN-High-Resolution-Network-Framework" class="headerlink" title="HRRN High Resolution Network Framework"></a><center>HRRN High Resolution Network Framework</center></h3><div align="center"><img src="image\HRRN高分辨率网络框架.PNG"></div>
+<h3 id="模型方法"><a href="#模型方法" class="headerlink" title="模型方法"></a>模型方法</h3><h3 id="HRRN-High-Resolution-Network-Framework"><a href="#HRRN-High-Resolution-Network-Framework" class="headerlink" title="HRRN High Resolution Network Framework"></a><center>HRRN High Resolution Network Framework</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN高分辨率网络框架.PNG"></div>
 LRSCN的目的是在低分辨率下获取足够的语义并将像素分为三个不同的集合，同时节省内存的使用，HRRN计算回归像素的显著性值，并在高分辨率下保持清晰的对象边界
 
 <p>LRSCN使用一个简单的U-Net编码器解码器架构，VGG-16作为主干网络，因此将从Conv1-2，Conv2-2，Conv3-3，Conv4-3，Conv5-3，Conv6-3获得六个特征，但是由于前两个特征的感受野太小，则不使用。在编码器和解码器之间增加一个多尺度特征提取和跨级特征融合模块(MECF)，以提高特征表示的可辨别性。解码器自上而下的方式融合MECF的输出特征和上一阶段的上采样特征，每个解码器的输出定义为$D_{i},i&#x3D;1,2,3…n$,最后SGA模块建立在D3之上用来生成准确的显著预测图T，为了回归清晰的目标边界值，HRRN的输入是在LRSCN提供的trimap引导下的高分辨率图像。HRRN具有基本的编码器-解码器架构，在不确定性损失的帮助下，网络可以对噪声数据更加鲁棒，并预测具有清晰边界的高分辨率显着图。</p>
 <h4 id="LRSCN"><a href="#LRSCN" class="headerlink" title="LRSCN"></a>LRSCN</h4><p>###<center>LRSCN架构图</center></p>
-<div align="center"><img src="image\LRSCN架构图.PNG"></div>
+<div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/LRSCN架构图.PNG"></div>
 开发了一种基于全局卷积网络GCN的多尺度特征提取模块ME，以扩大特征感受野并获得多尺度信息。为了实现第二个目标，我们利用跨级别特征融合模块CF来利用不同级别的特征优势。此外，在设计网络架构时，受的启发，我们使用拆分变换策略进一步放大 特征感受野，从而产生更具辨别力的特征表示。具体来说，我们将输入F按通道维度均匀地分成两部分${ F_{1}, F_2}$，然后将$F_1$送入多尺度特征提取路径，将$F_2$送入跨级特征融合路径。这两个路径的输出连接在一起作为最终输出。我们称这个桥接模块为MECF模块，如上图所示。
 
 <h3 id="SGA模块："><a href="#SGA模块：" class="headerlink" title="SGA模块："></a>SGA模块：</h3><p>每个解码器融合来自MECF模块和前一解码器级的特征，然后使用$3×3$卷积层进行最终预测。为了保持trimap和显著图的一致性，确保trimap的不确定区域能够准确覆盖显著图的边界，我们在D3上设计了一个显著引导注意模块（SGA）。具体来说，我们首先使用$3×3$卷积和sigmoid函数来计算显著性映射。然后，将显著性图视为空间权重图，有助于细化特征并生成精确的trimap。最后，输出trimap T是3通道分类logits。整个SGA模块保证trimap和saliecny地图的对齐。 </p>
 <h3 id="HRRN模块"><a href="#HRRN模块" class="headerlink" title="HRRN模块"></a>HRRN模块</h3><p>HRRN遵循解纠缠原则，在LRSCN提供的trimap的指导下，精确细化不确定区域中像素的显著性值，以保持高分辨率下清晰的目标边界。HRRN的架构如图2所示。HRRN有一个简单的类似U-NET的体系结构。为了在高分辨率下进行更好的预测，我们进行了一些非平凡的修改。首先，底层特征包含丰富的空间和细节信息，这些信息在恢复清晰的对象边界方面起着至关重要的作用，因此解码器在每个上采样块之前而不是在每个上采样块之后组合编码器特征。此外，我们使用一个两层的快捷块来对齐编码器特征通道，以进行特征融合。其次，为了让网络更加关注细节信息，我们通过一个快捷块将原始输入直接反馈到最后一个卷积层，以产生更好的结果。最后，从图像生成任务中学习，我们对每个卷积层使用谱归一化，以对网络的$Lipschitz$常数添加约束并稳定训练。 </p>
 <p>为了监督LRSCN，我们应该生成trimap的GT表示为$T^{gt}$，它可以表示确定的显着、确定的背景和不确定的区域。如上所述，不确定区域主要存在于对象的边界处。因此，我们使用随机像素数（5、7、9、11、13）在对象边界处擦除和扩展二进制真实图，以生成GT不确定区域。 剩余的前景和背景区域代表明确的显着和背景区域。$T^{gt}$ 定义为：<br>$$<br>\Large T_{gt}(x,y) &#x3D;\begin{cases}<br>2 &amp; T_{gt}(x,y)\in definite salient \<br>0 &amp; T_{gt}(x,y)\in definite background \<br>1 &amp; T_{gt}(x,y)\in uncertain region \<br>\end{cases}<br>$$<br>其中$(x,y)$表示图像上的每个像素位置。如下图所示</p>
-<h3 id="结果可视化"><a href="#结果可视化" class="headerlink" title="结果可视化"></a><center>结果可视化</center></h3><div align="center"><img src="image\HRRN结果可视化.PNG"></div>
+<h3 id="结果可视化"><a href="#结果可视化" class="headerlink" title="结果可视化"></a><center>结果可视化</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN结果可视化.PNG"></div>
 
 <p>对于trimap的监督我们使用交叉熵损失<br>$$\Large L_{trimap}&#x3D;\dfrac{1}{N}\sum_{i}-log(\dfrac{e^{T_{i} } }{\sum_{j} e^{T_{j} } })$$<br>为保障trimap的准确率，我们在trimap监督的基础上增加了额外显著性监督$L_{saliency}$，总损失是<br>$$\Large L_{LRSCN}&#x3D;L_{saliency}+L_{trimap}$$<br>不使用不确定性损失，因为LRSCN的主要目标是获取足够的语义，而不是精确的边界。</p>
 <p>对于输入的高分辨率图像$I$，让$G^H$表示其背景真值，预测显著性图为$S^H$。我们利用$L_1$损失来比较预测显著性图和背景真值在明确的显著性和背景区域上的绝对差异：<br>$$\Large L_1 &#x3D; \dfrac{1}{E}\sum_{i\in E}|S_{i}^H-G_{i}^H|$$<br>其中$E$表示在$trimap$中被标记为明确显着或背景的像素数，$S_{H}^i$和$G_{H}^i$表示位置$i$处的预测值和$groundtruth$值。<br>由于数据集本身在注释质量方面存在一些问题，因此引入一个不确定损失来解决数据集本身带来的缺陷。使用高斯似然的方式建模不确定性<br>$$\Large p(y|f(x))&#x3D;N(f(x),\delta^2)$$<br>其中$\delta$表示测量的不确定性，$y$是输出，在最大似然推断中，我们将模型的对数似然最大化，表示为:<br>$$\Large logp(y|f(x))\propto-\dfrac{||y-f(x)||}{2\delta^2}-\dfrac{1}{2}log{\delta^2}$$<br>则不确定损失定义为：<br>$$\Large L_{uncertainty}&#x3D;\dfrac{||y-f(x)||^2}{2\delta^2}+\dfrac{1}{2}log\delta^2$$<br>将其转化为像素的表达形式：<br>$$\Large L_{uncertainty}&#x3D;\dfrac{1}{U}\dfrac{||S_{i}^H-G_{i}^H||}{2\delta_{i}^2}+\dfrac{1}{2}log\delta_{i}^2$$</p>
-<h3 id="HRRN损失可视化"><a href="#HRRN损失可视化" class="headerlink" title="HRRN损失可视化"></a><center>HRRN损失可视化</center></h3><div align="center"><img src="image\HRRN损失可视化.PNG"></div>
+<h3 id="HRRN损失可视化"><a href="#HRRN损失可视化" class="headerlink" title="HRRN损失可视化"></a><center>HRRN损失可视化</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN损失可视化.PNG"></div>
 
     </div>
     

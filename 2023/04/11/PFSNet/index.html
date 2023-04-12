@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Categories: Liunx | DFSgwb</title>
+        <title>Pyramidal Feature Shrinking for Salient Object Detection | DFSgwb</title>
         <meta name="author" content="GWB" />
         <meta name="description" content="我的技术分享" />
         <meta name="keywords" content="" />
@@ -32,6 +32,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -144,26 +148,20 @@
 
             <transition name="into">
             <div id="main" v-show="!loading">
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Liunx/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Liunx
-            </a>
+                <div class="article">
+    <div>
+        <h1>Pyramidal Feature Shrinking for Salient Object Detection</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/11
         </span>
         
-        
-        
-        
-        
-        <span>
-            <a href="/categories/SOD/" style="background: #00bcd4">
+        <span class="category">
+            <a href="/categories/SOD/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -172,86 +170,31 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                深度学习
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/SOD/" style="color: #00a596">SOD</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                信息安全
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                默认分类
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/COD/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                COD
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2022/10/7</div>
-            <a href="/2022/10/07/Liunx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-                <h3>Liunx常用命令</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/Liunx/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        Liunx
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/Liunx/" style="color: #00a596">Liunx</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <h1 id="Pyramidal-Feature-Shrinking-for-Salient-Object-Detection"><a href="#Pyramidal-Feature-Shrinking-for-Salient-Object-Detection" class="headerlink" title="Pyramidal Feature Shrinking for Salient Object Detection"></a><center>Pyramidal Feature Shrinking for Salient Object Detection</center></h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>提出了一种金字塔型特征收缩网络(PFSNet) ，其目的是将相邻的特征节点按照层层收缩的方式进行聚合，从而使聚合后的特征融合有效的细节和语义，丢弃干扰信息。特别地，提出了一种金字塔收缩译码器(PSD) ，以渐近的方式分层聚合相邻特征。此外，我们提出了一个相邻融合模块(AFM)来进行相邻特征之间的空间增强，以动态加权特征和自适应融合适当的信息。此外，利用基于主干提取特征的尺度感知富集模块(SEM)获取丰富的尺度信息，生成具有扩张卷积的不同初始特征。</p>
+<p>在SOD任务中，高低级特征在功能之间有着很大的差距，SOD算法的关键在于如何充分利用语义和细节信息，在最后两个特征的合并中，具有丰富细节和噪声的低级特征和高级特征相融合，但是当两种特征完全不同时，差异较大的特征直接融合会产生噪声，导致性能的下降.<br>本文提出了一种金字塔收缩解码器，将相邻特征定义为相似特征，将不相邻的特征定义为孤立特征，</p>
+
     </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -292,6 +235,12 @@
         <script src='/js/cursor.min.js'></script>-->
         <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
         <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
         
     </body>
 </html>

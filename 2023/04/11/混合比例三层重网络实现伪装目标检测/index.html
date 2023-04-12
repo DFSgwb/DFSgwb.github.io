@@ -66,17 +66,17 @@
             <span>&ensp;Home</span>
         </a>
         
-        <a href="/about">
+        <a href="/about/">
             <i class="fa-solid fa-id-card fa-fw"></i>
             <span>&ensp;About</span>
         </a>
         
-        <a href="/archives">
+        <a href="/archives/">
             <i class="fa-solid fa-box-archive fa-fw"></i>
             <span>&ensp;Archives</span>
         </a>
         
-        <a href="/categories">
+        <a href="/categories/">
             <i class="fa-solid fa-bookmark fa-fw"></i>
             <span>&ensp;Categories</span>
         </a>
@@ -105,7 +105,7 @@
                 </div>
             </a>
             
-            <a href="/about">
+            <a href="/about/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-id-card fa-fw"></i>
@@ -114,7 +114,7 @@
                 </div>
             </a>
             
-            <a href="/archives">
+            <a href="/archives/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-box-archive fa-fw"></i>
@@ -123,7 +123,7 @@
                 </div>
             </a>
             
-            <a href="/categories">
+            <a href="/categories/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-bookmark fa-fw"></i>
@@ -200,11 +200,11 @@
 </ul>
 </blockquote>
 <p>此结构能够在混合尺度下挖掘出物体和背景之间准确而微妙的语义线索，并产生准确的预测，为了实现效率和有效性的平衡，模型采用共享权重策略，为增强模型在复杂场景下的泛化能力，设计了一个不确定性感知损失(UAL)来指导模型训练，模型结构图：</p>
-<div align="center"><img src=".\image\ZoomNet可视化.PNG"></div>
+<div align="center"><img src="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/image\ZoomNet可视化.PNG"></div>
 
-<h2 id="网络结构图"><a href="#网络结构图" class="headerlink" title="网络结构图"></a>网络结构图</h2><div align="center"><img src=".\image\ZoomNet.png"></div>
+<h2 id="网络结构图"><a href="#网络结构图" class="headerlink" title="网络结构图"></a>网络结构图</h2><div align="center"><img src="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/image\ZoomNet.png"></div>
 SIU：使用一个尺度作为主尺度，另外两个尺度作为辅助，利用共享的三元组特征编码器来提取不同尺度的特征并将它们馈送到尺度合并层。对于高尺度，使用最大池化加平均池化的混合结构进行下采样，这有助于在高分辨率特征中保持伪装对象的有效和多样性响应。对于低尺度使用双线性插值直接向上采样，然后将这些特征输入注意力生成器，并通过一系列卷积层计算出三通道特征图。然后再softmax激活层之后，可以获得对应于每个尺度的注意力映射计算权重为：
-<div align="center"><img src=".\image\SIU.png"></div>
+<div align="center"><img src="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/image\SIU.png"></div>
 $$\Large A_i=softmax(\Psi[U(f^{0.5}_i,f^{1.0}_i,D(f^{1.5}_i)],\phi)$$
 $$\Large f_i=A^{0.5}_i\cdot U(f^{0.5}_i)+A^{1.0}_i\cdot f^{1.0}_i+A^{1.5}_i\cdot D(f^{1.5}_i)$$
 

@@ -66,17 +66,17 @@
             <span>&ensp;Home</span>
         </a>
         
-        <a href="/about">
+        <a href="/about/">
             <i class="fa-solid fa-id-card fa-fw"></i>
             <span>&ensp;About</span>
         </a>
         
-        <a href="/archives">
+        <a href="/archives/">
             <i class="fa-solid fa-box-archive fa-fw"></i>
             <span>&ensp;Archives</span>
         </a>
         
-        <a href="/categories">
+        <a href="/categories/">
             <i class="fa-solid fa-bookmark fa-fw"></i>
             <span>&ensp;Categories</span>
         </a>
@@ -105,7 +105,7 @@
                 </div>
             </a>
             
-            <a href="/about">
+            <a href="/about/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-id-card fa-fw"></i>
@@ -114,7 +114,7 @@
                 </div>
             </a>
             
-            <a href="/archives">
+            <a href="/archives/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-box-archive fa-fw"></i>
@@ -123,7 +123,7 @@
                 </div>
             </a>
             
-            <a href="/categories">
+            <a href="/categories/">
                 <div class="item">
                     <div style="min-width: 20px; max-width: 50px; width: 10%">
                         <i class="fa-solid fa-bookmark fa-fw"></i>
@@ -177,12 +177,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/Transformer/" style="color: #00a596">Transformer</a>
+                <a href="/tags/Transformer/" style="color: #00bcd4">Transformer</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Segmentation/" style="color: #00bcd4">Segmentation</a>
+                <a href="/tags/Segmentation/" style="color: #ffa2c4">Segmentation</a>
             </span>
             
         </span>
@@ -190,9 +190,9 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="Pyramid-Grafting-Network-for-One-Stage-High-Resolution-Saliency-Detection"><a href="#Pyramid-Grafting-Network-for-One-Stage-High-Resolution-Saliency-Detection" class="headerlink" title="Pyramid Grafting Network for One-Stage High Resolution Saliency Detection"></a><center>Pyramid Grafting Network for One-Stage High Resolution Saliency Detection</h1><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>由于采样深度和感受野大小之间的矛盾，大多数根据低分辨输入设计的SOD模型在高分辨率图像中表现不佳，本文提出一种金字塔嫁接网络。使用transformer和CNN主干分别从不同分辨率的图像中提取特征，然后将特征从transformer分支嫁接到CNN分支，与此同时提出一种基于注意的分叉模型嫁接模块，使CNN分支能够在解码过程中，在不同信源特征的引导下，更全面地组合破碎的细节信息，此外还设计了一个注意引导丢失来明确监督交叉嫁接模块生成注意矩阵，以帮助网络更好地与来自不同模型的注意进行交互。</p>
+        <h1 id="Pyramid-Grafting-Network-for-One-Stage-High-Resolution-Saliency-Detection"><a href="#Pyramid-Grafting-Network-for-One-Stage-High-Resolution-Saliency-Detection" class="headerlink" title="Pyramid Grafting Network for One-Stage High Resolution Saliency Detection"></a><center>Pyramid Grafting Network for One-Stage High Resolution Saliency Detection</center></h1><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>由于采样深度和感受野大小之间的矛盾，大多数根据低分辨输入设计的SOD模型在高分辨率图像中表现不佳，本文提出一种金字塔嫁接网络。使用transformer和CNN主干分别从不同分辨率的图像中提取特征，然后将特征从transformer分支嫁接到CNN分支，与此同时提出一种基于注意的分叉模型嫁接模块，使CNN分支能够在解码过程中，在不同信源特征的引导下，更全面地组合破碎的细节信息，此外还设计了一个注意引导丢失来明确监督交叉嫁接模块生成注意矩阵，以帮助网络更好地与来自不同模型的注意进行交互。</p>
 <h3 id="困境"><a href="#困境" class="headerlink" title="困境"></a>困境</h3><p>当前主流的SOD模型遇到高分辨率的图像，为了减少内存的开销往往会将图像先下采样然后对输出结果上采样已恢复原始分辨率，由于现在的SOD模型都是使用编码器-解码器的方式设计的，随着分辨率的大幅度提高，提取的特征大小会增加，但是网络的感受野是固定的，使得相对感受野变小，最终导致无法捕获对任务至关重要的全局语义。</p>
-<div align="center"><img src="image\高分辨率下的传统模型困境.PNG"></div> 
+<div align="center"><img src="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/高分辨率下的传统模型困境.PNG"></div> 
 
 <p>目前对于高分辨率SOD方法有两种主流：HRSOD和DHQSOD，其中HRSOD将整个过程分为全局阶段，局部阶段和重组阶段，全局阶段为局部阶段和作物过程提供指导。DHSOD将SOD任务分解为分类任务和回归任务，这两个任务通过他们提出的trimap和不确定性损失连接起来，它们生成具有清晰边界的相对较好的显著性贴图。但是这两者都是使用多阶段架构，将SOD分为语义(低分辨率)和细节(高分辨率)两个阶段。由此引出两个问题：</p>
 <blockquote>
@@ -212,21 +212,21 @@
 </blockquote>
 <p>当前可用的高分辨率数据集是HRSOD，但是HRSOD数据集图像数量有限,严重影响模型的泛化能力。</p>
 <h3 id="Staggered-Grafting-Framework"><a href="#Staggered-Grafting-Framework" class="headerlink" title="Staggered Grafting Framework"></a>Staggered Grafting Framework</h3><p>网络框架如图所示：</p>
-<div align="center"><img src="image\Pyramid_Grafting_network.PNG"></div> 
+<div align="center"><img src="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/Pyramid_Grafting_network.PNG"></div> 
 
 <p>由两个编码器和一个解码器构成，使用Swim transformer和ResNet18作为编码器，transformer编码器能够在低分辨率情况下获得准确的全局语义信息，卷积编码器能够在高分辨率输入下获得丰富的细节信息，不同模型之间的提取的特征可能是互补的，可以获得更多的有效特征。</p>
 <p>在编码的过程中，向两个编码器馈送不同分辨率的图像，并行获取全局语义信息和详细信息。解码分为三个过程，一个是Swim解码，一个是嫁接编码，最后是交错结构的ResNet解码，在第二个子阶段的解码特征是从跨模态移植模块产生的，其中全局语义信息从Swin分支移植到ResNet分支，跨模态移植模块还会处理一个名为CAM的矩阵进行监督</p>
 <h3 id="交叉模型迁移模块-CMGM"><a href="#交叉模型迁移模块-CMGM" class="headerlink" title="交叉模型迁移模块(CMGM)"></a>交叉模型迁移模块(CMGM)</h3><p>作用：移植由两个编码器提取的特征，对于transformer所提取的特征$f_{S_2}$能够远距离捕获信息，具有全局语义信息。使用ResNet所得到的$f_{R_5}$有更好的局部信息，也就是更丰富的细节信息。但是由于特征大小和感受野之间的差异，在$f_{R_5}$中有更多的噪声。</p>
 <p>使用常见的融合方法：如逐元素相加和相乘的适用情况限制在显著预测和不同特征生成的预测至少有一部分是对的情况下，否则就是一种错误的适用方式，且这种操作都只关注于有限的局部信息，导致没法实现自我纠错。</p>
 <p>作者提出使用CMGM重新计算ResNet特征和Transformer特征之间的逐点关系，将全局语义信息通过transformer分支转移到ResNet分支，从而弥补常见的错误，通过计算$E&#x3D;|G-P| \in [0,1]$得到误差图</p>
-<h3 id="CMGM纠错效果图"><a href="#CMGM纠错效果图" class="headerlink" title=" CMGM纠错效果图"></a><center> CMGM纠错效果图</h3><div align="center"><img src="image\CMGM纠错.PNG"></div> 
+<h3 id="CMGM纠错效果图"><a href="#CMGM纠错效果图" class="headerlink" title=" CMGM纠错效果图"></a><center> CMGM纠错效果图</center></h3><div align="center"><img src="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/CMGM纠错.PNG"></div> 
 
 
-<h3 id="CMGM网络结构"><a href="#CMGM网络结构" class="headerlink" title=" CMGM网络结构"></a><center> CMGM网络结构</h3><div align="center"><img src="image\CMGM网络结构.PNG"></div>
+<h3 id="CMGM网络结构"><a href="#CMGM网络结构" class="headerlink" title=" CMGM网络结构"></a><center> CMGM网络结构</center></h3><div align="center"><img src="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/CMGM网络结构.PNG"></div>
 
-<h3 id="实验结果"><a href="#实验结果" class="headerlink" title=" 实验结果"></a><center> 实验结果</h3><div align="center"><img src="image\PGNet定量实验结果.PNG"></div>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title=" 实验结果"></a><center> 实验结果</center></h3><div align="center"><img src="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/PGNet定量实验结果.PNG"></div>
 
-<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a><center>可视化</center></h3><div align="center"><img src="image\PGNet可视化结果.PNG"></div>
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a><center>可视化</center></h3><div align="center"><img src="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/PGNet可视化结果.PNG"></div>
 
 <p>CUDA_VISIBLE_DEVICES&#x3D;2,3 python3 -m torch.distributed.launch –nproc_per_node&#x3D;2 train_distributed.py –batchsize 4 –master_port 29501 –savepath “..&#x2F;model&#x2F;PGNet_DUTS_Test&#x2F;“ –datapath “&#x2F;storage&#x2F;GWB&#x2F;Data&#x2F;DUTS-TR”\</p>
 
