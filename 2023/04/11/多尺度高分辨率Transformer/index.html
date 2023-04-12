@@ -177,17 +177,17 @@
             
             <span class="tag">
                 
-                <a href="/tags/High-Resolution-Vision/" style="color: #ffa2c4">High-Resolution Vision</a>
+                <a href="/tags/High-Resolution-Vision/" style="color: #ff7d73">High-Resolution Vision</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Transformer/" style="color: #03a9f4">Transformer</a>
+                <a href="/tags/Transformer/" style="color: #00a596">Transformer</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Segmentation/" style="color: #00bcd4">Segmentation</a>
+                <a href="/tags/Segmentation/" style="color: #ffa2c4">Segmentation</a>
             </span>
             
         </span>
@@ -204,7 +204,7 @@
 <li>3）HRViT采用混合尺度卷积前馈网络加强多尺度特征提取</li>
 <li>4）HRVIT的HR卷积结构和高效的补丁嵌入层在降低硬件成本的情况下保持率更多的低级细粒度特征</li>
 </ul>
-<h3 id="HRViT网络结构图"><a href="#HRViT网络结构图" class="headerlink" title="HRViT网络结构图"></a><center>HRViT网络结构图</center></h3><p><img src="/DFSgwb/DFSgwb.github.io.git/./image/HRViT.PNG" alt="HRViT网络结构图"></p>
+<h3 id="HRViT网络结构图"><a href="#HRViT网络结构图" class="headerlink" title="HRViT网络结构图"></a><center>HRViT网络结构图</center></h3><p><img src="https://cdn.jsdelivr.net/gh/%5BDFSgwb%5D/%5BblogImage%5D@main/img/HRViT.PNG"></p>
 <div align="center"><img src="image\HRViT.PNG"></div>
 由图可知，HRViT第一部分由卷积干组成，同时提取低层特征，在卷积stem后，HRViT部署了四个渐进式Transformer阶段，其中第n阶段包含n个并行的多尺度Transformer分支，每个阶段可以有一个或多个模块。每个模块从一个轻量级密集融合层开始，以实现跨分辨率交互和一个用于局部特征提取的有效补丁嵌入块，然后是重复的增强局部自注意力块和混合尺度卷积前馈网络，与逐步降低空间维度以生成金字塔特征的顺序ViT主干不同，我们在整个网络中维护HR特征，以通过跨分辨率融合增强HR表示的质量。
 
@@ -266,7 +266,15 @@
             </transition>
             
         </div>
-        <script src="/js/main.js"></script>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
         
         
 

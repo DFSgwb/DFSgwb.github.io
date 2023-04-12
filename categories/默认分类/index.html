@@ -150,7 +150,7 @@
         
         
         <span>
-            <a href="/categories/SOD/" style="background: #03a9f4">
+            <a href="/categories/SOD/" style="background: #00a596">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -174,11 +174,22 @@
         
         
         <span>
-            <a href="/categories/COD/" style="background: #03a9f4">
+            <a href="/categories/COD/" style="background: #ffa2c4">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 COD
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                深度学习
             </a>
         </span>
         
@@ -211,17 +222,17 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/High-Resolution-Vision/" style="color: #00bcd4">High-Resolution Vision</a>
+                        <a href="/tags/High-Resolution-Vision/" style="color: #ffa2c4">High-Resolution Vision</a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/Transformer/" style="color: #ff7d73">Transformer</a>
+                        <a href="/tags/Transformer/" style="color: #03a9f4">Transformer</a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/Segmentation/" style="color: #00a596">Segmentation</a>
+                        <a href="/tags/Segmentation/" style="color: #00bcd4">Segmentation</a>
                     </span>
                     
                 </span>
@@ -256,12 +267,12 @@
                     
                     <span class="tag">
                         
-                        <a href="/tags/Transformer/" style="color: #00bcd4">Transformer</a>
+                        <a href="/tags/Transformer/" style="color: #00a596">Transformer</a>
                     </span>
                     
                     <span class="tag">
                         
-                        <a href="/tags/Segmentation/" style="color: #ff7d73">Segmentation</a>
+                        <a href="/tags/Segmentation/" style="color: #00bcd4">Segmentation</a>
                     </span>
                     
                 </span>
@@ -300,7 +311,15 @@
             </transition>
             
         </div>
-        <script src="/js/main.js"></script>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
         
     </body>
 </html>

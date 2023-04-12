@@ -177,7 +177,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/SOD/" style="color: #00bcd4">SOD</a>
+                <a href="/tags/SOD/" style="color: #ff7d73">SOD</a>
             </span>
             
         </span>
@@ -253,7 +253,15 @@ LRSCN的目的是在低分辨率下获取足够的语义并将像素分为三个
             </transition>
             
         </div>
-        <script src="/js/main.js"></script>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
         
         
 

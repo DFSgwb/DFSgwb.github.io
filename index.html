@@ -146,7 +146,15 @@
 
             <transition name="into">
             <div id="main" v-show="!loading">
-                <div id="home-head">
+                <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<script src="../source/js/fireworks.min.js"></script>
+<div id="cursor"></div>
+<link rel="stylesheet" href="../source/css/cursor.min.css" />
+<script src="../source/js/cursor.min.js"></script>
+<canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+<script src="../source/js/background.min.js"></script>
+<div id="home-head">
     <div
         id="home-background"
         ref="homeBackground"
@@ -160,7 +168,7 @@
         <span class="info">
             <div class="wrap">
                 <h1>DFSgwb</h1>
-                <h3></h3>
+                <h3>My World</h3>
                 <h5>我的技术分享</h5>
             </div>
         </span>
@@ -261,7 +269,7 @@
         
         <span class="tag">
             
-            <a href="/tags/SOD/" style="color: #ff7d73">
+            <a href="/tags/SOD/" style="color: #00bcd4">
                 SOD
             </a>
         </span>
@@ -361,7 +369,7 @@
         
         <span class="tag">
             
-            <a href="/tags/SOD/" style="color: #00a596">
+            <a href="/tags/SOD/" style="color: #ff7d73">
                 SOD
             </a>
         </span>
@@ -411,21 +419,21 @@
         
         <span class="tag">
             
-            <a href="/tags/High-Resolution-Vision/" style="color: #ffa2c4">
+            <a href="/tags/High-Resolution-Vision/" style="color: #00a596">
                 High-Resolution Vision
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Transformer/" style="color: #00bcd4">
+            <a href="/tags/Transformer/" style="color: #ff7d73">
                 Transformer
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Segmentation/" style="color: #00a596">
+            <a href="/tags/Segmentation/" style="color: #03a9f4">
                 Segmentation
             </a>
         </span>
@@ -475,7 +483,7 @@
         
         <span class="tag">
             
-            <a href="/tags/COD/" style="color: #03a9f4">
+            <a href="/tags/COD/" style="color: #ffa2c4">
                 COD
             </a>
         </span>
@@ -525,7 +533,7 @@
         
         <span class="tag">
             
-            <a href="/tags/SOD/" style="color: #ff7d73">
+            <a href="/tags/SOD/" style="color: #00a596">
                 SOD
             </a>
         </span>
@@ -589,6 +597,120 @@
         
     </div>
     <a href="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2022/04/07/day_one/">
+        <h2 class="post-title">深度学习面试(一)</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                深度学习
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/4/7
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>U-Net的业务场景，DenseUNet和ResNet</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #00a596">
+                深度学习
+            </a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #03a9f4">
+                面试
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2022/04/07/day_one/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2022/04/07/day_two/">
+        <h2 class="post-title">深度学习面试(二)</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                深度学习
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/4/7
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>XGBoost和GBDT的不同</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #ff7d73">
+                深度学习
+            </a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #00bcd4">
+                面试
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2022/04/07/day_two/" class="go-post">阅读全文</a>
 </div>
 
 
@@ -664,7 +786,15 @@
             </transition>
             
         </div>
-        <script src="/js/main.js"></script>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
         
     </body>
 </html>

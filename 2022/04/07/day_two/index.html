@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Looking for the Detail and Context Devils:High-Resolution Salient Object Detection | DFSgwb</title>
+        <title>深度学习面试(二) | DFSgwb</title>
         <meta name="author" content="GWB" />
         <meta name="description" content="我的技术分享" />
         <meta name="keywords" content="" />
@@ -150,22 +150,22 @@
             <div id="main" v-show="!loading">
                 <div class="article">
     <div>
-        <h1>Looking for the Detail and Context Devils:High-Resolution Salient Object Detection</h1>
+        <h1>深度学习面试(二)</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/11
+            2022/4/7
         </span>
         
         <span class="category">
-            <a href="/categories/SOD/">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                SOD
+                深度学习
             </a>
         </span>
         
@@ -177,7 +177,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/SOD/" style="color: #00a596">SOD</a>
+                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #00bcd4">深度学习</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #00bcd4">面试</a>
             </span>
             
         </span>
@@ -185,32 +190,16 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="Looking-for-the-Detail-and-Context-Devils-High-Resolution-Salient-Object-Detection"><a href="#Looking-for-the-Detail-and-Context-Devils-High-Resolution-Salient-Object-Detection" class="headerlink" title="Looking for the Detail and Context Devils:High-Resolution Salient Object Detection "></a><center>Looking for the Detail and Context Devils:High-Resolution Salient Object Detection </center></h1><p>缺乏显著对象的边界细节和语义上下文是低分辨率SOD数据集的一大弊端，本文设计了一个端到端的学习框架，称为DRFNet,使用一个共享特征提取器和两个有效的细化头构成。通过解耦细节和上下文信息，一个细化头采用全局感知和特征金字塔，在不增加太多计算负担的情况下，提升空间细节信息，从而缩小高级语义和低级细节之间的差距，另一个细化头采用混合扩张卷积块和分组上采样，这在提取上下文信息方面非常有效，基于双重细化，使得实现扩大感受野并从高分辨率图像中获取更多的判别特征。</p>
-<p>高分辨率图像具有一个突出的特点包含更多可以覆盖范围和形状的结构对象和更多的细节信息。一方面高级上下文特征更适合检测大而混乱的对象，而小对象则受益于低级精细特征。不同层次特征的结合将为语义定位和细节增强提供更丰富的信息。</p>
-<p>现有的基于FCN结构的方法一个缺点就是特征通常是以粗到精细的方式集成，它缺乏获取足够的局部和全局上下文信息或远程依赖关系的能力。导致不显眼的对象和混淆区域的准确性较差。大量的使用卷积操作使得对于算力和内存的要求变得极高，但如果将输入图像限制为相对较低的分辨率，又阻碍了细节感知和高分辨的实际需求。</p>
-<p>现有的高分辨率图像像素级标记方法大致分为三大类，</p>
-<blockquote>
-<ul>
-<li>1首先将高分辨率图像裁剪为低分辨图像，然后预测低分辨率结果并将其结果插值为原始图像大小。这种操作虽然简单但是图像空间细节的丢失是不可避免，导致出现对物体边界的错误预测</li>
-<li>2设计轻型编码器-解码器网络,通过特征融合层次特征，之间提高空间分辨率并恢复一些缺少的细节，但是这种由于连续的下采样操作会带来空间信息的丢失且缺乏足够的对象的感受野</li>
-<li>3 引入具有多个分支的不对称网络,每个分支以不同分辨率运行，即低分辨率图像中提取全局信息，高分辨率图像中提取精细细节，但是如何在不同分支上整合全局和局部信息还没一个很好的方法，由于高级语义和低级细节之间的差距，不好的融合方式可能使得它们在预测中出现奇怪的预测区域</li>
-</ul>
-</blockquote>
-<h3 id="常见的HRSOD网络架构"><a href="#常见的HRSOD网络架构" class="headerlink" title="常见的HRSOD网络架构"></a><center>常见的HRSOD网络架构</center></h3><div align="center"><img src="image\三种常用的HR网络架构.PNG"></img></div>
-
-
-<h3 id="本文网络结构"><a href="#本文网络结构" class="headerlink" title="本文网络结构"></a><center>本文网络结构</center></h3><div align="center"><img src="image\DRFNet.PNG"></img></div>
-
-<h3 id="共享特征提取器"><a href="#共享特征提取器" class="headerlink" title="共享特征提取器"></a>共享特征提取器</h3><p>采用修改后的VGG-16和ResNet-18作为共享特征提取器</p>
-<h3 id="Detail-Refinement-Head"><a href="#Detail-Refinement-Head" class="headerlink" title="Detail Refinement Head"></a>Detail Refinement Head</h3><p>DRH包括三个关键块：</p>
-<blockquote>
-<ul>
-<li>1卷积特征缩减块(CFRB):该块旨在缩小多尺度深度特征的维数，本质上就是一个$1\times1$的卷积块，后面是批归一化和Relu激活函数，为减少高分辨率图像的计算和内存需求，卷积滤波器的数量设为为32</li>
-<li>2深度特征上采样块(DFUB):采用C组的反卷积进行上采样，通过适当的上采样率，可以放大较深层的输出特征以匹配较浅层产生的特征，且进一步减少计算量</li>
-<li>3全局感知特征交互块(GFIB)：由于接受域有限，无法获取足够的全局信息，为表达增强表现能力，首先对CFRB和DFUB的特征进行级联全局平均池化。然后将其转发到全连接层以生成全局权重向量,整个过程可以表示为<br>$$\Large \alpha_G &#x3D; \sigma(W_1<em>GAP([F_C,F_D])+b)$$<br>$$\Large F_R&#x3D;g(W_2</em>[F_C,F_D]+b)$$<br>$$\Large F_G &#x3D; \alpha_G\odot F_R$$</li>
-</ul>
-</blockquote>
-<h3 id="Context-Refinement-Head"><a href="#Context-Refinement-Head" class="headerlink" title="Context Refinement Head"></a>Context Refinement Head</h3><p>在直接堆叠或使用金字塔结构扩大感受野的策略中具有两个非常明显的缺点。1：计算量大，占用内存，不适合高分辨率图像。2：缺乏捕获足够多尺度局部上下文信息的能力，导致对于不显眼的对象的准确性较差本文提出的CRH使用混合膨胀卷积和分组上采样组成。具体的来说就是使用一个混合扩张卷积块和一个分组上采样组成</p>
+        <p>说说XGBoost和GBDT的不同:</p>
+<ol>
+<li>XGBoost和GBDT都是基于树的集成学习算法，但在实现细节和性能上存在一些不同：</li>
+<li>对于目标函数的优化：XGBoost采用了类似于牛顿法的二阶泰勒展开方式进行目标函数的极值优化，加快了收敛速度；而GBDT采用的是一阶泰勒展开。</li>
+<li>对于特征的选择：XGBoost采用增益和覆盖度的综合指标选择特征；GBDT采用的是信息熵或基尼指数。</li>
+<li>对于剪枝的处理：XGBoost对于树的结构进行分裂之后，采用正则化的方式进行剪枝；GBDT采用的是贪心算法来选择最优分裂点。</li>
+<li>对于模型的并行计算：XGBoost使用了多线程并行运算，在内存使用上更加高效；GBDT则只能串行计算。</li>
+<li>对于缺失值的处理：XGBoost可以自动地学习处理缺失值，GBDT则需要另外进行预处理。<br>综上所述，XGBoost在目标函数优化、特征选择、树结构剪枝以及模型的并行计算方面都具有更大的优势，因此在许多竞赛中取得了很好的成绩。但在数据处理方面相对要求更高。而GBDT则更为直观易懂，数据要求也相对较低。</li>
+</ol>
+<p>XGBoost和GBDT都是决策树集成学习算法，它们的区别主要涵盖以下几个方面：<br>1.算法原理：GBDT是一种基于残差学习的决策树集成算法，每一次学习目标是拟合当前模型残差，使得后续模型能够更好地拟合样本。而XGBoost是一种基于梯度提升的决策树算法，每一次学习目标是拟合当前模型梯度，使得后续模型能够更好地逼近损失函数。<br>2.损失函数：在实际应用中，XGBoost支持更广泛的损失函数选择，除了GBDT中常用的平方误差和绝对误差，还支持logistic、softmax等分类问题的损失函数。而且XGBoost能够集成不同的损失函数。<br>3.正则化：XGBoost加入了二阶导数信息来进行正则化，防止过拟合效果更好。同时，XGBoost还可以通过结构化的正则化方式减少过拟合现象。<br>4.并行化处理：相比于GBDT，XGBoost引入了缓存访问和特征采样等并行处理方式，可以通过并行化处理更快地训练模型。<br>5.可扩展性：XGBoost拓展性更强，支持分布式计算，可以在大数据环境下使用，而GBDT则只能在单机上运行。<br>总的来说，XGBoost是一个更加高效、灵活、容易扩展的算法，能够更好地解决现实生活中的复杂问题，在机器学习和数据挖掘领域中得到了广泛应用。</p>
 
     </div>
     
