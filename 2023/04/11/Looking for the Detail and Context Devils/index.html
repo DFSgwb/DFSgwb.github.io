@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Looking for the Detail and Context Devils:High-Resolution Salient Object Detection | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>Looking for the Detail and Context Devils:High-Resolution Salient Object Detection</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/11
+        </span>
+        
+        <span class="category">
+            <a href="/categories/SOD/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                SOD
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/SOD/" style="color: #03a9f4">SOD</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="Looking-for-the-Detail-and-Context-Devils-High-Resolution-Salient-Object-Detection"><a href="#Looking-for-the-Detail-and-Context-Devils-High-Resolution-Salient-Object-Detection" class="headerlink" title="Looking for the Detail and Context Devils:High-Resolution Salient Object Detection "></a><center>Looking for the Detail and Context Devils:High-Resolution Salient Object Detection </center></h1><p>缺乏显著对象的边界细节和语义上下文是低分辨率SOD数据集的一大弊端，本文设计了一个端到端的学习框架，称为DRFNet,使用一个共享特征提取器和两个有效的细化头构成。通过解耦细节和上下文信息，一个细化头采用全局感知和特征金字塔，在不增加太多计算负担的情况下，提升空间细节信息，从而缩小高级语义和低级细节之间的差距，另一个细化头采用混合扩张卷积块和分组上采样，这在提取上下文信息方面非常有效，基于双重细化，使得实现扩大感受野并从高分辨率图像中获取更多的判别特征。</p>
+<p>高分辨率图像具有一个突出的特点包含更多可以覆盖范围和形状的结构对象和更多的细节信息。一方面高级上下文特征更适合检测大而混乱的对象，而小对象则受益于低级精细特征。不同层次特征的结合将为语义定位和细节增强提供更丰富的信息。</p>
+<p>现有的基于FCN结构的方法一个缺点就是特征通常是以粗到精细的方式集成，它缺乏获取足够的局部和全局上下文信息或远程依赖关系的能力。导致不显眼的对象和混淆区域的准确性较差。大量的使用卷积操作使得对于算力和内存的要求变得极高，但如果将输入图像限制为相对较低的分辨率，又阻碍了细节感知和高分辨的实际需求。</p>
+<p>现有的高分辨率图像像素级标记方法大致分为三大类，</p>
+<blockquote>
+<ul>
+<li>1首先将高分辨率图像裁剪为低分辨图像，然后预测低分辨率结果并将其结果插值为原始图像大小。这种操作虽然简单但是图像空间细节的丢失是不可避免，导致出现对物体边界的错误预测</li>
+<li>2设计轻型编码器-解码器网络,通过特征融合层次特征，之间提高空间分辨率并恢复一些缺少的细节，但是这种由于连续的下采样操作会带来空间信息的丢失且缺乏足够的对象的感受野</li>
+<li>3 引入具有多个分支的不对称网络,每个分支以不同分辨率运行，即低分辨率图像中提取全局信息，高分辨率图像中提取精细细节，但是如何在不同分支上整合全局和局部信息还没一个很好的方法，由于高级语义和低级细节之间的差距，不好的融合方式可能使得它们在预测中出现奇怪的预测区域</li>
+</ul>
+</blockquote>
+<h3 id="常见的HRSOD网络架构"><a href="#常见的HRSOD网络架构" class="headerlink" title="常见的HRSOD网络架构"></a><center>常见的HRSOD网络架构</center></h3><div align="center"><img src="/2023/04/11/Looking%20for%20the%20Detail%20and%20Context%20Devils/三种常用的HR网络架构.PNG"></div>
+
+
+<h3 id="本文网络结构"><a href="#本文网络结构" class="headerlink" title="本文网络结构"></a><center>本文网络结构</center></h3><div align="center"><img src="/2023/04/11/Looking%20for%20the%20Detail%20and%20Context%20Devils/DRFNet.PNG"></div>
+
+<h3 id="共享特征提取器"><a href="#共享特征提取器" class="headerlink" title="共享特征提取器"></a>共享特征提取器</h3><p>采用修改后的VGG-16和ResNet-18作为共享特征提取器</p>
+<h3 id="Detail-Refinement-Head"><a href="#Detail-Refinement-Head" class="headerlink" title="Detail Refinement Head"></a>Detail Refinement Head</h3><p>DRH包括三个关键块：</p>
+<blockquote>
+<ul>
+<li>1卷积特征缩减块(CFRB):该块旨在缩小多尺度深度特征的维数，本质上就是一个$1\times1$的卷积块，后面是批归一化和Relu激活函数，为减少高分辨率图像的计算和内存需求，卷积滤波器的数量设为为32</li>
+<li>2深度特征上采样块(DFUB):采用C组的反卷积进行上采样，通过适当的上采样率，可以放大较深层的输出特征以匹配较浅层产生的特征，且进一步减少计算量</li>
+<li>3全局感知特征交互块(GFIB)：由于接受域有限，无法获取足够的全局信息，为表达增强表现能力，首先对CFRB和DFUB的特征进行级联全局平均池化。然后将其转发到全连接层以生成全局权重向量,整个过程可以表示为<br>$$\Large \alpha_G &#x3D; \sigma(W_1<em>GAP([F_C,F_D])+b)$$<br>$$\Large F_R&#x3D;g(W_2</em>[F_C,F_D]+b)$$<br>$$\Large F_G &#x3D; \alpha_G\odot F_R$$</li>
+</ul>
+</blockquote>
+<h3 id="Context-Refinement-Head"><a href="#Context-Refinement-Head" class="headerlink" title="Context Refinement Head"></a>Context Refinement Head</h3><p>在直接堆叠或使用金字塔结构扩大感受野的策略中具有两个非常明显的缺点。1：计算量大，占用内存，不适合高分辨率图像。2：缺乏捕获足够多尺度局部上下文信息的能力，导致对于不显眼的对象的准确性较差本文提出的CRH使用混合膨胀卷积和分组上采样组成。具体的来说就是使用一个混合扩张卷积块和一个分组上采样组成</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="left">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="left">发布时间：</strong>2023-04-13</a>
+        <br>
+        <strong>版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>

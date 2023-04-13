@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Pyramidal Feature Shrinking for Salient Object Detection | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>Pyramidal Feature Shrinking for Salient Object Detection</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/11
+        </span>
+        
+        <span class="category">
+            <a href="/categories/SOD/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                SOD
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/SOD/" style="color: #ff7d73">SOD</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="Pyramidal-Feature-Shrinking-for-Salient-Object-Detection"><a href="#Pyramidal-Feature-Shrinking-for-Salient-Object-Detection" class="headerlink" title="Pyramidal Feature Shrinking for Salient Object Detection"></a><center>Pyramidal Feature Shrinking for Salient Object Detection</center></h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>提出了一种金字塔型特征收缩网络(PFSNet) ，其目的是将相邻的特征节点按照层层收缩的方式进行聚合，从而使聚合后的特征融合有效的细节和语义，丢弃干扰信息。特别地，提出了一种金字塔收缩译码器(PSD) ，以渐近的方式分层聚合相邻特征。此外，我们提出了一个相邻融合模块(AFM)来进行相邻特征之间的空间增强，以动态加权特征和自适应融合适当的信息。此外，利用基于主干提取特征的尺度感知富集模块(SEM)获取丰富的尺度信息，生成具有扩张卷积的不同初始特征。</p>
+<p>在SOD任务中，高低级特征在功能之间有着很大的差距，SOD算法的关键在于如何充分利用语义和细节信息，在最后两个特征的合并中，具有丰富细节和噪声的低级特征和高级特征相融合，但是当两种特征完全不同时，差异较大的特征直接融合会产生噪声，导致性能的下降.<br><img src="/2023/04/11/PFSNet/PSD.PNG"><br>本文提出了一种金字塔收缩解码器，将相邻特征定义为相似特征，将不相邻的特征定义为孤立特征，PSD仅收缩每层中类似的特征，经过几层收缩后，最时候当前输入的特征得以保留，然后配合AFM融合模块实现增强当前样本的特征并抑制不适合的特征，最后为了充分利用好多尺度信息，配合使用SEM。其对应的架构图如下所示：<br><img src="/2023/04/11/PFSNet/PFSNet架构.PNG"></p>
+<h3 id="AFM模块"><a href="#AFM模块" class="headerlink" title="AFM模块"></a>AFM模块</h3><p>将待合并的特征视为父特征，合并后的特征视为子特征，AFM要实现的两个功能：</p>
+<blockquote>
+<p>（1）子特征应该继承适当当前输入样本的特征，并丢弃不适合的特征</p>
+<p>（2）子特征要和父特征保持相同的尺寸</p>
+</blockquote>
+<p>首先通过逐元素乘法从父特征中提取共享特征，然后通过逐元素加法将共享特征加到父特征中从而增强它们，通过级联运算将两个处理后的特征合并，然后让它们依次通过全局平均化，$1\times1$卷积和softmax函数来生成权重向量，最后对权重向量和特征进行相应的乘法，得到加权后的特征，在特征加权后再使用$3\times3$卷积来压缩与副特征一致的子特征的通道，由于不同的特征具有不同的权重，因此在卷积计算受，具有较小权重的元素很少被子特征继承，通过这种方式，达到子特征继承重要的特征并丢弃更多的噪声的目的。</p>
+<h3 id="PSD模块"><a href="#PSD模块" class="headerlink" title="PSD模块"></a>PSD模块</h3><p>本文首次提出将相邻特征扩展到层次融合。这样，我们就可以利用相邻特征融合的优势，实现多层次的特征融合，避免跳跃式融合操作。此外，从最后一个特征融合的位置来看，它可以直接集成基于 FPN 的框架中包含噪声的低层特征，而 PFSNet 则消除了大量的噪声。<br>PSD的核心目的是为了实现多特征集成，同时尽可能避免跳跃式特征融合的操作，PSD是由AFM组成的结构。合并特征的过程在相邻节点对中进行，首先使用backone提出五层特征$f_1,f_2,f_3,f_4,f_5$,然后使用AFM模块将相邻的特征$f_i,f_{i+1}$得到$f^{‘}_i$依次类推得到最后的特征$f$</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="left">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="left">发布时间：</strong>2023-04-13</a>
+        <br>
+        <strong>版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
