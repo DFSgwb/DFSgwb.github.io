@@ -42,8 +42,11 @@
 <link rel="stylesheet" href="/css/main.css" />
 
     <meta name="generator" content="Hexo 6.3.0"></head>
+    
     <body>
+        
         <div id="layout">
+            
             <transition name="fade">
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
@@ -52,6 +55,7 @@
                     <img src="/images/loading.gif" />
                 </div>
             </div>
+            
             </transition>
             <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
     <div class="desktop-menu">
@@ -154,6 +158,7 @@
 <script src="../source/js/cursor.min.js"></script>
 <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
 <script src="../source/js/background.min.js"></script>
+<link rel="stylesheet" href="../source/css/custom.css" />
 <div id="home-head">
     <div
         id="home-background"
@@ -177,6 +182,63 @@
 <div id="home-posts-wrap"  ref="homePostsWrap">
     <div id="home-posts">
         
+
+<div class="post">
+    <a href="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/">
+        <h2 class="post-title">Multi-Scale High-Resolution Vision Transformer for Semantic Segmentation</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                默认分类
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/11
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>由于采样深度和感受野大小之间的矛盾，大多数根据低分辨输入设计的SOD模型在高分辨率图像中表现不佳，本文提出一种金字塔嫁接网络。使用transformer和CNN主干分别从不同分辨率的图像中提取特征，然后将特征从transformer分支嫁接到CNN分支，与此同时提出一种基于注意的分叉模型嫁接模块，使CNN分支能够在解码过程中，在不同信源特征的引导下，更全面地组合破碎的细节信息，此外还设计了一个注意引导丢失来明确监督交叉嫁接模块生成注意矩阵，以帮助网络更好地与来自不同模型的注意进行交互。</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Transformer/" style="color: #03a9f4">
+                Transformer
+            </a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/Segmentation/" style="color: #ff7d73">
+                Segmentation
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/" class="go-post">阅读全文</a>
+</div>
 
 <div class="post">
     <a href="/2022/10/07/Liunx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
@@ -219,7 +281,7 @@
         
         <span class="tag">
             
-            <a href="/tags/Liunx/" style="color: #00bcd4">
+            <a href="/tags/Liunx/" style="color: #ffa2c4">
                 Liunx
             </a>
         </span>
@@ -269,14 +331,14 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #00a596">
+            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #03a9f4">
                 深度学习
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #ffa2c4">
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #ff7d73">
                 面试
             </a>
         </span>
@@ -326,14 +388,14 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #ffa2c4">
+            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #ff7d73">
                 深度学习
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #ff7d73">
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #03a9f4">
                 面试
             </a>
         </span>
@@ -383,21 +445,21 @@
         
         <span class="tag">
             
-            <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" style="color: #03a9f4">
+            <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" style="color: #00a596">
                 信息安全
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/SQL/" style="color: #03a9f4">
+            <a href="/tags/SQL/" style="color: #00bcd4">
                 SQL
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/XSS/" style="color: #00a596">
+            <a href="/tags/XSS/" style="color: #00bcd4">
                 XSS
             </a>
         </span>
@@ -471,6 +533,17 @@
             </span>
             &commat;GWB
         </div>
+        <div align="left">
+            <strong align="left">本文作者：</strong>GWB</a> 
+            <br>
+            <strong align="left">发布时间：</strong>2023-04-13</a>
+            <br>
+            <strong>版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            国际许可协议。
+            <br>
+            <strong>转载请注明出处！</strong>
+        </div>
         <div>
             Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
             <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
@@ -478,9 +551,9 @@
         
     </div>
 </footer>
-
             </div>
             </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
             
             <transition name="fade">
             <div id="preview" ref="preview" v-show="previewShow">
