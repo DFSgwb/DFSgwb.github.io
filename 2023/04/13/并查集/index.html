@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>并查集 | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>并查集</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/13
+        </span>
+        
+        <span class="category">
+            <a href="/categories/c/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                c++
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #00a596">C++</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/ACM/" style="color: #ffa2c4">ACM</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%88%B7%E9%A2%98/" style="color: #00a596">刷题</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>并查集是一种树型的数据结构，用于处理一些不相交集合的合并及查询问题（即所谓的并、查）。比如说，我们可以用并查集来判断一个森林中有几棵树、某个节点是否属于某棵树等。并查集（Union-Find）就是用来对集合进行 合并（Union） 与 查询（Find） 操作的一种数据结构。</p>
+<blockquote>
+<p>合并 就是将两个不相交的集合合并成一个集合。<br>查询 就是查询两个元素是否属于同一集合。</p>
+</blockquote>
+<p>简易版并查集模板</p>
+<pre><code class="cpp">int n=1001;//定义节点数量
+int father[1001]
+//初始化并查集
+int init()&#123;
+    for(int i=0;i&lt;n;i++)&#123;
+        father[i]=i;
+    &#125;
+&#125;
+//并查集查找根
+int find(int x)&#123;
+    return u==father[u]?u:father[u]=find(father[u]);//压缩路径
+&#125;
+//将v-&gt;u这条边添加到并查集中
+int merge(int u,int v)&#123;
+    u=find(u);
+    v=find(v);
+    if(u==v) return;
+    father[v]=u;
+&#125;
+//在减少find函数迭代次数的情况，优化加边的操作就会变成将小集合连接到大集合上
+int merge_2(int u,int v)&#123;
+    u=find(u);
+    v=find(v);
+    if(u==v) return ;
+    if(size[u]&lt;size[v]) father[u]=v;
+    else father[v]=u; 
+&#125;
+//判断u和v是否是在一个根下
+int same(int u,int v)&#123;
+    u=find(u);
+    v=find(v);
+    return u==v;
+&#125;
+</code></pre>
+<h3 id="带权并查集"><a href="#带权并查集" class="headerlink" title="带权并查集"></a>带权并查集</h3><p>在一般的并查集的基础上，在每条边中记录额外的信息</p>
+<pre><code class="cpp">int n=1001;//定义节点数量
+int father[1001];
+int value[1001];
+//初始化并查集
+int init()&#123;
+    for(int i=0;i&lt;n;i++)&#123;
+        father[i]=i;
+    &#125;
+&#125;
+//并查集查找根
+int find(int x)&#123;
+    if(x!=father[x])&#123;
+        int t=father[x];
+        father[x]=find(father[x]);
+        value[x]+=value[t];
+    &#125;
+    return father[x];
+&#125;
+</code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>题目描述：</p>
+<blockquote>
+<p>Now and then you play the following game with your friend. Your friend writes down a sequence consisting of zeroes and ones. You choose a continuous subsequence (for example the subsequence from the third to the fifth digit inclusively) and ask him, whether this subsequence contains even or odd number of ones. Your friend answers your question and you can ask him about another subsequence and so on. Your task is to guess the entire sequence of numbers.<br>You suspect some of your friend’s answers may not be correct and you want to convict him of falsehood. Thus you have decided to write a program to help you in this matter. The program will receive a series of your questions together with the answers you have received from your friend. The aim of this program is to find the first answer which is provably wrong, i.e. that there exists a sequence satisfying answers to all the previous questions, but no such sequence satisfies this answer.</p>
+</blockquote>
+<p>输入：</p>
+<blockquote>
+<p>The first line of input contains one number, which is the length of the sequence of zeroes and ones. This length is less or equal to 1000000000. In the second line, there is one positive integer which is the number of questions asked and answers to them. The number of questions and answers is less or equal to 5000. The remaining lines specify questions and answers. Each line contains one question and the answer to this question: two integers (the position of the first and last digit in the chosen subsequence) and one word which is either <code>even&#39; or </code>odd’ (the answer, i.e. the parity of the number of ones in the chosen subsequence, where <code>even&#39; means an even number of ones and </code>odd’ means an odd number).</p>
+</blockquote>
+<p>输出：</p>
+<blockquote>
+<p>There is only one line in output containing one integer X. Number X says that there exists a sequence of zeroes and ones satisfying first X parity conditions, but there exists none satisfying X+1 conditions. If there exists a sequence of zeroes and ones satisfying all the given conditions, then number X should be the number of all the questions asked.</p>
+</blockquote>
+<blockquote>
+<p>样例：<br>10<br>5<br>1 2 even<br>3 4 odd<br>5 6 even<br>1 6 even<br>7 10 odd</p>
+</blockquote>
+<p>Sample Output</p>
+<blockquote>
+<p>3</p>
+</blockquote>
+<pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=5e4+10;
+int p[N],d[N];
+int n,k;
+int find(int x)
+&#123;
+    if(x!=p[x])&#123;
+        int t=p[x];
+        p[x]=find(p[x]);
+        d[x]=d[x]+d[t];
+    &#125;
+    return p[x];
+&#125;
+signed main()
+&#123;
+    cin&gt;&gt;n&gt;&gt;k;
+    int ans=0;
+    for(int i=1;i&lt;=n;i++) p[i]=i;
+    while(k--)
+    &#123;
+        int v,a,b;
+        cin&gt;&gt;v&gt;&gt;a&gt;&gt;b;
+        if(a&gt;n||b&gt;n) &#123;
+            ans++;
+            continue;
+        &#125;
+        int pa=find(a),pb=find(b);
+        if(v==1)&#123;
+            if(pa==pb)&#123;//在同一个集合内
+                if((d[a]-d[b])%3)&#123;//如果不是同类关系
+                    ans++;
+                &#125;
+            &#125;
+            else &#123;//不在一个集合内，要合并
+                p[pa]=pb;
+                d[pa]=d[b]-d[a];//更新信息，可以画图理解
+                                //因为要满足d[b]=d[pa]+d[a]
+            &#125;
+        &#125;
+        else&#123;
+            if(a==b) &#123;ans++; continue;&#125;
+            else 
+            &#123;
+                if(pa==pb)&#123;
+                    if((d[a] - d[b] - 1) % 3) ans++;
+                &#125;
+                else &#123;
+                    p[pa]=pb;//要满足d[b]=d[pa]+d[a]-1;
+                    d[pa]=d[b]-d[a]+1;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    cout&lt;&lt;ans&lt;&lt;endl;
+    return 0;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="center">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="center">当前时间：</strong>2023-04-16 15:04:78</a>
+        <br>
+        <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
