@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Yolov1 | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>Yolov1</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/16
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                人工智能
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #ffa2c4">深度学习</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Yolo/" style="color: #00a596">Yolo</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Detection/" style="color: #ffa2c4">Detection</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>目前物体检测算法有以下三种：</p>
+<blockquote>
+<ul>
+<li>1.传统物体检测算法，使用人工设计特征以及机器学习的分类方式，但这种算法提取到的特征局限性较大且学习速度有限；</li>
+<li>2.结合候选框+深度学习分类法，这类Two-Stage方法解决了前者的问题，在精度上有很大突破，但在速度上很难达到实时检测的效果；</li>
+<li>3.基于深度学习的回归方法，在速度上达到了实时级别的突破，本文使用YOLO就是属于One-stage，YOLO虽然在v1,v2版本准确率上有所欠缺，但到v5版本时准确率提高了很多。</li>
+</ul>
+</blockquote>
+<h3 id="Yolo简介"><a href="#Yolo简介" class="headerlink" title="Yolo简介"></a>Yolo简介</h3><blockquote>
+<p>① YOLO的全称是you only look once，指只需要浏览一次就可以识别出图中的物体的类别和位置。<br>② YOLO是目标检测模型。目标检测是计算机视觉中比较简单的任务，用来在一张图篇中找到某些特定的物体，目标检测不仅要求我们识别这些物体的种类，同时要求我们标出这些物体的位置。<br>③ YOLO能实现图像或视频中物体的快速识别，在相同的识别类别范围和识别准确率条件下，YOLO识别速度最快。YOLO有多种模型</p>
+</blockquote>
+<img src="/2023/04/16/YoLov1/yolo.PNG">
+
+<h3 id="yolov1"><a href="#yolov1" class="headerlink" title="yolov1"></a>yolov1</h3><p>算法流程：</p>
+<blockquote>
+<ul>
+<li>1.将输入图像缩放到$448\times448\times3$大小</li>
+<li>2.经过卷积网络backbone提取特征图</li>
+<li>3.把提取到的特征图输入到两层全连接层，最终输出$7\times7\times30$大小的特征图</li>
+</ul>
+</blockquote>
+<p>检测方法：</p>
+<blockquote>
+<ul>
+<li>1.将输入图像划分成S*S的网格，如果物体中心落入某个网格内，就由该网格单元负责检测该目标。</li>
+<li>2.每个网格预测B个边界框和它们的置信度，置信度是预测框和真实物体IOU和网格是否包含物体01值之积</li>
+<li>3.每个边界框都包含5个预测值，x,y,w,h,confidence，分别代表中心坐标，宽高和IOU值，这里的坐标是相对于网格左上角的偏移量，宽高是相对于整幅图像的占比</li>
+</ul>
+</blockquote>
+<img src="/2023/04/16/YoLov1/yolov1.PNG">
+
+<h4 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h4><p>网络前面的卷积层用于从图像中提取特征，全连接层用于预测输出概率和坐标，共有24个卷积层，2个全连接层。</p>
+<img src="/2023/04/16/YoLov1/yolov1archit.PNG">
+
+<h4 id="Training设计"><a href="#Training设计" class="headerlink" title="Training设计"></a>Training设计</h4><p>使用ImageNet分类数据先做预训练，预训练使用的网络为Fig 3中的前20层卷积，再加一个average-pooling层和全连接层。预训练好以后，再加4层卷积和2层全连接(随机初始化权重)去训练检测任务，输入大小为448×448,预训练分类时使用的是224×224。最后一层会同时输出类别概率和box的坐标，利用图像的宽和高对box的宽和高做归一化，使其介于0和1之间。将box的x和y坐标参数化为特定网格单元位置的偏移量，因此它们也在0和1之间。对最后一层使用线性激活函数，其他层均使用leaky ReLU。</p>
+<p>优化模型输出的sum-squared error，是因为它很容易优化，但并不完全符合最大化average precision的目标。它将定位误差与分类误差同等加权，这可能并不理想。此外，图像中会有很多网格不包含任何目标，这些网格的confidence score为0，这通常会overpower确实包含目标的网格的梯度。这会导致模型不稳定，出现发散。为了解决这个问题，增加了bounding box坐标预测的损失，减小了不包含目标的box的confidence预测的损失，使用参数 $\lambda_{coord}(&#x3D;5),\lambda_{noobj}(&#x3D;0.5)$来完成</p>
+<p>sum-squared error对大box和小box也是同等加权的，一个好的误差度量应该能反映出small box中的小偏差比large box的小偏差更重要。为了解决这个问题，使用bounding box的宽和高的平方根来计算，而不是宽和高本身。YOLO对每个网格单元会预测多个bounding boxes。在训练时，我们希望对每个目标只有一个bounding box预测器对其负责。会分配一个预测器来负责预测一个目标，基于它的预测与ground truth有最高的IOU。</p>
+<h4 id="YOLOV1优点"><a href="#YOLOV1优点" class="headerlink" title="YOLOV1优点"></a>YOLOV1优点</h4><blockquote>
+<p>①快。因为回归问题没有复杂的流程（pipeline）。<br>②可以基于整幅图像预测（看全貌而不是只看部分）。与基于滑动窗口和区域提议的技术不同，YOLO在训练和测试期间会看到整个图像，因此它隐式地编码有关类及其外观的上下文信息。因为能看到图像全貌，与 Fast R-CNN 相比，YOLO 预测背景出错的次数少了一半。<br>③学习到物体的通用表示（generalizable representations），泛化能力好。因此，当训练集和测试集类型不同时，YOLO 的表现比 DPM 和 R-CNN 好得多，应用于新领域也很少出现崩溃的情况。</p>
+</blockquote>
+<h4 id="YOLOV1缺点"><a href="#YOLOV1缺点" class="headerlink" title="YOLOV1缺点"></a>YOLOV1缺点</h4><blockquote>
+<p>① 空间限制：一个单元格只能预测两个框和一个类别，这种空间约束必然会限制预测的数量；<br>② 难扩展：模型根据数据预测边界框，很难将其推广到具有新的或不同寻常的宽高比或配置的对象。由于输出层为全连接层，因此在检测时，YOLO 训练模型只支持与训练图像相同的输入分辨率。<br>③ 网络损失不具体：无论边界框的大小都用损失函数近似为检测性能，物体 IOU 误差和小物体 IOU 误差对网络训练中 loss 贡献值接近，但对于大边界框来说，小损失影响不大，对于小边界框，小错误对 IOU 影响较大，从而降低了物体检测的定位准确性。</p>
+</blockquote>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="center">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="center">当前时间：</strong>2023-04-16 17:04:84</a>
+        <br>
+        <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>

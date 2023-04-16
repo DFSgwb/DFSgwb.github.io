@@ -4,6 +4,64 @@
   
     
     <entry>
+      <title>Yolov1</title>
+      <link href="/2023/04/16/YoLov1/"/>
+      <url>/2023/04/16/YoLov1/</url>
+      
+        <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>目前物体检测算法有以下三种：</p><blockquote><ul><li>1.传统物体检测算法，使用人工设计特征以及机器学习的分类方式，但这种算法提取到的特征局限性较大且学习速度有限；</li><li>2.结合候选框+深度学习分类法，这类Two-Stage方法解决了前者的问题，在精度上有很大突破，但在速度上很难达到实时检测的效果；</li><li>3.基于深度学习的回归方法，在速度上达到了实时级别的突破，本文使用YOLO就是属于One-stage，YOLO虽然在v1,v2版本准确率上有所欠缺，但到v5版本时准确率提高了很多。</li></ul></blockquote><h3 id="Yolo简介"><a href="#Yolo简介" class="headerlink" title="Yolo简介"></a>Yolo简介</h3><blockquote><p>① YOLO的全称是you only look once，指只需要浏览一次就可以识别出图中的物体的类别和位置。<br>② YOLO是目标检测模型。目标检测是计算机视觉中比较简单的任务，用来在一张图篇中找到某些特定的物体，目标检测不仅要求我们识别这些物体的种类，同时要求我们标出这些物体的位置。<br>③ YOLO能实现图像或视频中物体的快速识别，在相同的识别类别范围和识别准确率条件下，YOLO识别速度最快。YOLO有多种模型</p></blockquote><img src="/2023/04/16/YoLov1/yolo.PNG"><h3 id="yolov1"><a href="#yolov1" class="headerlink" title="yolov1"></a>yolov1</h3><p>算法流程：</p><blockquote><ul><li>1.将输入图像缩放到$448\times448\times3$大小</li><li>2.经过卷积网络backbone提取特征图</li><li>3.把提取到的特征图输入到两层全连接层，最终输出$7\times7\times30$大小的特征图</li></ul></blockquote><p>检测方法：</p><blockquote><ul><li>1.将输入图像划分成S*S的网格，如果物体中心落入某个网格内，就由该网格单元负责检测该目标。</li><li>2.每个网格预测B个边界框和它们的置信度，置信度是预测框和真实物体IOU和网格是否包含物体01值之积</li><li>3.每个边界框都包含5个预测值，x,y,w,h,confidence，分别代表中心坐标，宽高和IOU值，这里的坐标是相对于网格左上角的偏移量，宽高是相对于整幅图像的占比</li></ul></blockquote><img src="/2023/04/16/YoLov1/yolov1.PNG"><h4 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h4><p>网络前面的卷积层用于从图像中提取特征，全连接层用于预测输出概率和坐标，共有24个卷积层，2个全连接层。</p><img src="/2023/04/16/YoLov1/yolov1archit.PNG"><h4 id="Training设计"><a href="#Training设计" class="headerlink" title="Training设计"></a>Training设计</h4><p>使用ImageNet分类数据先做预训练，预训练使用的网络为Fig 3中的前20层卷积，再加一个average-pooling层和全连接层。预训练好以后，再加4层卷积和2层全连接(随机初始化权重)去训练检测任务，输入大小为448×448,预训练分类时使用的是224×224。最后一层会同时输出类别概率和box的坐标，利用图像的宽和高对box的宽和高做归一化，使其介于0和1之间。将box的x和y坐标参数化为特定网格单元位置的偏移量，因此它们也在0和1之间。对最后一层使用线性激活函数，其他层均使用leaky ReLU。</p><p>优化模型输出的sum-squared error，是因为它很容易优化，但并不完全符合最大化average precision的目标。它将定位误差与分类误差同等加权，这可能并不理想。此外，图像中会有很多网格不包含任何目标，这些网格的confidence score为0，这通常会overpower确实包含目标的网格的梯度。这会导致模型不稳定，出现发散。为了解决这个问题，增加了bounding box坐标预测的损失，减小了不包含目标的box的confidence预测的损失，使用参数 $\lambda_{coord}(&#x3D;5),\lambda_{noobj}(&#x3D;0.5)$来完成</p><p>sum-squared error对大box和小box也是同等加权的，一个好的误差度量应该能反映出small box中的小偏差比large box的小偏差更重要。为了解决这个问题，使用bounding box的宽和高的平方根来计算，而不是宽和高本身。YOLO对每个网格单元会预测多个bounding boxes。在训练时，我们希望对每个目标只有一个bounding box预测器对其负责。会分配一个预测器来负责预测一个目标，基于它的预测与ground truth有最高的IOU。</p><h4 id="YOLOV1优点"><a href="#YOLOV1优点" class="headerlink" title="YOLOV1优点"></a>YOLOV1优点</h4><blockquote><p>①快。因为回归问题没有复杂的流程（pipeline）。<br>②可以基于整幅图像预测（看全貌而不是只看部分）。与基于滑动窗口和区域提议的技术不同，YOLO在训练和测试期间会看到整个图像，因此它隐式地编码有关类及其外观的上下文信息。因为能看到图像全貌，与 Fast R-CNN 相比，YOLO 预测背景出错的次数少了一半。<br>③学习到物体的通用表示（generalizable representations），泛化能力好。因此，当训练集和测试集类型不同时，YOLO 的表现比 DPM 和 R-CNN 好得多，应用于新领域也很少出现崩溃的情况。</p></blockquote><h4 id="YOLOV1缺点"><a href="#YOLOV1缺点" class="headerlink" title="YOLOV1缺点"></a>YOLOV1缺点</h4><blockquote><p>① 空间限制：一个单元格只能预测两个框和一个类别，这种空间约束必然会限制预测的数量；<br>② 难扩展：模型根据数据预测边界框，很难将其推广到具有新的或不同寻常的宽高比或配置的对象。由于输出层为全连接层，因此在检测时，YOLO 训练模型只支持与训练图像相同的输入分辨率。<br>③ 网络损失不具体：无论边界框的大小都用损失函数近似为检测性能，物体 IOU 误差和小物体 IOU 误差对网络训练中 loss 贡献值接近，但对于大边界框来说，小损失影响不大，对于小边界框，小错误对 IOU 影响较大，从而降低了物体检测的定位准确性。</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> Yolo </tag>
+            
+            <tag> Detection </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Yolov2</title>
+      <link href="/2023/04/16/Yolov2/"/>
+      <url>/2023/04/16/Yolov2/</url>
+      
+        <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>由于YOLOv1存在定位不准确以及与two-stage方法相比召回率低的缺点，作者于2017年提出了YOLOv2算法。在论文中作者提出了从更准确，更快，更多识别三个角度对YOLOv1算法进行了改进，其中识别更多对象也就是扩展到能检测9000种不同对象，被称为YOLO9000。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> Yolo </tag>
+            
+            <tag> Detection </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>并查集</title>
       <link href="/2023/04/16/%E5%B9%B6%E6%9F%A5%E9%9B%86/"/>
       <url>/2023/04/16/%E5%B9%B6%E6%9F%A5%E9%9B%86/</url>
@@ -25,6 +83,37 @@
             <tag> ACM </tag>
             
             <tag> 刷题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>图的有趣性质(一)</title>
+      <link href="/2023/04/16/%E5%9B%BE1/"/>
+      <url>/2023/04/16/%E5%9B%BE1/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>小朋友 A 在和 ta 的小伙伴们玩传信息游戏，游戏规则如下：</p><blockquote><p>1.有 n 名玩家，所有玩家编号分别为 0 ～ n-1，其中小朋友 A 的编号为 0<br>2.每个玩家都有固定的若干个可传信息的其他玩家（也可能没有）。传信息的关系是单向的（比如 A 可以向 B 传信息，但 B 不能向 A 传信息）。<br>每轮信息必须需要传递给另一个人，且信息可重复经过同一个人</p></blockquote><p>给定总玩家数 n，以及按[玩家编号,对应可传递玩家编号]关系组成的二维数组 relation。返回信息从小 A (编号 0 ) 经过 k 轮传递到编号为 n-1 的小伙伴处的方案数；若不能到达，返回 0</p><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><blockquote><p>输入：n &#x3D; 5, relation &#x3D; [[0,2],[2,1],[3,4],[2,3],[1,4],[2,0],[0,4]], k &#x3D; 3<br>输出：3<br>解释：信息从小 A 编号 0 处开始，经 3 轮传递，到达编号 4。共有 3 种方案，分别是 0-&gt;2-&gt;0-&gt;4， 0-&gt;2-&gt;1-&gt;4， 0-&gt;2-&gt;3-&gt;4。</p></blockquote><h3 id="思路一："><a href="#思路一：" class="headerlink" title="思路一："></a>思路一：</h3><p>一眼DFS或者BFS即可</p><pre><code class="cpp">class Solution &#123;public:    int ans=0;    void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; relation, int start, int step, int k, int n) &#123;        if(step==k)&#123;            if(start==n-1)&#123;                ans++;            &#125;            return ;        &#125;        for(int i = 0; i &lt; relation.size(); i++)&#123;            if(relation[i][0] == start)                dfs(relation, relation[i][1], step+1, k, n);        &#125;    &#125;    int numWays(int n, vector&lt;vector&lt;int&gt;&gt;&amp; relation, int k) &#123;        for(int i=0;i&lt;relation.size();i++)&#123;            if(relation[i][0]==0)                 dfs(relation, relation[i][1], 1, k, n);        &#125;        return ans;    &#125;&#125;;</code></pre><h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><p>在图中有一种有趣的性质，当我们使用01的邻接矩阵表示图中边集的连通性时，使用领接矩阵乘以邻接矩阵得到的新矩阵中的[i][j]表示的就是从i-&gt;j的路线数量</p><pre><code class="cpp">class Solution &#123;public:    int N;    vector&lt;vector&lt;int&gt;&gt;A, A0;    void func() &#123;        vector&lt;vector&lt;int&gt;&gt;vt(N, vector&lt;int&gt;(N,0));        for(int i=0;i&lt;N;++i)&#123;            for(int j=0;j&lt;N;++j)&#123;                for(int k=0;k&lt;N;k++)&#123;                    vt[i][j]+=A[i][k]*A0[k][j];                &#125;            &#125;        &#125;        A = vt;    &#125;    int numWays(int n, vector&lt;vector&lt;int&gt;&gt;&amp; relation, int k) &#123;        N = n;        A0.resize(n,vector&lt;int&gt;(n,0));        for(auto&amp; vt : relation )&#123;            A0[vt[0]][vt[1]] = 1;        &#125;        A= A0;        for(int i=1;i&lt;k;++i)&#123;            func();        &#125;        return A[0][n-1];    &#125;&#125;;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> c++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> ACM </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> 图 </tag>
             
         </tags>
       
@@ -120,31 +209,6 @@
     
     
     <entry>
-      <title>Disentangled High Quality Salient Object Detection</title>
-      <link href="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/"/>
-      <url>/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Disentangled-High-Quality-Salient-Object-Detection"><a href="#Disentangled-High-Quality-Salient-Object-Detection" class="headerlink" title="Disentangled High Quality Salient Object Detection"></a><center>Disentangled High Quality Salient Object Detection</center></h1><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>将高分辨率SOD任务分解为低分辨率显著性分类网络(LRSCN)和高分辨细化网络(HRRN),作为一项逐像素分类任务，LRSCN旨在以低分辨率来捕获足够的语义，以识别明确的显著，背景和不确定区域。HRRN是一项回归任务，旨在准确提炼不明确区域中的像素的显著性值。</p><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>一种好的高分辨率显著目标检测方法不仅要准确地检测出整个显著目标，还要预测显著目标的精确边界。基于低分辨率设计的SOD模型无法直接套用到高分辨率图像中，最主要的原因就是，低分辨的方法往往是将识别和定位两个过程使用一个过程实现，而对于高分辨率图像最为重要的是对于边界的精确分割。对于显著区域的定位我们可以通过扩大感受野来获取足够的语义，但是由于高分辨的特性，这将使得内存的使用大大的增加，此时往往采用下采样操作，但是下采样操作不可避免地会使得结构信息丢失。这种解决问题的思路也就是导致低分辨的SOD模型直接迁移至高分辨率图像中会出现边界模糊的原因。如下图所示</p><h3 id="模型结果对比"><a href="#模型结果对比" class="headerlink" title="模型结果对比"></a><center>模型结果对比</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/低分辨率SOD模型.PNG"></div>从上图可以发现，显著像素点可以分为以下三类：<blockquote><ul><li>(1)大多数显著对象内部的像素具有最高的显著值，我们称为确定的显著像素</li><li>(2) 背景区域中的大多数像素具有最低的显著值，我们称为确定的背景显著像素</li><li>(3) 模糊物体边界像素的显著值在0到1之间波动，称之为不明确像素</li></ul></blockquote><p>理想的 SOD 方法应有效识别图像中明确的显着区域和背景区域，并准确计算不确定区域中像素的显着性值，以保持清晰的目标边界。也就是一个回归任务加一个分类任务。<br>将高分辨率显着对象检测分离为低分辨率显着性分类网络(LRSCN)和高分辨率细化网络(HRRN).LRSCN旨在以低分辨率捕获足够的语义并将像素分类为三个不同的集合以供以后处理.HRRN旨在准确提炼不确定区域中像素的显着性值,以在GPU内存有限的情况下以高分辨率保持清晰的对象边界.如上所述,HRRN 需要高分辨率图像中的结构细节。然而，广泛使用的低分辨率显着性数据集通常在注释质量方面存在一些问题,几乎不可能从这些有缺陷的数据集中直接获得足够的对象边界细节来训练高分辨率网络。在最近的工作中，Zeng 等人。提出通过使用具有准确注释的高分辨率图像来训练他们的 SOD 网络。然而，如此高质量的图像标注需要大量的人工成本。在我们的论文中,我们认为没有必要在网络训练中使用这种精确注释的高分辨率图像.通过在训练过程中引入不确定性，我们的 HRRN 可以仅使用标注不佳的低分辨率训练数据集很好地解决高分辨率细化任务。</p><h3 id="模型方法"><a href="#模型方法" class="headerlink" title="模型方法"></a>模型方法</h3><h3 id="HRRN-High-Resolution-Network-Framework"><a href="#HRRN-High-Resolution-Network-Framework" class="headerlink" title="HRRN High Resolution Network Framework"></a><center>HRRN High Resolution Network Framework</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN高分辨率网络框架.PNG"></div>LRSCN的目的是在低分辨率下获取足够的语义并将像素分为三个不同的集合，同时节省内存的使用，HRRN计算回归像素的显著性值，并在高分辨率下保持清晰的对象边界<p>LRSCN使用一个简单的U-Net编码器解码器架构，VGG-16作为主干网络，因此将从Conv1-2，Conv2-2，Conv3-3，Conv4-3，Conv5-3，Conv6-3获得六个特征，但是由于前两个特征的感受野太小，则不使用。在编码器和解码器之间增加一个多尺度特征提取和跨级特征融合模块(MECF)，以提高特征表示的可辨别性。解码器自上而下的方式融合MECF的输出特征和上一阶段的上采样特征，每个解码器的输出定义为$D_{i},i&#x3D;1,2,3…n$,最后SGA模块建立在D3之上用来生成准确的显著预测图T，为了回归清晰的目标边界值，HRRN的输入是在LRSCN提供的trimap引导下的高分辨率图像。HRRN具有基本的编码器-解码器架构，在不确定性损失的帮助下，网络可以对噪声数据更加鲁棒，并预测具有清晰边界的高分辨率显着图。</p><h4 id="LRSCN"><a href="#LRSCN" class="headerlink" title="LRSCN"></a>LRSCN</h4><p>###<center>LRSCN架构图</center></p><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/LRSCN架构图.PNG"></div>开发了一种基于全局卷积网络GCN的多尺度特征提取模块ME，以扩大特征感受野并获得多尺度信息。为了实现第二个目标，我们利用跨级别特征融合模块CF来利用不同级别的特征优势。此外，在设计网络架构时，受的启发，我们使用拆分变换策略进一步放大 特征感受野，从而产生更具辨别力的特征表示。具体来说，我们将输入F按通道维度均匀地分成两部分${ F_{1}, F_2}$，然后将$F_1$送入多尺度特征提取路径，将$F_2$送入跨级特征融合路径。这两个路径的输出连接在一起作为最终输出。我们称这个桥接模块为MECF模块，如上图所示。<h3 id="SGA模块："><a href="#SGA模块：" class="headerlink" title="SGA模块："></a>SGA模块：</h3><p>每个解码器融合来自MECF模块和前一解码器级的特征，然后使用$3×3$卷积层进行最终预测。为了保持trimap和显著图的一致性，确保trimap的不确定区域能够准确覆盖显著图的边界，我们在D3上设计了一个显著引导注意模块（SGA）。具体来说，我们首先使用$3×3$卷积和sigmoid函数来计算显著性映射。然后，将显著性图视为空间权重图，有助于细化特征并生成精确的trimap。最后，输出trimap T是3通道分类logits。整个SGA模块保证trimap和saliecny地图的对齐。 </p><h3 id="HRRN模块"><a href="#HRRN模块" class="headerlink" title="HRRN模块"></a>HRRN模块</h3><p>HRRN遵循解纠缠原则，在LRSCN提供的trimap的指导下，精确细化不确定区域中像素的显著性值，以保持高分辨率下清晰的目标边界。HRRN的架构如图2所示。HRRN有一个简单的类似U-NET的体系结构。为了在高分辨率下进行更好的预测，我们进行了一些非平凡的修改。首先，底层特征包含丰富的空间和细节信息，这些信息在恢复清晰的对象边界方面起着至关重要的作用，因此解码器在每个上采样块之前而不是在每个上采样块之后组合编码器特征。此外，我们使用一个两层的快捷块来对齐编码器特征通道，以进行特征融合。其次，为了让网络更加关注细节信息，我们通过一个快捷块将原始输入直接反馈到最后一个卷积层，以产生更好的结果。最后，从图像生成任务中学习，我们对每个卷积层使用谱归一化，以对网络的$Lipschitz$常数添加约束并稳定训练。 </p><p>为了监督LRSCN，我们应该生成trimap的GT表示为$T^{gt}$，它可以表示确定的显着、确定的背景和不确定的区域。如上所述，不确定区域主要存在于对象的边界处。因此，我们使用随机像素数（5、7、9、11、13）在对象边界处擦除和扩展二进制真实图，以生成GT不确定区域。 剩余的前景和背景区域代表明确的显着和背景区域。$T^{gt}$ 定义为：<br>$$<br>\Large T_{gt}(x,y) &#x3D;\begin{cases}<br>2 &amp; T_{gt}(x,y)\in definite salient \<br>0 &amp; T_{gt}(x,y)\in definite background \<br>1 &amp; T_{gt}(x,y)\in uncertain region \<br>\end{cases}<br>$$<br>其中$(x,y)$表示图像上的每个像素位置。如下图所示</p><h3 id="结果可视化"><a href="#结果可视化" class="headerlink" title="结果可视化"></a><center>结果可视化</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN结果可视化.PNG"></div><p>对于trimap的监督我们使用交叉熵损失<br>$$\Large L_{trimap}&#x3D;\dfrac{1}{N}\sum_{i}-log(\dfrac{e^{T_{i} } }{\sum_{j} e^{T_{j} } })$$<br>为保障trimap的准确率，我们在trimap监督的基础上增加了额外显著性监督$L_{saliency}$，总损失是<br>$$\Large L_{LRSCN}&#x3D;L_{saliency}+L_{trimap}$$<br>不使用不确定性损失，因为LRSCN的主要目标是获取足够的语义，而不是精确的边界。</p><p>对于输入的高分辨率图像$I$，让$G^H$表示其背景真值，预测显著性图为$S^H$。我们利用$L_1$损失来比较预测显著性图和背景真值在明确的显著性和背景区域上的绝对差异：<br>$$\Large L_1 &#x3D; \dfrac{1}{E}\sum_{i\in E}|S_{i}^H-G_{i}^H|$$<br>其中$E$表示在$trimap$中被标记为明确显着或背景的像素数，$S_{H}^i$和$G_{H}^i$表示位置$i$处的预测值和$groundtruth$值。<br>由于数据集本身在注释质量方面存在一些问题，因此引入一个不确定损失来解决数据集本身带来的缺陷。使用高斯似然的方式建模不确定性<br>$$\Large p(y|f(x))&#x3D;N(f(x),\delta^2)$$<br>其中$\delta$表示测量的不确定性，$y$是输出，在最大似然推断中，我们将模型的对数似然最大化，表示为:<br>$$\Large logp(y|f(x))\propto-\dfrac{||y-f(x)||}{2\delta^2}-\dfrac{1}{2}log{\delta^2}$$<br>则不确定损失定义为：<br>$$\Large L_{uncertainty}&#x3D;\dfrac{||y-f(x)||^2}{2\delta^2}+\dfrac{1}{2}log\delta^2$$<br>将其转化为像素的表达形式：<br>$$\Large L_{uncertainty}&#x3D;\dfrac{1}{U}\dfrac{||S_{i}^H-G_{i}^H||}{2\delta_{i}^2}+\dfrac{1}{2}log\delta_{i}^2$$</p><h3 id="HRRN损失可视化"><a href="#HRRN损失可视化" class="headerlink" title="HRRN损失可视化"></a><center>HRRN损失可视化</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN损失可视化.PNG"></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> SOD </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> SOD </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Looking for the Detail and Context Devils:High-Resolution Salient Object Detection</title>
       <link href="/2023/04/11/Looking%20for%20the%20Detail%20and%20Context%20Devils/"/>
       <url>/2023/04/11/Looking%20for%20the%20Detail%20and%20Context%20Devils/</url>
@@ -170,11 +234,11 @@
     
     
     <entry>
-      <title>Salient Object Detection via Dynamic Scale Routing</title>
-      <link href="/2023/04/11/Salient%20Object%20Detection%20via%20Dynamic%20Scale%20Routing/"/>
-      <url>/2023/04/11/Salient%20Object%20Detection%20via%20Dynamic%20Scale%20Routing/</url>
+      <title>Disentangled High Quality Salient Object Detection</title>
+      <link href="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/"/>
+      <url>/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/</url>
       
-        <content type="html"><![CDATA[<h2 id="Salient-Object-Detection-via-Dynamic-Scale-Routing"><a href="#Salient-Object-Detection-via-Dynamic-Scale-Routing" class="headerlink" title="Salient Object Detection via Dynamic Scale Routing "></a><center>Salient Object Detection via Dynamic Scale Routing </center></h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>现有的SOD模型的编码器可以通过提取多尺度特征，并通过各种微妙的解码器组合特征，但是这个特征通常是固定的，实际上，在不同场景中配合使用不同的内核大小是更可取的，因此本文提出了一种动态的金字塔卷积模型，动态选择最适合的内核大小，其次提出了一种自适应双向解码器以最好适应基于DPConv的编码器。最重要的的亮点是它能够在特征尺度及其动态集合之间进行路由，使推理过程具有尺度感知能力</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="Disentangled-High-Quality-Salient-Object-Detection"><a href="#Disentangled-High-Quality-Salient-Object-Detection" class="headerlink" title="Disentangled High Quality Salient Object Detection"></a><center>Disentangled High Quality Salient Object Detection</center></h1><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>将高分辨率SOD任务分解为低分辨率显著性分类网络(LRSCN)和高分辨细化网络(HRRN),作为一项逐像素分类任务，LRSCN旨在以低分辨率来捕获足够的语义，以识别明确的显著，背景和不确定区域。HRRN是一项回归任务，旨在准确提炼不明确区域中的像素的显著性值。</p><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>一种好的高分辨率显著目标检测方法不仅要准确地检测出整个显著目标，还要预测显著目标的精确边界。基于低分辨率设计的SOD模型无法直接套用到高分辨率图像中，最主要的原因就是，低分辨的方法往往是将识别和定位两个过程使用一个过程实现，而对于高分辨率图像最为重要的是对于边界的精确分割。对于显著区域的定位我们可以通过扩大感受野来获取足够的语义，但是由于高分辨的特性，这将使得内存的使用大大的增加，此时往往采用下采样操作，但是下采样操作不可避免地会使得结构信息丢失。这种解决问题的思路也就是导致低分辨的SOD模型直接迁移至高分辨率图像中会出现边界模糊的原因。如下图所示</p><h3 id="模型结果对比"><a href="#模型结果对比" class="headerlink" title="模型结果对比"></a><center>模型结果对比</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/低分辨率SOD模型.PNG"></div>从上图可以发现，显著像素点可以分为以下三类：<blockquote><ul><li>(1)大多数显著对象内部的像素具有最高的显著值，我们称为确定的显著像素</li><li>(2) 背景区域中的大多数像素具有最低的显著值，我们称为确定的背景显著像素</li><li>(3) 模糊物体边界像素的显著值在0到1之间波动，称之为不明确像素</li></ul></blockquote><p>理想的 SOD 方法应有效识别图像中明确的显着区域和背景区域，并准确计算不确定区域中像素的显着性值，以保持清晰的目标边界。也就是一个回归任务加一个分类任务。<br>将高分辨率显着对象检测分离为低分辨率显着性分类网络(LRSCN)和高分辨率细化网络(HRRN).LRSCN旨在以低分辨率捕获足够的语义并将像素分类为三个不同的集合以供以后处理.HRRN旨在准确提炼不确定区域中像素的显着性值,以在GPU内存有限的情况下以高分辨率保持清晰的对象边界.如上所述,HRRN 需要高分辨率图像中的结构细节。然而，广泛使用的低分辨率显着性数据集通常在注释质量方面存在一些问题,几乎不可能从这些有缺陷的数据集中直接获得足够的对象边界细节来训练高分辨率网络。在最近的工作中，Zeng 等人。提出通过使用具有准确注释的高分辨率图像来训练他们的 SOD 网络。然而，如此高质量的图像标注需要大量的人工成本。在我们的论文中,我们认为没有必要在网络训练中使用这种精确注释的高分辨率图像.通过在训练过程中引入不确定性，我们的 HRRN 可以仅使用标注不佳的低分辨率训练数据集很好地解决高分辨率细化任务。</p><h3 id="模型方法"><a href="#模型方法" class="headerlink" title="模型方法"></a>模型方法</h3><h3 id="HRRN-High-Resolution-Network-Framework"><a href="#HRRN-High-Resolution-Network-Framework" class="headerlink" title="HRRN High Resolution Network Framework"></a><center>HRRN High Resolution Network Framework</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN高分辨率网络框架.PNG"></div>LRSCN的目的是在低分辨率下获取足够的语义并将像素分为三个不同的集合，同时节省内存的使用，HRRN计算回归像素的显著性值，并在高分辨率下保持清晰的对象边界<p>LRSCN使用一个简单的U-Net编码器解码器架构，VGG-16作为主干网络，因此将从Conv1-2，Conv2-2，Conv3-3，Conv4-3，Conv5-3，Conv6-3获得六个特征，但是由于前两个特征的感受野太小，则不使用。在编码器和解码器之间增加一个多尺度特征提取和跨级特征融合模块(MECF)，以提高特征表示的可辨别性。解码器自上而下的方式融合MECF的输出特征和上一阶段的上采样特征，每个解码器的输出定义为$D_{i},i&#x3D;1,2,3…n$,最后SGA模块建立在D3之上用来生成准确的显著预测图T，为了回归清晰的目标边界值，HRRN的输入是在LRSCN提供的trimap引导下的高分辨率图像。HRRN具有基本的编码器-解码器架构，在不确定性损失的帮助下，网络可以对噪声数据更加鲁棒，并预测具有清晰边界的高分辨率显着图。</p><h4 id="LRSCN"><a href="#LRSCN" class="headerlink" title="LRSCN"></a>LRSCN</h4><p>###<center>LRSCN架构图</center></p><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/LRSCN架构图.PNG"></div>开发了一种基于全局卷积网络GCN的多尺度特征提取模块ME，以扩大特征感受野并获得多尺度信息。为了实现第二个目标，我们利用跨级别特征融合模块CF来利用不同级别的特征优势。此外，在设计网络架构时，受的启发，我们使用拆分变换策略进一步放大 特征感受野，从而产生更具辨别力的特征表示。具体来说，我们将输入F按通道维度均匀地分成两部分${ F_{1}, F_2}$，然后将$F_1$送入多尺度特征提取路径，将$F_2$送入跨级特征融合路径。这两个路径的输出连接在一起作为最终输出。我们称这个桥接模块为MECF模块，如上图所示。<h3 id="SGA模块："><a href="#SGA模块：" class="headerlink" title="SGA模块："></a>SGA模块：</h3><p>每个解码器融合来自MECF模块和前一解码器级的特征，然后使用$3×3$卷积层进行最终预测。为了保持trimap和显著图的一致性，确保trimap的不确定区域能够准确覆盖显著图的边界，我们在D3上设计了一个显著引导注意模块（SGA）。具体来说，我们首先使用$3×3$卷积和sigmoid函数来计算显著性映射。然后，将显著性图视为空间权重图，有助于细化特征并生成精确的trimap。最后，输出trimap T是3通道分类logits。整个SGA模块保证trimap和saliecny地图的对齐。 </p><h3 id="HRRN模块"><a href="#HRRN模块" class="headerlink" title="HRRN模块"></a>HRRN模块</h3><p>HRRN遵循解纠缠原则，在LRSCN提供的trimap的指导下，精确细化不确定区域中像素的显著性值，以保持高分辨率下清晰的目标边界。HRRN的架构如图2所示。HRRN有一个简单的类似U-NET的体系结构。为了在高分辨率下进行更好的预测，我们进行了一些非平凡的修改。首先，底层特征包含丰富的空间和细节信息，这些信息在恢复清晰的对象边界方面起着至关重要的作用，因此解码器在每个上采样块之前而不是在每个上采样块之后组合编码器特征。此外，我们使用一个两层的快捷块来对齐编码器特征通道，以进行特征融合。其次，为了让网络更加关注细节信息，我们通过一个快捷块将原始输入直接反馈到最后一个卷积层，以产生更好的结果。最后，从图像生成任务中学习，我们对每个卷积层使用谱归一化，以对网络的$Lipschitz$常数添加约束并稳定训练。 </p><p>为了监督LRSCN，我们应该生成trimap的GT表示为$T^{gt}$，它可以表示确定的显着、确定的背景和不确定的区域。如上所述，不确定区域主要存在于对象的边界处。因此，我们使用随机像素数（5、7、9、11、13）在对象边界处擦除和扩展二进制真实图，以生成GT不确定区域。 剩余的前景和背景区域代表明确的显着和背景区域。$T^{gt}$ 定义为：<br>$$<br>\Large T_{gt}(x,y) &#x3D;\begin{cases}<br>2 &amp; T_{gt}(x,y)\in definite salient \<br>0 &amp; T_{gt}(x,y)\in definite background \<br>1 &amp; T_{gt}(x,y)\in uncertain region \<br>\end{cases}<br>$$<br>其中$(x,y)$表示图像上的每个像素位置。如下图所示</p><h3 id="结果可视化"><a href="#结果可视化" class="headerlink" title="结果可视化"></a><center>结果可视化</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN结果可视化.PNG"></div><p>对于trimap的监督我们使用交叉熵损失<br>$$\Large L_{trimap}&#x3D;\dfrac{1}{N}\sum_{i}-log(\dfrac{e^{T_{i} } }{\sum_{j} e^{T_{j} } })$$<br>为保障trimap的准确率，我们在trimap监督的基础上增加了额外显著性监督$L_{saliency}$，总损失是<br>$$\Large L_{LRSCN}&#x3D;L_{saliency}+L_{trimap}$$<br>不使用不确定性损失，因为LRSCN的主要目标是获取足够的语义，而不是精确的边界。</p><p>对于输入的高分辨率图像$I$，让$G^H$表示其背景真值，预测显著性图为$S^H$。我们利用$L_1$损失来比较预测显著性图和背景真值在明确的显著性和背景区域上的绝对差异：<br>$$\Large L_1 &#x3D; \dfrac{1}{E}\sum_{i\in E}|S_{i}^H-G_{i}^H|$$<br>其中$E$表示在$trimap$中被标记为明确显着或背景的像素数，$S_{H}^i$和$G_{H}^i$表示位置$i$处的预测值和$groundtruth$值。<br>由于数据集本身在注释质量方面存在一些问题，因此引入一个不确定损失来解决数据集本身带来的缺陷。使用高斯似然的方式建模不确定性<br>$$\Large p(y|f(x))&#x3D;N(f(x),\delta^2)$$<br>其中$\delta$表示测量的不确定性，$y$是输出，在最大似然推断中，我们将模型的对数似然最大化，表示为:<br>$$\Large logp(y|f(x))\propto-\dfrac{||y-f(x)||}{2\delta^2}-\dfrac{1}{2}log{\delta^2}$$<br>则不确定损失定义为：<br>$$\Large L_{uncertainty}&#x3D;\dfrac{||y-f(x)||^2}{2\delta^2}+\dfrac{1}{2}log\delta^2$$<br>将其转化为像素的表达形式：<br>$$\Large L_{uncertainty}&#x3D;\dfrac{1}{U}\dfrac{||S_{i}^H-G_{i}^H||}{2\delta_{i}^2}+\dfrac{1}{2}log\delta_{i}^2$$</p><h3 id="HRRN损失可视化"><a href="#HRRN损失可视化" class="headerlink" title="HRRN损失可视化"></a><center>HRRN损失可视化</center></h3><div align="center"><img src="/2023/04/11/Disentangled%20High%20Quality%20Salient%20Object%20Detection/HRRN损失可视化.PNG"></div>]]></content>
       
       
       <categories>
@@ -200,6 +264,31 @@
       <url>/2023/04/11/PFSNet/</url>
       
         <content type="html"><![CDATA[<h1 id="Pyramidal-Feature-Shrinking-for-Salient-Object-Detection"><a href="#Pyramidal-Feature-Shrinking-for-Salient-Object-Detection" class="headerlink" title="Pyramidal Feature Shrinking for Salient Object Detection"></a><center>Pyramidal Feature Shrinking for Salient Object Detection</center></h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>提出了一种金字塔型特征收缩网络(PFSNet) ，其目的是将相邻的特征节点按照层层收缩的方式进行聚合，从而使聚合后的特征融合有效的细节和语义，丢弃干扰信息。特别地，提出了一种金字塔收缩译码器(PSD) ，以渐近的方式分层聚合相邻特征。此外，我们提出了一个相邻融合模块(AFM)来进行相邻特征之间的空间增强，以动态加权特征和自适应融合适当的信息。此外，利用基于主干提取特征的尺度感知富集模块(SEM)获取丰富的尺度信息，生成具有扩张卷积的不同初始特征。</p><p>在SOD任务中，高低级特征在功能之间有着很大的差距，SOD算法的关键在于如何充分利用语义和细节信息，在最后两个特征的合并中，具有丰富细节和噪声的低级特征和高级特征相融合，但是当两种特征完全不同时，差异较大的特征直接融合会产生噪声，导致性能的下降.<br><img src="/2023/04/11/PFSNet/PSD.PNG"><br>本文提出了一种金字塔收缩解码器，将相邻特征定义为相似特征，将不相邻的特征定义为孤立特征，PSD仅收缩每层中类似的特征，经过几层收缩后，最时候当前输入的特征得以保留，然后配合AFM融合模块实现增强当前样本的特征并抑制不适合的特征，最后为了充分利用好多尺度信息，配合使用SEM。其对应的架构图如下所示：<br><img src="/2023/04/11/PFSNet/PFSNet架构.PNG"></p><h3 id="AFM模块"><a href="#AFM模块" class="headerlink" title="AFM模块"></a>AFM模块</h3><p>将待合并的特征视为父特征，合并后的特征视为子特征，AFM要实现的两个功能：</p><blockquote><p>（1）子特征应该继承适当当前输入样本的特征，并丢弃不适合的特征</p><p>（2）子特征要和父特征保持相同的尺寸</p></blockquote><p>首先通过逐元素乘法从父特征中提取共享特征，然后通过逐元素加法将共享特征加到父特征中从而增强它们，通过级联运算将两个处理后的特征合并，然后让它们依次通过全局平均化，$1\times1$卷积和softmax函数来生成权重向量，最后对权重向量和特征进行相应的乘法，得到加权后的特征，在特征加权后再使用$3\times3$卷积来压缩与副特征一致的子特征的通道，由于不同的特征具有不同的权重，因此在卷积计算受，具有较小权重的元素很少被子特征继承，通过这种方式，达到子特征继承重要的特征并丢弃更多的噪声的目的。</p><h3 id="PSD模块"><a href="#PSD模块" class="headerlink" title="PSD模块"></a>PSD模块</h3><p>本文首次提出将相邻特征扩展到层次融合。这样，我们就可以利用相邻特征融合的优势，实现多层次的特征融合，避免跳跃式融合操作。此外，从最后一个特征融合的位置来看，它可以直接集成基于 FPN 的框架中包含噪声的低层特征，而 PFSNet 则消除了大量的噪声。<br>PSD的核心目的是为了实现多特征集成，同时尽可能避免跳跃式特征融合的操作，PSD是由AFM组成的结构。合并特征的过程在相邻节点对中进行，首先使用backone提出五层特征$f_1,f_2,f_3,f_4,f_5$,然后使用AFM模块将相邻的特征$f_i,f_{i+1}$得到$f^{‘}_i$依次类推得到最后的特征$f$</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SOD </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SOD </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Salient Object Detection via Dynamic Scale Routing</title>
+      <link href="/2023/04/11/Salient%20Object%20Detection%20via%20Dynamic%20Scale%20Routing/"/>
+      <url>/2023/04/11/Salient%20Object%20Detection%20via%20Dynamic%20Scale%20Routing/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Salient-Object-Detection-via-Dynamic-Scale-Routing"><a href="#Salient-Object-Detection-via-Dynamic-Scale-Routing" class="headerlink" title="Salient Object Detection via Dynamic Scale Routing "></a><center>Salient Object Detection via Dynamic Scale Routing </center></h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>现有的SOD模型的编码器可以通过提取多尺度特征，并通过各种微妙的解码器组合特征，但是这个特征通常是固定的，实际上，在不同场景中配合使用不同的内核大小是更可取的，因此本文提出了一种动态的金字塔卷积模型，动态选择最适合的内核大小，其次提出了一种自适应双向解码器以最好适应基于DPConv的编码器。最重要的的亮点是它能够在特征尺度及其动态集合之间进行路由，使推理过程具有尺度感知能力</p>]]></content>
       
       
       <categories>
@@ -286,11 +375,11 @@
       
         <tags>
             
-            <tag> High-Resolution Vision </tag>
-            
             <tag> Transformer </tag>
             
             <tag> Segmentation </tag>
+            
+            <tag> High-Resolution Vision </tag>
             
         </tags>
       
