@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Categories: 深度学习 | DFSgwb</title>
+        <title>OCR技术(一) | DFSgwb</title>
         <meta name="author" content="GWB" />
         <meta name="description" content="我的技术分享" />
         <meta name="keywords" content="" />
@@ -32,6 +32,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -148,59 +152,20 @@
 
             <transition name="into">
             <div id="main" v-show="!loading">
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/c/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                c++
-            </a>
+                <div class="article">
+    <div>
+        <h1>OCR技术(一)</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/11
         </span>
         
-        
-        
-        <span>
-            <a href="/categories/SOD/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                SOD
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/Liunx/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Liunx
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                深度学习
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="background: #00bcd4">
+        <span class="category">
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -209,120 +174,40 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                信息安全
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #00bcd4">深度学习</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/OCR/" style="color: #ff7d73">OCR</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                默认分类
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/COD/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                COD
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2022/4/7</div>
-            <a href="/2022/04/07/day_one/">
-                <h3>深度学习面试(一)</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        深度学习
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #03a9f4">深度学习</a>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #ff7d73">面试</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <h2 id="Mask-TextSpotter"><a href="#Mask-TextSpotter" class="headerlink" title="Mask TextSpotter"></a>Mask TextSpotter</h2><p>该文受到Mask R-CNN的启发提出了一种用于场景text spotting的可端到端训练的神经网络模型：Mask TextSpotter。与以前使用端到端可训练深度神经网络完成text spotting的方法不同，Mask TextSpotter利用简单且平滑的端到端学习过程，通过语义分割获得精确的文本检测和识别。此外，它在处理不规则形状的文本实例（例如，弯曲文本）方面优于之前的方法。</p>
+<img src="/2023/04/11/OCR/1.PNG">
+
+<p>网络架构由四部分组成，骨干网feature pyramid network (FPN)，文本候选区域生成网络region proposal network (RPN)，文本包围盒回归网络Fast R-CNN，文本实例分割与字符分割网络mask branch。</p>
+<h4 id="训练阶段"><a href="#训练阶段" class="headerlink" title="训练阶段"></a>训练阶段</h4><p>RPN首先生成大量的文本候选区域，然后这些候选区域的RoI特征被送入Fast R-CNN branch和mask branch，由它们去分别生成精确的文本候选包围盒（text candidate boxes）、文本实例分割图（text instance segmentation maps）、字符分割图（character segmentation maps）。它将输入的RoI（固定大小$16\times64$）经过4层卷积层和1层反卷积层，生成38通道的图（大小$32\times128$），包括一个全局文本实例图——它给出了文本区域的精确定位，无论文本排列的形状如何它都能分割出来，还包括36个字符图（对应于字符0～9，A～Z），一个字符背景图（排除字符后的的所有背景区域），在后处理阶段字符背景图会被用到。</p>
+<p>推理阶段mask branch的输入RoIs来自于Fast R-CNN的输出。<br>推理的过程如下：首先输入一幅测试图像，通过Fast R-CNN获取候选文本区域，然后通过NMS（非极大抑制）过滤掉冗余的候选区域，剩下的候选区域resize后送入mask branch，得到全局文本实例图，和字符图。通过计算全局文本实例图的轮廓可以直接得到包围文本的多边形，通过在字符图上使用提出的pixel voting方法生成字符序列。<br>如上图所示，Pixel voting方法根据字符背景图中每一个联通区域，计算每一字符层相应区域的平均字符概率，即得到了识别的结果。<br>为了在识别出来的字符序列中找到最佳匹配单词，作者在编辑距离（Edit Distance）基础上发明了加权编辑距离（Weighted Edit Distance）</p>
+
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2022/4/7</div>
-            <a href="/2022/04/07/day_two/">
-                <h3>深度学习面试(二)</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        深度学习
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #00a596">深度学习</a>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #03a9f4">面试</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
-    </div>
+    
+    
+    
+    
+    
     
 </div>
 
@@ -330,7 +215,7 @@
     <div align="center">
         <strong align="center">本文作者：</strong>GWB</a> 
         <br>
-        <strong align="center">当前时间：</strong>2023-04-18 15:04:02</a>
+        <strong align="center">当前时间：</strong>2023-04-18 15:04:00</a>
         <br>
         <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
         <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
@@ -374,6 +259,12 @@
         <script src='/js/cursor.min.js'></script>-->
         <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
         <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
         
     </body>
 </html>
