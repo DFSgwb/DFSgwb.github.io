@@ -388,31 +388,6 @@
     
     
     <entry>
-      <title>Zoom In and Out:A Mixed-scale Triplet Network for Camouflaged Object Detection</title>
-      <link href="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
-      <url>/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Zoom-In-and-Out-A-Mixed-scale-Triplet-Network-for-Camouflaged-Object-Detection"><a href="#Zoom-In-and-Out-A-Mixed-scale-Triplet-Network-for-Camouflaged-Object-Detection" class="headerlink" title="Zoom In and Out:A Mixed-scale Triplet Network for Camouflaged Object Detection"></a>Zoom In and Out:A Mixed-scale Triplet Network for Camouflaged Object Detection</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>最近提出的伪装目标检测（COD）试图分割视觉上融入周围环境的目标，这在现实场景中是极其复杂和困难的。除了伪装对象与其背景之间具有很高的内在相似性外，这些对象通常在尺度上具有多样性，外观模糊，甚至被严重遮挡。为了解决这些问题，我们提出了一种混合比例的三重网络ZoomNet，它模仿人类在观察模糊图像时的行为，即放大和缩小。具体而言，我们的ZoomNet采用缩放策略，通过设计的尺度积分单元和分层混合尺度单元学习区分性混合尺度语义，充分挖掘候选对象和背景环境之间的细微线索。此外，考虑到来自不可区分纹理的不确定性和模糊性，我们构造了一个简单而有效的正则化约束，即不确定性感知损失，以促进模型在候选区域准确地生成具有更高置信度的预测。我们提出的高度任务友好的模型在四个公共数据集上始终优于现有的23种最先进的方法。此外，与最新的前沿模型相比，该模型在SOD任务上的优异性能也验证了该模型的有效性和通用性。</p><h2 id="COD任务难点"><a href="#COD任务难点" class="headerlink" title="COD任务难点"></a>COD任务难点</h2><blockquote><ul><li>如何在外观不明显和各种尺度的情况下准确定位伪装对象</li><li>如何抑制来自背景的明显干扰，更可靠地推断伪装对象</li></ul></blockquote><p>为了准确地找到场景中模糊或伪装的对象，人类可以尝试通过放大和缩小图像来参考和比较不同尺度下形状和外观的变化，这种行为模式为本文提供思路，可以通过模拟人类放大和缩小策略来识别伪装的物体。本文中提出一种混合规模的三重网络$ZoomNet$。为了精准定位目标，我们使用尺度空间理论来模拟放大和缩小策略，为此设计了两个关键模块</p><blockquote><ul><li>规模集成单元(SIU):筛选和聚合特定尺度的特征</li><li>分层混合规模单元(HMU):重组和增强混合尺度特征</li></ul></blockquote><p>此结构能够在混合尺度下挖掘出物体和背景之间准确而微妙的语义线索，并产生准确的预测，为了实现效率和有效性的平衡，模型采用共享权重策略，为增强模型在复杂场景下的泛化能力，设计了一个不确定性感知损失(UAL)来指导模型训练，模型结构图：</p><div align="center"><img src="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/image\ZoomNet可视化.PNG"></div><h2 id="网络结构图"><a href="#网络结构图" class="headerlink" title="网络结构图"></a>网络结构图</h2><div align="center"><img src="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/image\ZoomNet.png"></div>SIU：使用一个尺度作为主尺度，另外两个尺度作为辅助，利用共享的三元组特征编码器来提取不同尺度的特征并将它们馈送到尺度合并层。对于高尺度，使用最大池化加平均池化的混合结构进行下采样，这有助于在高分辨率特征中保持伪装对象的有效和多样性响应。对于低尺度使用双线性插值直接向上采样，然后将这些特征输入注意力生成器，并通过一系列卷积层计算出三通道特征图。然后再softmax激活层之后，可以获得对应于每个尺度的注意力映射计算权重为：<div align="center"><img src="/2023/04/11/%E6%B7%B7%E5%90%88%E6%AF%94%E4%BE%8B%E4%B8%89%E5%B1%82%E9%87%8D%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E4%BC%AA%E8%A3%85%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/image\SIU.png"></div>$$\Large A_i=softmax(\Psi[U(f^{0.5}_i,f^{1.0}_i,D(f^{1.5}_i)],\phi)$$$$\Large f_i=A^{0.5}_i\cdot U(f^{0.5}_i)+A^{1.0}_i\cdot f^{1.0}_i+A^{1.5}_i\cdot D(f^{1.5}_i)$$]]></content>
-      
-      
-      <categories>
-          
-          <category> COD </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> COD </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Multi-Scale High-Resolution Vision Transformer for Semantic Segmentation</title>
       <link href="/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/"/>
       <url>/2023/04/11/%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E6%B5%8B%E7%9A%84%E9%87%91%E5%AD%97%E5%A1%94%E5%AB%81%E6%8E%A5%E6%A8%A1%E5%9E%8B/</url>
@@ -459,6 +434,31 @@
             <tag> 深度学习 </tag>
             
             <tag> OCR </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Zoom In and Out:A Mixed-scale Triplet Network for Camouflaged Object Detection</title>
+      <link href="/2023/04/11/Zoom/"/>
+      <url>/2023/04/11/Zoom/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Zoom-In-and-Out-A-Mixed-scale-Triplet-Network-for-Camouflaged-Object-Detection"><a href="#Zoom-In-and-Out-A-Mixed-scale-Triplet-Network-for-Camouflaged-Object-Detection" class="headerlink" title="Zoom In and Out:A Mixed-scale Triplet Network for Camouflaged Object Detection"></a>Zoom In and Out:A Mixed-scale Triplet Network for Camouflaged Object Detection</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>最近提出的伪装目标检测（COD）试图分割视觉上融入周围环境的目标，这在现实场景中是极其复杂和困难的。除了伪装对象与其背景之间具有很高的内在相似性外，这些对象通常在尺度上具有多样性，外观模糊，甚至被严重遮挡。为了解决这些问题，我们提出了一种混合比例的三重网络ZoomNet，它模仿人类在观察模糊图像时的行为，即放大和缩小。具体而言，我们的ZoomNet采用缩放策略，通过设计的尺度积分单元和分层混合尺度单元学习区分性混合尺度语义，充分挖掘候选对象和背景环境之间的细微线索。此外，考虑到来自不可区分纹理的不确定性和模糊性，我们构造了一个简单而有效的正则化约束，即不确定性感知损失，以促进模型在候选区域准确地生成具有更高置信度的预测。我们提出的高度任务友好的模型在四个公共数据集上始终优于现有的23种最先进的方法。此外，与最新的前沿模型相比，该模型在SOD任务上的优异性能也验证了该模型的有效性和通用性。</p><h2 id="COD任务难点"><a href="#COD任务难点" class="headerlink" title="COD任务难点"></a>COD任务难点</h2><blockquote><ul><li>如何在外观不明显和各种尺度的情况下准确定位伪装对象</li><li>如何抑制来自背景的明显干扰，更可靠地推断伪装对象</li></ul></blockquote><p>为了准确地找到场景中模糊或伪装的对象，人类可以尝试通过放大和缩小图像来参考和比较不同尺度下形状和外观的变化，这种行为模式为本文提供思路，可以通过模拟人类放大和缩小策略来识别伪装的物体。本文中提出一种混合规模的三重网络$ZoomNet$。为了精准定位目标，我们使用尺度空间理论来模拟放大和缩小策略，为此设计了两个关键模块</p><blockquote><ul><li>规模集成单元(SIU):筛选和聚合特定尺度的特征</li><li>分层混合规模单元(HMU):重组和增强混合尺度特征</li></ul></blockquote><p>此结构能够在混合尺度下挖掘出物体和背景之间准确而微妙的语义线索，并产生准确的预测，为了实现效率和有效性的平衡，模型采用共享权重策略，为增强模型在复杂场景下的泛化能力，设计了一个不确定性感知损失(UAL)来指导模型训练，模型结构图：</p><div align="center"><img src="/2023/04/11/Zoom/ZoomNet可视化.PNG"></div><h2 id="网络结构图"><a href="#网络结构图" class="headerlink" title="网络结构图"></a>网络结构图</h2><div align="center"><img src="/2023/04/11/Zoom/ZoomNet.png"></div><p>SIU：使用一个尺度作为主尺度，另外两个尺度作为辅助，利用共享的三元组特征编码器来提取不同尺度的特征并将它们馈送到尺度合并层。对于高尺度，使用最大池化加平均池化的混合结构进行下采样，这有助于在高分辨率特征中保持伪装对象的有效和多样性响应。对于低尺度使用双线性插值直接向上采样，然后将这些特征输入注意力生成器，并通过一系列卷积层计算出三通道特征图。然后再softmax激活层之后，可以获得对应于每个尺度的注意力映射计算权重为：</p><div align="center"><img src="/2023/04/11/Zoom/SIU.png"></div><div align="center">$\Large A_i=softmax(\Psi[U(f^{0.5}_i,f^{1.0}_i,D(f^{1.5}_i)],\phi)$</div><br><div align="center">$\Large f_i=A^{0.5}_i\cdot U(f^{0.5}_i)+A^{1.0}_i\cdot f^{1.0}_i+A^{1.5}_i\cdot D(f^{1.5}_i)$</div>]]></content>
+      
+      
+      <categories>
+          
+          <category> COD </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> COD </tag>
             
         </tags>
       
