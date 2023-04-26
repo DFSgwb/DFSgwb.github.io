@@ -35,6 +35,37 @@
     
     
     <entry>
+      <title>leetcode2418</title>
+      <link href="/2023/04/25/leetcode1031/"/>
+      <url>/2023/04/25/leetcode1031/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><blockquote><p>给你一个整数数组 nums 和两个整数 firstLen 和 secondLen，请你找出并返回两个非重叠 子数组 中元素的最大和，长度分别为 firstLen 和 secondLen.长度为 firstLen 的子数组可以出现在长为 secondLen 的子数组之前或之后，但二者必须是不重叠的。子数组是数组的一个 连续 部分。</p></blockquote><h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>示例1：</p><blockquote><p>输入：nums&#x3D;[0,6,5,2,2,5,1,9,4], firstLen&#x3D;1, secondLen&#x3D;2<br>输出：20<br>解释：子数组的一种选择中，[9]长度为1，[6,5]长度为2。</p></blockquote><p>示例2:</p><blockquote><p>输入：nums&#x3D;[3,8,1,3,2,1,8,9,0], firstLen&#x3D;3, secondLen&#x3D;2<br>输出：29<br>解释：子数组的一种选择中，[3,8,1]长度为3，[8,9]长度为 2。</p></blockquote><p>示例3:</p><blockquote><p>输入：nums&#x3D;[2,1,5,6,0,9,5,0,3,8], firstLen &#x3D; 4, secondLen &#x3D; 3<br>输出：31<br>解释：子数组的一种选择中[5,6,0,9]长度为 4，[0,3,8]长度为 3。</p></blockquote><p>提示：</p><blockquote><ul><li>1 &lt;&#x3D; firstLen, secondLen &lt;&#x3D; 1000</li><li>2 &lt;&#x3D; firstLen + secondLen &lt;&#x3D; 1000</li><li>firstLen + secondLen &lt;&#x3D; nums.length &lt;&#x3D; 1000</li><li>0 &lt;&#x3D; nums[i] &lt;&#x3D; 1000</li></ul></blockquote><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>前置知识：前缀和</p><p>但对于数组$nums$，定义前缀和$S[0]&#x3D;0,S[i+1]&#x3D;\sum\limits_{j&#x3D;0}^i nums[j]$,由此不难得出$S[i+1]&#x3D;S[i]+nums[i]$。</p><p>通过前缀和我们可以把子数组的元素和转化为两个前缀和的差，也就是<br>$$\sum\limits_{j&#x3D;left}^{right}nums[j]&#x3D;\sum\limits_{j&#x3D;0}^{right}nums[j]-\sum\limits_{j&#x3D;0}^{left-1}nums[j]&#x3D;S[right+1]-S[left]$$</p><p>解决思路：<br>设长度为firstLen的子数组为a，长度为secondLen的子数组为b，先解决左a右b的情况，然后同理处理右a左b的情况。</p><img src="/2023/04/25/leetcode1031/1.PNG"><p>代码实现</p><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;class Solution&#123;public:    int maxSumTwoNoOverlap(vector&lt;int&gt; &amp;nums, int firstLen, int secondLen)    &#123;        int n = nums.size(), ans = 0, s[n + 1];        s[0] = 0;        // 计算nums的前缀和        partial_sum(nums.begin(), nums.end(), s + 1);        int maxnumA = 0, maxnumB = 0;        for (int i = firstLen + secondLen; i &lt;= n; i++)        &#123;            maxnumA = max(maxnumA, s[i - secondLen] - s[i - secondLen - firstLen]);            maxnumB = max(maxnumB, s[i - firstLen] - s[i - firstLen - secondLen]);            ans = max(ans, max(maxnumA + s[i] - s[i - secondLen], maxnumB + s[i] - s[i - firstLen]));        &#125;        return ans;    &#125;&#125;;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> ACM </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Pyramid Grafting Network for One-Stage High Resolution Saliency Detection</title>
       <link href="/2023/04/18/PGNet/"/>
       <url>/2023/04/18/PGNet/</url>
