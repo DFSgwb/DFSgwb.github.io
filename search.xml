@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>leetcode 1048</title>
+      <link href="/2023/04/27/leetcode1048/"/>
+      <url>/2023/04/27/leetcode1048/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><blockquote><p>给出一个单词数组 words ，其中每个单词都由小写英文字母组成，如果我们可以不改变其他字符的顺序 ，在wordA 的任何地方添加 恰好一个 字母使其变成wordB，那么我们认为wordA是wordB的前身。例如”abc”是”abac”的前身，而”cba”不是”bcad”的前身。词链式单词[word_1,word_2, …, word_k]组成的序列，k&gt;&#x3D;1，其中word1是word2的前身，word2是word3的前身，依此类推。一个单词通常是k&#x3D;&#x3D;1的单词链，从给定单词列表words中选择单词组成词链，返回词链的最长可能长度 </p></blockquote><h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>示例1：</p><blockquote><p>输入：words &#x3D; [“a”,”b”,”ba”,”bca”,”bda”,”bdca”]<br>输出：4<br>解释：最长单词链之一为 [“a”,”ba”,”bda”,”bdca”]</p></blockquote><p>示例2:</p><blockquote><p>输入：words &#x3D; [“xbc”,”pcxbcf”,”xb”,”cxbc”,”pcxbc”]<br>输出：5<br>解释：所有的单词都可以放入单词链 [“xb”, “xbc”, “cxbc”, “pcxbc”, “pcxbcf”].</p></blockquote><p>示例3:</p><blockquote><p>输入：words &#x3D; [“abcd”,”dbqca”]<br>输出：1<br>解释：字链[“abcd”]是最长的字链之一。[“abcd”，”dbqca”]不是一个有效的单词链，因为字母的顺序被改变了。</p></blockquote><p>提示：</p><blockquote><ul><li>1 &lt;&#x3D; words.length &lt;&#x3D; 1000</li><li>1 &lt;&#x3D; words[i].length &lt;&#x3D; 16</li><li>words[i] 仅由小写英文字母组成</li></ul></blockquote><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;class Solution&#123;public:    int longestStrChain(vector&lt;string&gt; &amp;words)    &#123;        // 首先对words进行排个序，按照长度排序        sort(words.begin(), words.end(), [](const auto &amp;a, const auto &amp;b)             &#123; return a.length() &lt; b.length(); &#125;);        int ans = 0;        unordered_map&lt;string, int&gt; mp;        for (auto &amp;s : words)        &#123;            int res = 0;            for (int i = 0; i &lt; s.length(); ++i)            &#123;                auto it = mp.find(s.substr(0, i) + s.substr(i + 1));                if (it != mp.end())                &#123;                    res = max(res, it-&gt;second);                &#125;            &#125;            ans = max(ans, mp[s] = res + 1);        &#125;        return ans;    &#125;&#125;;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> ACM </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>leetcode 1031</title>
       <link href="/2023/04/25/leetcode1031/"/>
       <url>/2023/04/25/leetcode1031/</url>
@@ -35,7 +66,7 @@
     
     
     <entry>
-      <title>leetcode2418</title>
+      <title>leetcode 2418</title>
       <link href="/2023/04/25/leetcode2418/"/>
       <url>/2023/04/25/leetcode2418/</url>
       

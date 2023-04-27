@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>OCR技术(一) | DFSgwb</title>
+        <title>leetcode 1048 | DFSgwb</title>
         <meta name="author" content="GWB" />
         <meta name="description" content="我的技术分享" />
         <meta name="keywords" content="" />
@@ -154,22 +154,22 @@
             <div id="main" v-show="!loading">
                 <div class="article">
     <div>
-        <h1>OCR技术(一)</h1>
+        <h1>leetcode 1048</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/11
+            2023/4/27
         </span>
         
         <span class="category">
-            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+            <a href="/categories/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                人工智能
+                每日一题
             </a>
         </span>
         
@@ -181,12 +181,22 @@
             
             <span class="tag">
                 
-                <a href="/tags/OCR/" style="color: #03a9f4">OCR</a>
+                <a href="/tags/C/" style="color: #ff7d73">C++</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="color: #00a596">深度学习</a>
+                <a href="/tags/ACM/" style="color: #00a596">ACM</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%88%B7%E9%A2%98/" style="color: #ff7d73">刷题</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/leetcode/" style="color: #03a9f4">leetcode</a>
             </span>
             
         </span>
@@ -194,12 +204,58 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="Mask-TextSpotter"><a href="#Mask-TextSpotter" class="headerlink" title="Mask TextSpotter"></a>Mask TextSpotter</h2><p>该文受到Mask R-CNN的启发提出了一种用于场景text spotting的可端到端训练的神经网络模型：Mask TextSpotter。与以前使用端到端可训练深度神经网络完成text spotting的方法不同，Mask TextSpotter利用简单且平滑的端到端学习过程，通过语义分割获得精确的文本检测和识别。此外，它在处理不规则形状的文本实例（例如，弯曲文本）方面优于之前的方法。</p>
-<img src="/2023/04/11/OCR/1.PNG">
-
-<p>网络架构由四部分组成，骨干网feature pyramid network (FPN)，文本候选区域生成网络region proposal network (RPN)，文本包围盒回归网络Fast R-CNN，文本实例分割与字符分割网络mask branch。</p>
-<h4 id="训练阶段"><a href="#训练阶段" class="headerlink" title="训练阶段"></a>训练阶段</h4><p>RPN首先生成大量的文本候选区域，然后这些候选区域的RoI特征被送入Fast R-CNN branch和mask branch，由它们去分别生成精确的文本候选包围盒（text candidate boxes）、文本实例分割图（text instance segmentation maps）、字符分割图（character segmentation maps）。它将输入的RoI（固定大小$16\times64$）经过4层卷积层和1层反卷积层，生成38通道的图（大小$32\times128$），包括一个全局文本实例图——它给出了文本区域的精确定位，无论文本排列的形状如何它都能分割出来，还包括36个字符图（对应于字符0～9，A～Z），一个字符背景图（排除字符后的的所有背景区域），在后处理阶段字符背景图会被用到。</p>
-<p>推理阶段mask branch的输入RoIs来自于Fast R-CNN的输出。<br>推理的过程如下：首先输入一幅测试图像，通过Fast R-CNN获取候选文本区域，然后通过NMS（非极大抑制）过滤掉冗余的候选区域，剩下的候选区域resize后送入mask branch，得到全局文本实例图，和字符图。通过计算全局文本实例图的轮廓可以直接得到包围文本的多边形，通过在字符图上使用提出的pixel voting方法生成字符序列。<br>如上图所示，Pixel voting方法根据字符背景图中每一个联通区域，计算每一字符层相应区域的平均字符概率，即得到了识别的结果。<br>为了在识别出来的字符序列中找到最佳匹配单词，作者在编辑距离（Edit Distance）基础上发明了加权编辑距离（Weighted Edit Distance）</p>
+        <h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><blockquote>
+<p>给出一个单词数组 words ，其中每个单词都由小写英文字母组成，如果我们可以不改变其他字符的顺序 ，在wordA 的任何地方添加 恰好一个 字母使其变成wordB，那么我们认为wordA是wordB的前身。例如”abc”是”abac”的前身，而”cba”不是”bcad”的前身。词链式单词[word_1,word_2, …, word_k]组成的序列，k&gt;&#x3D;1，其中word1是word2的前身，word2是word3的前身，依此类推。一个单词通常是k&#x3D;&#x3D;1的单词链，从给定单词列表words中选择单词组成词链，返回词链的最长可能长度 </p>
+</blockquote>
+<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>示例1：</p>
+<blockquote>
+<p>输入：words &#x3D; [“a”,”b”,”ba”,”bca”,”bda”,”bdca”]<br>输出：4<br>解释：最长单词链之一为 [“a”,”ba”,”bda”,”bdca”]</p>
+</blockquote>
+<p>示例2:</p>
+<blockquote>
+<p>输入：words &#x3D; [“xbc”,”pcxbcf”,”xb”,”cxbc”,”pcxbc”]<br>输出：5<br>解释：所有的单词都可以放入单词链 [“xb”, “xbc”, “cxbc”, “pcxbc”, “pcxbcf”].</p>
+</blockquote>
+<p>示例3:</p>
+<blockquote>
+<p>输入：words &#x3D; [“abcd”,”dbqca”]<br>输出：1<br>解释：字链[“abcd”]是最长的字链之一。[“abcd”，”dbqca”]不是一个有效的单词链，因为字母的顺序被改变了。</p>
+</blockquote>
+<p>提示：</p>
+<blockquote>
+<ul>
+<li>1 &lt;&#x3D; words.length &lt;&#x3D; 1000</li>
+<li>1 &lt;&#x3D; words[i].length &lt;&#x3D; 16</li>
+<li>words[i] 仅由小写英文字母组成</li>
+</ul>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+class Solution
+&#123;
+public:
+    int longestStrChain(vector&lt;string&gt; &amp;words)
+    &#123;
+        // 首先对words进行排个序，按照长度排序
+        sort(words.begin(), words.end(), [](const auto &amp;a, const auto &amp;b)
+             &#123; return a.length() &lt; b.length(); &#125;);
+        int ans = 0;
+        unordered_map&lt;string, int&gt; mp;
+        for (auto &amp;s : words)
+        &#123;
+            int res = 0;
+            for (int i = 0; i &lt; s.length(); ++i)
+            &#123;
+                auto it = mp.find(s.substr(0, i) + s.substr(i + 1));
+                if (it != mp.end())
+                &#123;
+                    res = max(res, it-&gt;second);
+                &#125;
+            &#125;
+            ans = max(ans, mp[s] = res + 1);
+        &#125;
+        return ans;
+    &#125;
+&#125;;
+</code></pre>
 
     </div>
     
@@ -215,7 +271,7 @@
     <div align="center">
         <strong align="center">本文作者：</strong>GWB</a> 
         <br>
-        <strong align="center">当前时间：</strong>2023-04-27 17:04:98</a>
+        <strong align="center">当前时间：</strong>2023-04-27 17:04:72</a>
         <br>
         <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
         <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
