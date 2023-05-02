@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>leetcode 970</title>
+      <link href="/2023/05/02/leetcode970/"/>
+      <url>/2023/05/02/leetcode970/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><blockquote><p>给定三个整数x 、y和bound,返回值小于或等于bound的所有强整数 组成的列表 。如果某一整数可以表示为 $x^i + y^j$ ，其中整数 i &gt;&#x3D; 0 且 j &gt;&#x3D; 0，那么我们认为该整数是一个 强整数 。你可以按任何顺序返回答案。在你的回答中，每个值 最多 出现一次。 </p></blockquote><h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>示例1：</p><blockquote><p>输入：x &#x3D; 2, y &#x3D; 3, bound &#x3D; 10<br>输出：[2,3,4,5,7,9,10]<br>解释：2 &#x3D; 20 + 30<br>3 &#x3D; 21 + 30<br>4 &#x3D; 20 + 31<br>5 &#x3D; 21 + 31<br>7 &#x3D; 22 + 31<br>9 &#x3D; 23 + 30<br>10 &#x3D; 20 + 32</p></blockquote><p>示例2:</p><blockquote><p>输入：x &#x3D; 3, y &#x3D; 5, bound &#x3D; 15<br>输出：[2,4,6,8,10,14]</p></blockquote><p>提示：</p><blockquote><ul><li>1 &lt;&#x3D; x, y &lt;&#x3D; 100</li><li>0 &lt;&#x3D; bound &lt;&#x3D; $10^6$</li></ul></blockquote><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><pre><code class="cpp">#include &lt;bits/stdc++.h&gt;using namespace std;//使用set暴力循环class Solution&#123;public:    vector&lt;int&gt; powerfulIntegers(int x, int y, int bound)    &#123;        vector&lt;int&gt; ans;        unordered_set&lt;int&gt; res;        for (int i = 1; i &lt;= bound; i *= x)        &#123;            for (int j = 1; j + i &lt;= bound; j *= y)            &#123;                res.insert(i + j);                if (y == 1)                    break;            &#125;            if (x == 1)                break;        &#125;        for (int x : res)            ans.push_back(x);        sort(ans.begin(), ans.end());        return ans;    &#125;&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> ACM </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>leetcode 1048</title>
       <link href="/2023/04/27/leetcode1048/"/>
       <url>/2023/04/27/leetcode1048/</url>
