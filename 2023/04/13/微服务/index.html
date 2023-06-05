@@ -181,12 +181,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="color: #03a9f4">微服务</a>
+                <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="color: #ff7d73">微服务</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Java/" style="color: #00a596">Java</a>
+                <a href="/tags/Java/" style="color: #ffa2c4">Java</a>
             </span>
             
             <span class="tag">
@@ -298,12 +298,57 @@ API网关的作用
 <h2 id="微服务架构设计原则"><a href="#微服务架构设计原则" class="headerlink" title="微服务架构设计原则"></a>微服务架构设计原则</h2><h3 id="业务架构"><a href="#业务架构" class="headerlink" title="业务架构"></a>业务架构</h3><p>产品经理和运营人员主要负责</p>
 <h3 id="逻辑架构"><a href="#逻辑架构" class="headerlink" title="逻辑架构"></a>逻辑架构</h3><p>1.聚合微服务设计模式：沿X轴或者Z轴独立扩展，业务每个服务都用自己独立的缓存和数据库</p>
 <div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/聚合微服务架构设计模式.PNG"></div>
-2.代理微服务设计模式：聚合模式的一个变种，客户端不负责数据集合，只会按业务需求的差别调用不同的微服务。
+
+<p>2.代理微服务设计模式：聚合模式的一个变种，客户端不负责数据集合，只会按业务需求的差别调用不同的微服务。</p>
 <div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/代理微服务架构设计模式.PNG"></div>
-3.链式微服务设计模式：缺点服务使用同步通信模式，在整个链式调用完成之前，客户端会一直堵塞，链路过长，会导致客户端请求超时。
+
+<p>3.链式微服务设计模式：缺点服务使用同步通信模式，在整个链式调用完成之前，客户端会一直堵塞，链路过长，会导致客户端请求超时。</p>
 <div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/链式微服务架构设计模式.PNG"></div>
 
-<h3 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h3><h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3>
+<p>4.分支微服务设计模式：聚合模式的扩展，允许同时调用两个微服务链</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/分支微服务.PNG"></div>
+
+<p>5.数据共享微服务设计模式：在单体应用到微服务架构的过渡阶段，可以使用数据共享微服务设计模式，部分微服务可能会共享缓存和数据库存储，不过只有在两个服务之间存在强耦合关系时才可以，对于基于微服务的新建应用而言，严禁使用这个模式来组织服务</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/数据共享微服务.PNG"></div>
+
+<p>6.异步消息传递微服务设计模式：REST是基于同步机制的，会造成调用链阻塞，使用消息队列代替REST请求&#x2F;响应。</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/异步消息传递微服务.PNG"></div>
+
+<h3 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h3><p>技术架构简单的来说就是业务代码架构+业务数据设计+各种中间件+各种技术框架</p>
+<p>胶水代码：用来将服务与单体应用集成起来，胶水代码可以通过以下三种方式访问单体应用中的数据</p>
+<blockquote>
+<p>通过调用单体应用提供的远程API<br>直接访问单体应用的数据库<br>保存一份数据副本，和单体数据库保存同步。</p>
+</blockquote>
+<h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3><h2 id="微服务中的技术选型"><a href="#微服务中的技术选型" class="headerlink" title="微服务中的技术选型"></a>微服务中的技术选型</h2><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务架构中的主要技术框架选型.PNG"></div>
+
+<h3 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h3><p>Dubbo是阿里巴巴公司开源的一个高性能优秀的服务框架，使得应用可通过高性能的RPC实现服务的输出和输入功能，可以和Spring框架无缝集成</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/Dubbo架构.jpg"></div>
+各组件之间的调用关系：Consumer表示服务的消费者，Provider表示服务的提供者，Container表示服务容器。
+
+<blockquote>
+<p>服务器负责启动，加载，运行提供者<br>提供者在启动时向注册中心注册自己提供的服务<br>消费者其中是向注册中心订阅自己所需的服务<br>注册中心返回提供者地址列表给消费者，如果有变更，注册中心将基于TCP长连接推送变更数据给消费者。<br>消费者从远程结构中调用远程接口，Dubbo会基于负载均衡算法选取一个提供者进行调用，如果调用失败就换一个<br>消费者和提供者在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心，可以在Dubbo的可视化界面上看到。</p>
+</blockquote>
+<p>Dubbo中的默认负载均衡算法</p>
+<blockquote>
+<p>1.Random LoadBalance:随机，按权重设置随机概率。 在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后分布也比较均匀，有利于动态调整提供者权重。<br>2.RoundRobin LoadBalance：轮循，按每台机器相应速度的权重设置轮循比率。 存在慢提供者累积请求的问题，比如，某台机器因自身性能问题导致响应很慢，但没有故障，当请求调到这台机器时就会卡住，久而久之，所有的请求都会卡在这台机器上。<br>LeastActive LoadBalance：最少活跃调用数。 根据不同服务生产者的当前调用数统计分发，可以使当前连接数较多的提供者收到更少的请求，而使当前连接数较少的提供者优先收到更多的的请求。<br>ConsistentHash LoadBalance：一致性Hash，相同参数的请求总是会发送到同一提供者处。 当某一台提供者机器发生故障时，原本发往该提供者的请求会基于虚拟节点平摊到其他提供者处，不会引起剧烈变动。</p>
+</blockquote>
+<p>现有Dubbo来实现微服务缺少的功能：</p>
+<blockquote>
+<p>分布式配置：要配合DiamondX，Disconf，Apollo来实现<br>服务跟踪：可以使用Pinpoint，CAT，Zipkin来实现<br>批量任务：可以使用开源的Elastic-job来实现</p>
+</blockquote>
+<p>Dubbo本身RPC框架的缺失：</p>
+<blockquote>
+<p>服务提供方与调用方的接口依赖性太强<br>服务对平台敏感，难以简单复用</p>
+</blockquote>
+<h2 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h2><p>太强了的全家桶，后面再单独学</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/1.PNG"></div>
+
+<h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><p>主流的配置中心性能对比</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/2.PNG"></div>
+
+<h2 id="请求链路追踪"><a href="#请求链路追踪" class="headerlink" title="请求链路追踪"></a>请求链路追踪</h2><p>请求链路追踪(Link Tracking)或者又叫应用性能管理(APM,Application performance Management)，主要用于在分布式系统中实现细颗粒度的请求链追踪和监控。</p>
+<p>主流的APM性能对比</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/3.PNG"></div>
     </div>
     
     
@@ -318,7 +363,7 @@ API网关的作用
     <div align="center">
         <strong align="center">本文作者：</strong>GWB</a> 
         <br>
-        <strong align="center">当前时间：</strong>2023-06-05 11:06:05</a>
+        <strong align="center">当前时间：</strong>2023-06-05 18:06:75</a>
         <br>
         <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
         <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
