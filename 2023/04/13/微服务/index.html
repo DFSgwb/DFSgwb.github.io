@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>微服务 | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>微服务</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/13
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                后端开发
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="color: #03a9f4">微服务</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Java/" style="color: #00a596">Java</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #03a9f4">后端</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h3 id="传统单体架构与微服务架构"><a href="#传统单体架构与微服务架构" class="headerlink" title="传统单体架构与微服务架构"></a>传统单体架构与微服务架构</h3><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务架构.PNG"></div> 
+微服务架构的优点
+
+<blockquote>
+<ul>
+<li>复杂度可控：将应用分解为一个个微小应用，规避了无止境的复杂度累计</li>
+<li>可独立部署：每个微服务具备独立运行的进程，所以都可以独立部署</li>
+<li>技术选型灵活</li>
+<li>易于容错</li>
+<li>易于扩展</li>
+<li>功能特定</li>
+<li>功能特定</li>
+</ul>
+</blockquote>
+<p>微服务架构的不足</p>
+<p>1.开发人员必须处理创建分布式系统的复杂性</p>
+<blockquote>
+<ul>
+<li>开发工具是面向构建传统的单体应用程序的，不为开发分布式应用程序提供全面功能上的支持</li>
+<li>测试更加困难。在微服务架构中，服务数量众多，每个服务都是独立的业务单元，服务主要通过接口进行交互，如何保证依赖的正常，是测试面临的主要挑战。</li>
+<li>开发人员必须实现服务之间的通信机制</li>
+<li>实现用例跨多个服务时，需要面对使用分布式事务管理的困难</li>
+<li>实现阔多个服务的用例，需要团队之间进行仔细的协调</li>
+</ul>
+</blockquote>
+<p>2.部署的复杂性</p>
+<p>3.增加内存的消耗</p>
+<p>微服务与SOA之间的区别</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务与SOA.PNG"></div>
+
+<h3 id="软件架构的4-1视图"><a href="#软件架构的4-1视图" class="headerlink" title="软件架构的4+1视图"></a>软件架构的4+1视图</h3><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/4+1视图.PNG"></div>
+
+<h3 id="微服务架构的中间通信"><a href="#微服务架构的中间通信" class="headerlink" title="微服务架构的中间通信"></a>微服务架构的中间通信</h3><p>1.交互方式</p>
+<blockquote>
+<ul>
+<li>1.一对一：每个客户端请求由一个服务实例来处理</li>
+<li>2.一对多：每个客户端请求由多个服务实例来处理</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>1.同步模式：客户端请求需要服务端实时响应，客户端等待响应时可能导致堵塞</li>
+<li>2。异步模式：客户端请求不会阻塞进程，服务端的响应可以是非实时的</li>
+</ul>
+</blockquote>
+<p>一对一的交互类型：</p>
+<blockquote>
+<ul>
+<li>1.请求&#x2F;响应：一个客户端向服务端发起请求，等待响应，客户端期望服务端很快就会发送响应，在一个基于线程的应用中，等待过程可能造成线程阻塞，这样的方式会导致服务的紧耦合。</li>
+<li>2.异步请求&#x2F;响应，客户端发送请求到服务端，服务端异步响应请求，不会发生阻塞进程，因为五福短不会立即反应。</li>
+<li>3.单向通知：客户端的请求发送到服务端，但是不期望服务端做出任何响应。</li>
+</ul>
+</blockquote>
+<p>一对多的交互方式：</p>
+<blockquote>
+<ul>
+<li>1.发布&#x2F;订阅方式：客户端发布通知消息，被零个或多个感兴趣的服务订阅</li>
+<li>2.发布&#x2F;异步响应方式:客户端发布请求消息，然后等待从感兴趣的服务发回的响应</li>
+</ul>
+</blockquote>
+<h3 id="REST架构六大原则"><a href="#REST架构六大原则" class="headerlink" title="REST架构六大原则"></a>REST架构六大原则</h3><p>1.C-S架构</p>
+<blockquote>
+<p>数据存储在Server端，Client端只需使用就行。两端彻底分离的好处使client端代码的可移植性变强，Server端的拓展性变强。两端单独开发，互不干扰。</p>
+</blockquote>
+<p>2.无状态</p>
+<blockquote>
+<p>http请求本身就是无状态的。基于C-S架构，客户端的每一次请求带有充分的信息能够让服务端识别。请求所需的一些信息都包含在URL的查询参数、header、body，服务端能够根据请求的各种参数，无需保存客户端的状态，将响应正确返回给客户端。无状态的特征大大提高的服务端的健壮性和可拓展性。当然这种无状态性的约束也是有缺点的，客户端的每一次请求都必须带上相同重复的信息确定自己的身份和状态（这也是必须的），造成传输数据的冗余性，但这种确定对于性能和使用来说，几乎是忽略不计的。</p>
+</blockquote>
+<p>3.统一格式</p>
+<blockquote>
+<p>REST架构的核心，统一的接口对于REST服务非常重要。客户端只需要关注实现的接口即可。接口的可读性加强，使用人员方便调用。</p>
+</blockquote>
+<p>4.一致的数据格式</p>
+<blockquote>
+<p>服务端返回的数据格式要么是XML、要么是JSON，或者直接返回状态码。</p>
+</blockquote>
+<p>5.系统分层</p>
+<blockquote>
+<p>客户端通常无法表明自己是直接还是间接与端服务器进行连接，分层时同样要考虑安全策略。</p>
+</blockquote>
+<p>6.可缓存</p>
+<blockquote>
+<p>在万维网上，客户端可以缓存页面的响应内容。因此响应都应隐式或显式的定义为可缓存的，若不可缓存则要避免客户端在多次请求后用旧数据或脏数据来响应。管理得当的缓存会部分地或完全地除去客户端和服务端之间的交互，进一步改善性能和延展性</p>
+</blockquote>
+<h3 id="scale-cube"><a href="#scale-cube" class="headerlink" title="scale cube"></a>scale cube</h3><p>X轴扩展：使用负载均衡器后运行的多份拷贝，简而言之就是一个Nginx后面挂载多台Tomcat，每台Tomcat就是一个相同的单体应用的拷贝，保证了单一节点失效下的高可用性，但是没有解决单体服务开发和维护复杂的问题。</p>
+<p>Y轴扩展：将应用划分成了多个不同的服务，每个服务负责一个或多个紧密相关的功能。一般也被称为业务扩展或垂直拓展。</p>
+<p>Z轴扩展：类似于X轴扩展，但是不同的是数据集的划分不同，每个服务器只负责处理整体数据的一个子集，系统的最前端有一个带状态的分布器，负责将请求路由到合适的服务器上。</p>
+<h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务发展历程.PNG"></div>
+
+<p>API网关的逻辑架构</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/API架构.PNG"></div>
+API网关的作用
+
+<blockquote>
+<p>统一对外接口：当用户需要集成不同产品或服务之间的功能，调用不同服务提供的功能时，通过APi网关可以让用户在不感知服务边缘的情况下，利用统一的接口组装服务。<br>统一鉴权：通过API网关对访问进行统一鉴权，不需要每个应用单独对调用方进行鉴权，应用可以专注于业务。<br>服务注册与授权：控制调用方，使其明确可以使用和不可以使用的服务。<br>服务限流：对调用每个接口的每日次数及总次数进行限制<br>全链路跟踪：通过API网关提供的唯一请求ID可以监控调用流程，以及调用的响应时间。</p>
+</blockquote>
+<h2 id="微服务架构设计原则"><a href="#微服务架构设计原则" class="headerlink" title="微服务架构设计原则"></a>微服务架构设计原则</h2><h3 id="业务架构"><a href="#业务架构" class="headerlink" title="业务架构"></a>业务架构</h3><p>产品经理和运营人员主要负责</p>
+<h3 id="逻辑架构"><a href="#逻辑架构" class="headerlink" title="逻辑架构"></a>逻辑架构</h3><p>1.聚合微服务设计模式：沿X轴或者Z轴独立扩展，业务每个服务都用自己独立的缓存和数据库</p>
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/聚合微服务架构设计模式.PNG"></div>
+2.代理微服务设计模式：聚合模式的一个变种，客户端不负责数据集合，只会按业务需求的差别调用不同的微服务。
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/代理微服务架构设计模式.PNG"></div>
+3.链式微服务设计模式：缺点服务使用同步通信模式，在整个链式调用完成之前，客户端会一直堵塞，链路过长，会导致客户端请求超时。
+<div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/链式微服务架构设计模式.PNG"></div>
+
+<h3 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h3><h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="center">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="center">当前时间：</strong>2023-06-05 11:06:05</a>
+        <br>
+        <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
