@@ -4,6 +4,64 @@
   
     
     <entry>
+      <title>微服务</title>
+      <link href="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+      <url>/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</url>
+      
+        <content type="html"><![CDATA[<h3 id="传统单体架构与微服务架构"><a href="#传统单体架构与微服务架构" class="headerlink" title="传统单体架构与微服务架构"></a>传统单体架构与微服务架构</h3><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务架构.PNG"></div> 微服务架构的优点<blockquote><ul><li>复杂度可控：将应用分解为一个个微小应用，规避了无止境的复杂度累计</li><li>可独立部署：每个微服务具备独立运行的进程，所以都可以独立部署</li><li>技术选型灵活</li><li>易于容错</li><li>易于扩展</li><li>功能特定</li><li>功能特定</li></ul></blockquote><p>微服务架构的不足</p><p>1.开发人员必须处理创建分布式系统的复杂性</p><blockquote><ul><li>开发工具是面向构建传统的单体应用程序的，不为开发分布式应用程序提供全面功能上的支持</li><li>测试更加困难。在微服务架构中，服务数量众多，每个服务都是独立的业务单元，服务主要通过接口进行交互，如何保证依赖的正常，是测试面临的主要挑战。</li><li>开发人员必须实现服务之间的通信机制</li><li>实现用例跨多个服务时，需要面对使用分布式事务管理的困难</li><li>实现阔多个服务的用例，需要团队之间进行仔细的协调</li></ul></blockquote><p>2.部署的复杂性</p><p>3.增加内存的消耗</p><p>微服务与SOA之间的区别</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务与SOA.PNG"></div><h3 id="软件架构的4-1视图"><a href="#软件架构的4-1视图" class="headerlink" title="软件架构的4+1视图"></a>软件架构的4+1视图</h3><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/4+1视图.PNG"></div><h3 id="微服务架构的中间通信"><a href="#微服务架构的中间通信" class="headerlink" title="微服务架构的中间通信"></a>微服务架构的中间通信</h3><p>1.交互方式</p><blockquote><ul><li>1.一对一：每个客户端请求由一个服务实例来处理</li><li>2.一对多：每个客户端请求由多个服务实例来处理</li></ul></blockquote><blockquote><ul><li>1.同步模式：客户端请求需要服务端实时响应，客户端等待响应时可能导致堵塞</li><li>2。异步模式：客户端请求不会阻塞进程，服务端的响应可以是非实时的</li></ul></blockquote><p>一对一的交互类型：</p><blockquote><ul><li>1.请求&#x2F;响应：一个客户端向服务端发起请求，等待响应，客户端期望服务端很快就会发送响应，在一个基于线程的应用中，等待过程可能造成线程阻塞，这样的方式会导致服务的紧耦合。</li><li>2.异步请求&#x2F;响应，客户端发送请求到服务端，服务端异步响应请求，不会发生阻塞进程，因为五福短不会立即反应。</li><li>3.单向通知：客户端的请求发送到服务端，但是不期望服务端做出任何响应。</li></ul></blockquote><p>一对多的交互方式：</p><blockquote><ul><li>1.发布&#x2F;订阅方式：客户端发布通知消息，被零个或多个感兴趣的服务订阅</li><li>2.发布&#x2F;异步响应方式:客户端发布请求消息，然后等待从感兴趣的服务发回的响应</li></ul></blockquote><h3 id="REST架构六大原则"><a href="#REST架构六大原则" class="headerlink" title="REST架构六大原则"></a>REST架构六大原则</h3><p>1.C-S架构</p><blockquote><p>数据存储在Server端，Client端只需使用就行。两端彻底分离的好处使client端代码的可移植性变强，Server端的拓展性变强。两端单独开发，互不干扰。</p></blockquote><p>2.无状态</p><blockquote><p>http请求本身就是无状态的。基于C-S架构，客户端的每一次请求带有充分的信息能够让服务端识别。请求所需的一些信息都包含在URL的查询参数、header、body，服务端能够根据请求的各种参数，无需保存客户端的状态，将响应正确返回给客户端。无状态的特征大大提高的服务端的健壮性和可拓展性。当然这种无状态性的约束也是有缺点的，客户端的每一次请求都必须带上相同重复的信息确定自己的身份和状态（这也是必须的），造成传输数据的冗余性，但这种确定对于性能和使用来说，几乎是忽略不计的。</p></blockquote><p>3.统一格式</p><blockquote><p>REST架构的核心，统一的接口对于REST服务非常重要。客户端只需要关注实现的接口即可。接口的可读性加强，使用人员方便调用。</p></blockquote><p>4.一致的数据格式</p><blockquote><p>服务端返回的数据格式要么是XML、要么是JSON，或者直接返回状态码。</p></blockquote><p>5.系统分层</p><blockquote><p>客户端通常无法表明自己是直接还是间接与端服务器进行连接，分层时同样要考虑安全策略。</p></blockquote><p>6.可缓存</p><blockquote><p>在万维网上，客户端可以缓存页面的响应内容。因此响应都应隐式或显式的定义为可缓存的，若不可缓存则要避免客户端在多次请求后用旧数据或脏数据来响应。管理得当的缓存会部分地或完全地除去客户端和服务端之间的交互，进一步改善性能和延展性</p></blockquote><h3 id="scale-cube"><a href="#scale-cube" class="headerlink" title="scale cube"></a>scale cube</h3><p>X轴扩展：使用负载均衡器后运行的多份拷贝，简而言之就是一个Nginx后面挂载多台Tomcat，每台Tomcat就是一个相同的单体应用的拷贝，保证了单一节点失效下的高可用性，但是没有解决单体服务开发和维护复杂的问题。</p><p>Y轴扩展：将应用划分成了多个不同的服务，每个服务负责一个或多个紧密相关的功能。一般也被称为业务扩展或垂直拓展。</p><p>Z轴扩展：类似于X轴扩展，但是不同的是数据集的划分不同，每个服务器只负责处理整体数据的一个子集，系统的最前端有一个带状态的分布器，负责将请求路由到合适的服务器上。</p><h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务发展历程.PNG"></div><p>API网关的逻辑架构</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/API架构.PNG"></div>API网关的作用<blockquote><p>统一对外接口：当用户需要集成不同产品或服务之间的功能，调用不同服务提供的功能时，通过APi网关可以让用户在不感知服务边缘的情况下，利用统一的接口组装服务。<br>统一鉴权：通过API网关对访问进行统一鉴权，不需要每个应用单独对调用方进行鉴权，应用可以专注于业务。<br>服务注册与授权：控制调用方，使其明确可以使用和不可以使用的服务。<br>服务限流：对调用每个接口的每日次数及总次数进行限制<br>全链路跟踪：通过API网关提供的唯一请求ID可以监控调用流程，以及调用的响应时间。</p></blockquote><h2 id="微服务架构设计原则"><a href="#微服务架构设计原则" class="headerlink" title="微服务架构设计原则"></a>微服务架构设计原则</h2><h3 id="业务架构"><a href="#业务架构" class="headerlink" title="业务架构"></a>业务架构</h3><p>产品经理和运营人员主要负责</p><h3 id="逻辑架构"><a href="#逻辑架构" class="headerlink" title="逻辑架构"></a>逻辑架构</h3><p>1.聚合微服务设计模式：沿X轴或者Z轴独立扩展，业务每个服务都用自己独立的缓存和数据库</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/聚合微服务架构设计模式.PNG"></div><p>2.代理微服务设计模式：聚合模式的一个变种，客户端不负责数据集合，只会按业务需求的差别调用不同的微服务。</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/代理微服务架构设计模式.PNG"></div><p>3.链式微服务设计模式：缺点服务使用同步通信模式，在整个链式调用完成之前，客户端会一直堵塞，链路过长，会导致客户端请求超时。</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/链式微服务架构设计模式.PNG"></div><p>4.分支微服务设计模式：聚合模式的扩展，允许同时调用两个微服务链</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/分支微服务.PNG"></div><p>5.数据共享微服务设计模式：在单体应用到微服务架构的过渡阶段，可以使用数据共享微服务设计模式，部分微服务可能会共享缓存和数据库存储，不过只有在两个服务之间存在强耦合关系时才可以，对于基于微服务的新建应用而言，严禁使用这个模式来组织服务</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/数据共享微服务.PNG"></div><p>6.异步消息传递微服务设计模式：REST是基于同步机制的，会造成调用链阻塞，使用消息队列代替REST请求&#x2F;响应。</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/异步消息传递微服务.PNG"></div><h3 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h3><p>技术架构简单的来说就是业务代码架构+业务数据设计+各种中间件+各种技术框架</p><p>胶水代码：用来将服务与单体应用集成起来，胶水代码可以通过以下三种方式访问单体应用中的数据</p><blockquote><p>通过调用单体应用提供的远程API<br>直接访问单体应用的数据库<br>保存一份数据副本，和单体数据库保存同步。</p></blockquote><h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3><h2 id="微服务中的技术选型"><a href="#微服务中的技术选型" class="headerlink" title="微服务中的技术选型"></a>微服务中的技术选型</h2><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务架构中的主要技术框架选型.PNG"></div><h3 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h3><p>Dubbo是阿里巴巴公司开源的一个高性能优秀的服务框架，使得应用可通过高性能的RPC实现服务的输出和输入功能，可以和Spring框架无缝集成</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/Dubbo架构.jpg"></div>各组件之间的调用关系：Consumer表示服务的消费者，Provider表示服务的提供者，Container表示服务容器。<blockquote><p>服务器负责启动，加载，运行提供者<br>提供者在启动时向注册中心注册自己提供的服务<br>消费者其中是向注册中心订阅自己所需的服务<br>注册中心返回提供者地址列表给消费者，如果有变更，注册中心将基于TCP长连接推送变更数据给消费者。<br>消费者从远程结构中调用远程接口，Dubbo会基于负载均衡算法选取一个提供者进行调用，如果调用失败就换一个<br>消费者和提供者在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心，可以在Dubbo的可视化界面上看到。</p></blockquote><p>Dubbo中的默认负载均衡算法</p><blockquote><p>1.Random LoadBalance:随机，按权重设置随机概率。 在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后分布也比较均匀，有利于动态调整提供者权重。<br>2.RoundRobin LoadBalance：轮循，按每台机器相应速度的权重设置轮循比率。 存在慢提供者累积请求的问题，比如，某台机器因自身性能问题导致响应很慢，但没有故障，当请求调到这台机器时就会卡住，久而久之，所有的请求都会卡在这台机器上。<br>LeastActive LoadBalance：最少活跃调用数。 根据不同服务生产者的当前调用数统计分发，可以使当前连接数较多的提供者收到更少的请求，而使当前连接数较少的提供者优先收到更多的的请求。<br>ConsistentHash LoadBalance：一致性Hash，相同参数的请求总是会发送到同一提供者处。 当某一台提供者机器发生故障时，原本发往该提供者的请求会基于虚拟节点平摊到其他提供者处，不会引起剧烈变动。</p></blockquote><p>现有Dubbo来实现微服务缺少的功能：</p><blockquote><p>分布式配置：要配合DiamondX，Disconf，Apollo来实现<br>服务跟踪：可以使用Pinpoint，CAT，Zipkin来实现<br>批量任务：可以使用开源的Elastic-job来实现</p></blockquote><p>Dubbo本身RPC框架的缺失：</p><blockquote><p>服务提供方与调用方的接口依赖性太强<br>服务对平台敏感，难以简单复用</p></blockquote><h2 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h2><p>太强了的全家桶，后面再单独学</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/1.PNG"></div><h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><p>主流的配置中心性能对比</p><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/2.PNG"></div><h2 id="请求链路追踪"><a href="#请求链路追踪" class="headerlink" title="请求链路追踪"></a>请求链路追踪</h2><p>请求链路追踪(Link Tracking)或者又叫应用性能管理(APM,Application performance Management)，主要用于在分布式系统中实现细颗粒度的请求链追踪和监控。</p><h3 id="主流的APM性能对比"><a href="#主流的APM性能对比" class="headerlink" title="主流的APM性能对比"></a>主流的APM性能对比</h3><div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/3.PNG"></div>原理对比<div align="center"><img src="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/4.PNG"></div><h1 id="Service-Mesh"><a href="#Service-Mesh" class="headerlink" title="Service Mesh"></a>Service Mesh</h1><p>应该具有的基本特征：</p><blockquote><p>是一种基础设施层服务，服务间的通信通过服务网格进行<br>可靠地传输复杂拓扑中服务的请求，将它们变成现代的云原生服务<br>是一种网络代理的实现，通常与业务服务部署在一起，业务服务感知不到<br>是一种网络模型，位于TCP&#x2F;IP之上的抽象层，TCP&#x2F;IP负责在网络节点间可靠的传递字节码，Service Mesh则负责在服务间可靠地传输服务间的协议请求<br>可对运行时进行控制，是服务变得可监控，可管理</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 微服务 </tag>
+            
+            <tag> Java </tag>
+            
+            <tag> 后端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>图解MySQL</title>
+      <link href="/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/"/>
+      <url>/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/</url>
+      
+        <content type="html"><![CDATA[<h3 id="MySQL的执行过程"><a href="#MySQL的执行过程" class="headerlink" title="MySQL的执行过程"></a>MySQL的执行过程</h3><blockquote><p>1:连接器<br>2:查询缓存<br>3:解析SQL<br>4:执行SQL</p></blockquote><div align="center"><img src="/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/MySQL架构.PNG"></div>MySql的架构有两层：Server层和存储引擎层<blockquote><p>Server层：负责建立连接，分析和执行SQL<br>存储引擎层：负责数据的存储和提取，5.5以上的版本默认使用InnoDb</p></blockquote><p>MySql的连接是基于TCP协议进行传输的，所以在连接过程中会进行三次握手。</p><p>查看当前MySQL服务被多少个客户连接了，直接使用命令show processlist，默认空闲连接的最大时长是8小时也就是28880秒。默认最大连接数量是151个。</p><p>MySQL中的长连接和短连接</p><pre><code>// 短连接连接 mysql 服务（TCP 三次握手）执行sql断开 mysql 服务（TCP 四次挥手）// 长连接:缺点占用内存连接 mysql 服务（TCP 三次握手）执行sql执行sql执行sql....断开 mysql 服务（TCP 四次挥手）</code></pre><p>解决长连接占用内存的问题：</p><blockquote><p>1.定期断开长连接<br>2.客户端主动重置连接：MySQL 5.7 版本实现了 mysql_reset_connection() 函数的接口，注意这是接口函数不是命令，那么当客户端执行了一个很大的操作后，在代码里调用 mysql_reset_connection 函数来重置连接，达到释放内存的效果。这个过程不需要重连和重新做权限验证，但是会将连接恢复到刚刚创建完时的状态。</p></blockquote><h3 id="解析SQL"><a href="#解析SQL" class="headerlink" title="解析SQL"></a>解析SQL</h3><p>解析器完成SQL的解析工作，解析器通过语法分析和词法分析实现解析工作。解析器只负责构建语法树和检查语法，但是不会去查表或者字段存不存在。这个工作是由执行SQL的prepare阶段完成对于表或者字段是否存在的判断。</p><p>不过，对于 MySQL 5.7 判断表或字段是否存在的工作，是在词法分析&amp;语法分析之后，prepare 阶段之前做的。结论都一样，不是在解析器里做的。正因为 MySQL 5.7 代码结构不好，所以 MySQL 8.0 代码结构变化很大，后来判断表或字段是否存在的工作就被放入到 prepare 阶段做了。</p><h3 id="执行SQL"><a href="#执行SQL" class="headerlink" title="执行SQL"></a>执行SQL</h3><p>执行语句的三个流程</p><blockquote><p>prepare 阶段，也就是预处理阶段；<br>optimize 阶段，也就是优化阶段；优化器主要负责将 SQL 查询语句的执行方案确定下来<br>execute 阶段，也就是执行阶段；</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 后端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySql必知必会</title>
       <link href="/2023/05/14/Mysql/"/>
       <url>/2023/05/14/Mysql/</url>
@@ -443,35 +501,6 @@
             <tag> ACM </tag>
             
             <tag> 刷题 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>微服务</title>
-      <link href="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-      <url>/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</url>
-      
-        <content type="html"><![CDATA[<h3 id="传统单体架构与微服务架构"><a href="#传统单体架构与微服务架构" class="headerlink" title="传统单体架构与微服务架构"></a>传统单体架构与微服务架构</h3><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务架构.PNG"></div> 微服务架构的优点<blockquote><ul><li>复杂度可控：将应用分解为一个个微小应用，规避了无止境的复杂度累计</li><li>可独立部署：每个微服务具备独立运行的进程，所以都可以独立部署</li><li>技术选型灵活</li><li>易于容错</li><li>易于扩展</li><li>功能特定</li><li>功能特定</li></ul></blockquote><p>微服务架构的不足</p><p>1.开发人员必须处理创建分布式系统的复杂性</p><blockquote><ul><li>开发工具是面向构建传统的单体应用程序的，不为开发分布式应用程序提供全面功能上的支持</li><li>测试更加困难。在微服务架构中，服务数量众多，每个服务都是独立的业务单元，服务主要通过接口进行交互，如何保证依赖的正常，是测试面临的主要挑战。</li><li>开发人员必须实现服务之间的通信机制</li><li>实现用例跨多个服务时，需要面对使用分布式事务管理的困难</li><li>实现阔多个服务的用例，需要团队之间进行仔细的协调</li></ul></blockquote><p>2.部署的复杂性</p><p>3.增加内存的消耗</p><p>微服务与SOA之间的区别</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务与SOA.PNG"></div><h3 id="软件架构的4-1视图"><a href="#软件架构的4-1视图" class="headerlink" title="软件架构的4+1视图"></a>软件架构的4+1视图</h3><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/4+1视图.PNG"></div><h3 id="微服务架构的中间通信"><a href="#微服务架构的中间通信" class="headerlink" title="微服务架构的中间通信"></a>微服务架构的中间通信</h3><p>1.交互方式</p><blockquote><ul><li>1.一对一：每个客户端请求由一个服务实例来处理</li><li>2.一对多：每个客户端请求由多个服务实例来处理</li></ul></blockquote><blockquote><ul><li>1.同步模式：客户端请求需要服务端实时响应，客户端等待响应时可能导致堵塞</li><li>2。异步模式：客户端请求不会阻塞进程，服务端的响应可以是非实时的</li></ul></blockquote><p>一对一的交互类型：</p><blockquote><ul><li>1.请求&#x2F;响应：一个客户端向服务端发起请求，等待响应，客户端期望服务端很快就会发送响应，在一个基于线程的应用中，等待过程可能造成线程阻塞，这样的方式会导致服务的紧耦合。</li><li>2.异步请求&#x2F;响应，客户端发送请求到服务端，服务端异步响应请求，不会发生阻塞进程，因为五福短不会立即反应。</li><li>3.单向通知：客户端的请求发送到服务端，但是不期望服务端做出任何响应。</li></ul></blockquote><p>一对多的交互方式：</p><blockquote><ul><li>1.发布&#x2F;订阅方式：客户端发布通知消息，被零个或多个感兴趣的服务订阅</li><li>2.发布&#x2F;异步响应方式:客户端发布请求消息，然后等待从感兴趣的服务发回的响应</li></ul></blockquote><h3 id="REST架构六大原则"><a href="#REST架构六大原则" class="headerlink" title="REST架构六大原则"></a>REST架构六大原则</h3><p>1.C-S架构</p><blockquote><p>数据存储在Server端，Client端只需使用就行。两端彻底分离的好处使client端代码的可移植性变强，Server端的拓展性变强。两端单独开发，互不干扰。</p></blockquote><p>2.无状态</p><blockquote><p>http请求本身就是无状态的。基于C-S架构，客户端的每一次请求带有充分的信息能够让服务端识别。请求所需的一些信息都包含在URL的查询参数、header、body，服务端能够根据请求的各种参数，无需保存客户端的状态，将响应正确返回给客户端。无状态的特征大大提高的服务端的健壮性和可拓展性。当然这种无状态性的约束也是有缺点的，客户端的每一次请求都必须带上相同重复的信息确定自己的身份和状态（这也是必须的），造成传输数据的冗余性，但这种确定对于性能和使用来说，几乎是忽略不计的。</p></blockquote><p>3.统一格式</p><blockquote><p>REST架构的核心，统一的接口对于REST服务非常重要。客户端只需要关注实现的接口即可。接口的可读性加强，使用人员方便调用。</p></blockquote><p>4.一致的数据格式</p><blockquote><p>服务端返回的数据格式要么是XML、要么是JSON，或者直接返回状态码。</p></blockquote><p>5.系统分层</p><blockquote><p>客户端通常无法表明自己是直接还是间接与端服务器进行连接，分层时同样要考虑安全策略。</p></blockquote><p>6.可缓存</p><blockquote><p>在万维网上，客户端可以缓存页面的响应内容。因此响应都应隐式或显式的定义为可缓存的，若不可缓存则要避免客户端在多次请求后用旧数据或脏数据来响应。管理得当的缓存会部分地或完全地除去客户端和服务端之间的交互，进一步改善性能和延展性</p></blockquote><h3 id="scale-cube"><a href="#scale-cube" class="headerlink" title="scale cube"></a>scale cube</h3><p>X轴扩展：使用负载均衡器后运行的多份拷贝，简而言之就是一个Nginx后面挂载多台Tomcat，每台Tomcat就是一个相同的单体应用的拷贝，保证了单一节点失效下的高可用性，但是没有解决单体服务开发和维护复杂的问题。</p><p>Y轴扩展：将应用划分成了多个不同的服务，每个服务负责一个或多个紧密相关的功能。一般也被称为业务扩展或垂直拓展。</p><p>Z轴扩展：类似于X轴扩展，但是不同的是数据集的划分不同，每个服务器只负责处理整体数据的一个子集，系统的最前端有一个带状态的分布器，负责将请求路由到合适的服务器上。</p><h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务发展历程.PNG"></div><p>API网关的逻辑架构</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/API架构.PNG"></div>API网关的作用<blockquote><p>统一对外接口：当用户需要集成不同产品或服务之间的功能，调用不同服务提供的功能时，通过APi网关可以让用户在不感知服务边缘的情况下，利用统一的接口组装服务。<br>统一鉴权：通过API网关对访问进行统一鉴权，不需要每个应用单独对调用方进行鉴权，应用可以专注于业务。<br>服务注册与授权：控制调用方，使其明确可以使用和不可以使用的服务。<br>服务限流：对调用每个接口的每日次数及总次数进行限制<br>全链路跟踪：通过API网关提供的唯一请求ID可以监控调用流程，以及调用的响应时间。</p></blockquote><h2 id="微服务架构设计原则"><a href="#微服务架构设计原则" class="headerlink" title="微服务架构设计原则"></a>微服务架构设计原则</h2><h3 id="业务架构"><a href="#业务架构" class="headerlink" title="业务架构"></a>业务架构</h3><p>产品经理和运营人员主要负责</p><h3 id="逻辑架构"><a href="#逻辑架构" class="headerlink" title="逻辑架构"></a>逻辑架构</h3><p>1.聚合微服务设计模式：沿X轴或者Z轴独立扩展，业务每个服务都用自己独立的缓存和数据库</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/聚合微服务架构设计模式.PNG"></div><p>2.代理微服务设计模式：聚合模式的一个变种，客户端不负责数据集合，只会按业务需求的差别调用不同的微服务。</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/代理微服务架构设计模式.PNG"></div><p>3.链式微服务设计模式：缺点服务使用同步通信模式，在整个链式调用完成之前，客户端会一直堵塞，链路过长，会导致客户端请求超时。</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/链式微服务架构设计模式.PNG"></div><p>4.分支微服务设计模式：聚合模式的扩展，允许同时调用两个微服务链</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/分支微服务.PNG"></div><p>5.数据共享微服务设计模式：在单体应用到微服务架构的过渡阶段，可以使用数据共享微服务设计模式，部分微服务可能会共享缓存和数据库存储，不过只有在两个服务之间存在强耦合关系时才可以，对于基于微服务的新建应用而言，严禁使用这个模式来组织服务</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/数据共享微服务.PNG"></div><p>6.异步消息传递微服务设计模式：REST是基于同步机制的，会造成调用链阻塞，使用消息队列代替REST请求&#x2F;响应。</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/异步消息传递微服务.PNG"></div><h3 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h3><p>技术架构简单的来说就是业务代码架构+业务数据设计+各种中间件+各种技术框架</p><p>胶水代码：用来将服务与单体应用集成起来，胶水代码可以通过以下三种方式访问单体应用中的数据</p><blockquote><p>通过调用单体应用提供的远程API<br>直接访问单体应用的数据库<br>保存一份数据副本，和单体数据库保存同步。</p></blockquote><h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3><h2 id="微服务中的技术选型"><a href="#微服务中的技术选型" class="headerlink" title="微服务中的技术选型"></a>微服务中的技术选型</h2><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/微服务架构中的主要技术框架选型.PNG"></div><h3 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h3><p>Dubbo是阿里巴巴公司开源的一个高性能优秀的服务框架，使得应用可通过高性能的RPC实现服务的输出和输入功能，可以和Spring框架无缝集成</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/Dubbo架构.jpg"></div>各组件之间的调用关系：Consumer表示服务的消费者，Provider表示服务的提供者，Container表示服务容器。<blockquote><p>服务器负责启动，加载，运行提供者<br>提供者在启动时向注册中心注册自己提供的服务<br>消费者其中是向注册中心订阅自己所需的服务<br>注册中心返回提供者地址列表给消费者，如果有变更，注册中心将基于TCP长连接推送变更数据给消费者。<br>消费者从远程结构中调用远程接口，Dubbo会基于负载均衡算法选取一个提供者进行调用，如果调用失败就换一个<br>消费者和提供者在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心，可以在Dubbo的可视化界面上看到。</p></blockquote><p>Dubbo中的默认负载均衡算法</p><blockquote><p>1.Random LoadBalance:随机，按权重设置随机概率。 在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后分布也比较均匀，有利于动态调整提供者权重。<br>2.RoundRobin LoadBalance：轮循，按每台机器相应速度的权重设置轮循比率。 存在慢提供者累积请求的问题，比如，某台机器因自身性能问题导致响应很慢，但没有故障，当请求调到这台机器时就会卡住，久而久之，所有的请求都会卡在这台机器上。<br>LeastActive LoadBalance：最少活跃调用数。 根据不同服务生产者的当前调用数统计分发，可以使当前连接数较多的提供者收到更少的请求，而使当前连接数较少的提供者优先收到更多的的请求。<br>ConsistentHash LoadBalance：一致性Hash，相同参数的请求总是会发送到同一提供者处。 当某一台提供者机器发生故障时，原本发往该提供者的请求会基于虚拟节点平摊到其他提供者处，不会引起剧烈变动。</p></blockquote><p>现有Dubbo来实现微服务缺少的功能：</p><blockquote><p>分布式配置：要配合DiamondX，Disconf，Apollo来实现<br>服务跟踪：可以使用Pinpoint，CAT，Zipkin来实现<br>批量任务：可以使用开源的Elastic-job来实现</p></blockquote><p>Dubbo本身RPC框架的缺失：</p><blockquote><p>服务提供方与调用方的接口依赖性太强<br>服务对平台敏感，难以简单复用</p></blockquote><h2 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h2><p>太强了的全家桶，后面再单独学</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/1.PNG"></div><h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><p>主流的配置中心性能对比</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/2.PNG"></div><h2 id="请求链路追踪"><a href="#请求链路追踪" class="headerlink" title="请求链路追踪"></a>请求链路追踪</h2><p>请求链路追踪(Link Tracking)或者又叫应用性能管理(APM,Application performance Management)，主要用于在分布式系统中实现细颗粒度的请求链追踪和监控。</p><p>主流的APM性能对比</p><div align="center"><img src="/2023/04/13/%E5%BE%AE%E6%9C%8D%E5%8A%A1/3.PNG"></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> 后端开发 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 微服务 </tag>
-            
-            <tag> Java </tag>
-            
-            <tag> 后端 </tag>
             
         </tags>
       
