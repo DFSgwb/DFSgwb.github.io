@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Docker</title>
+      <link href="/2023/06/07/Docker/"/>
+      <url>/2023/06/07/Docker/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Docker逻辑架构"><a href="#Docker逻辑架构" class="headerlink" title="Docker逻辑架构"></a>Docker逻辑架构</h2><div align="center"><img src="/2023/06/07/Docker/Docker逻辑架构.PNG"></div> 如上图所示，我们可以简单的将Docker分为三个组件：Client，Docker_Host,Registry三部分。<blockquote><p>Client: 基于sock和Docker_Host上的Docker来守护进程通信，执行docker build，docker pull，docker run命令，这些命令都是可以用HTTPS&#x2F;HTTP的RESTfulAPI来通信的。</p></blockquote><p>企业级Docker Registry项目基本上会优先选择Harbor，其中Harbor的逻辑架构如下：harbor将一组docker原生Registry做成集群，在最前端用Nginx异类的负载均衡器进行分发，同时每个Registry都将目录mount到宿主机磁盘，宿主机磁盘可以选择用Ceph或者Glusterfs，甚至是更简单的NFS分布式存储来保证数据的可靠性。</p><div align="center"><img src="/2023/06/07/Docker/Harbor逻辑架构.PNG"></div> <p>Harbor的安装步骤：下载源码，然后进入harbor&#x2F;deploy目录，初始化配置，配置文件尾harbor.cfg</p><h2 id="Docker网络架构"><a href="#Docker网络架构" class="headerlink" title="Docker网络架构"></a>Docker网络架构</h2><h3 id="单机网络模式"><a href="#单机网络模式" class="headerlink" title="单机网络模式"></a>单机网络模式</h3><blockquote><ul><li>1、Bridge模式：使用eth0虚拟网桥进行通信。执行docker run -p命令时，Docker实际上是在iptables上遵循DNAT规则，实现了端口转发功能。</li><li>2、Host模式：此时容器不会获得一个独立的Network Namespace，而是会和宿主机共用一个Network Namespace，同时该容器也不会虚拟出自己的网卡，配置直接的IP地址，而是会使用宿主机的端口和Ip地址。</li><li>3、Container模式：使用参数 –net&#x3D;container:目标容器名称&#x2F;ID 指定,使用此模式创建的容器需指定和一个已经存在的容器共享一个网络namespace，而不会创建独立的namespace，即新创建的容器不会创建自己的网卡也不会配置自己的IP，而是和一个已经存在的被指定的目标容器共享对方的IP和端口范围，因此这个容器的端口不能和被指定的目标容器端口冲突，除了网络之外的文件系统、用户信息、进程信息等仍然保持相互隔离，两个容器的进程可以通过lo网卡及容器IP进行通信。</li><li>4、None模式：使Docker将新容器放到隔离的网络栈中，但是不进行配置，之后由用户自己进行网络配置。</li></ul></blockquote><h3 id="集群网络模式"><a href="#集群网络模式" class="headerlink" title="集群网络模式"></a>集群网络模式</h3><blockquote><ul><li>1、Bridge端口转发：同一个容器内部使用eth0的虚拟网桥进行通信，不同宿主机之间通过物理网卡和物理网络进行通信。该模式最简单，但是由于NAT转发会在本机上维护一张路由表，因此导致网络性能较差。同时在该模式之下，跨容器网络的端口冲突和端口占用问题也会非常明显。</li></ul></blockquote><div align="center"><img src="/2023/06/07/Docker/Bridge端口转发.PNG"></div> <blockquote><ul><li>2、扁平网络：当业务网络和管理网络需要隔离，让服务器拥有多张网卡，一部分网卡绑定在一起支撑业务网络通信，一部分用来支撑管理网络。或者在一些混合部署模式下，我们想要使两部分无缝对接，一般来说都是将Docker容器网络和物理网络直接通过交换价来打通，将这两部分统一为一张扁平化网络。但这种模式容器的IP地址的分配和回收是一个很大的问题，管理不便。</li></ul></blockquote><div align="center"><img src="/2023/06/07/Docker/扁平网络.PNG"></div> <blockquote><ul><li>3、Flannel模式：这种模式的范式为建立隧道和VXLAN，打通不同的宿主机，再通过软件功能和分布式存储做软件交换机，跨宿主机做报文传输，本质上就是SDN技术。Flannel模式就是通过分布式存储etcd在集群环境下维护一张全局路由表，然后每台宿主机上会运行一个flanneld守护进程，负责和etcd交互，拿到全局路由表，同时监听本宿主机上的所有容器报文，执行类似交换机的路由转发操作。优点是功能丰富，跨主机通信能力强，缺点是维护成本高，有一定的性能损耗。</li></ul></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 微服务 </tag>
+            
+            <tag> 后端 </tag>
+            
+            <tag> Docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>微服务</title>
       <link href="/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
       <url>/2023/06/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</url>

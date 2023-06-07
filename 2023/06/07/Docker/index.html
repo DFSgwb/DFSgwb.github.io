@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Docker | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>Docker</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/7
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                后端开发
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="color: #ffa2c4">微服务</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #ff7d73">后端</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Docker/" style="color: #00bcd4">Docker</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="Docker逻辑架构"><a href="#Docker逻辑架构" class="headerlink" title="Docker逻辑架构"></a>Docker逻辑架构</h2><div align="center"><img src="/2023/06/07/Docker/Docker逻辑架构.PNG"></div> 
+如上图所示，我们可以简单的将Docker分为三个组件：Client，Docker_Host,Registry三部分。
+
+<blockquote>
+<p>Client: 基于sock和Docker_Host上的Docker来守护进程通信，执行docker build，docker pull，docker run命令，这些命令都是可以用HTTPS&#x2F;HTTP的RESTfulAPI来通信的。</p>
+</blockquote>
+<p>企业级Docker Registry项目基本上会优先选择Harbor，其中Harbor的逻辑架构如下：harbor将一组docker原生Registry做成集群，在最前端用Nginx异类的负载均衡器进行分发，同时每个Registry都将目录mount到宿主机磁盘，宿主机磁盘可以选择用Ceph或者Glusterfs，甚至是更简单的NFS分布式存储来保证数据的可靠性。</p>
+<div align="center"><img src="/2023/06/07/Docker/Harbor逻辑架构.PNG"></div> 
+
+<p>Harbor的安装步骤：下载源码，然后进入harbor&#x2F;deploy目录，初始化配置，配置文件尾harbor.cfg</p>
+<h2 id="Docker网络架构"><a href="#Docker网络架构" class="headerlink" title="Docker网络架构"></a>Docker网络架构</h2><h3 id="单机网络模式"><a href="#单机网络模式" class="headerlink" title="单机网络模式"></a>单机网络模式</h3><blockquote>
+<ul>
+<li>1、Bridge模式：使用eth0虚拟网桥进行通信。执行docker run -p命令时，Docker实际上是在iptables上遵循DNAT规则，实现了端口转发功能。</li>
+<li>2、Host模式：此时容器不会获得一个独立的Network Namespace，而是会和宿主机共用一个Network Namespace，同时该容器也不会虚拟出自己的网卡，配置直接的IP地址，而是会使用宿主机的端口和Ip地址。</li>
+<li>3、Container模式：使用参数 –net&#x3D;container:目标容器名称&#x2F;ID 指定,使用此模式创建的容器需指定和一个已经存在的容器共享一个网络namespace，而不会创建独立的namespace，即新创建的容器不会创建自己的网卡也不会配置自己的IP，而是和一个已经存在的被指定的目标容器共享对方的IP和端口范围，因此这个容器的端口不能和被指定的目标容器端口冲突，除了网络之外的文件系统、用户信息、进程信息等仍然保持相互隔离，两个容器的进程可以通过lo网卡及容器IP进行通信。</li>
+<li>4、None模式：使Docker将新容器放到隔离的网络栈中，但是不进行配置，之后由用户自己进行网络配置。</li>
+</ul>
+</blockquote>
+<h3 id="集群网络模式"><a href="#集群网络模式" class="headerlink" title="集群网络模式"></a>集群网络模式</h3><blockquote>
+<ul>
+<li>1、Bridge端口转发：同一个容器内部使用eth0的虚拟网桥进行通信，不同宿主机之间通过物理网卡和物理网络进行通信。该模式最简单，但是由于NAT转发会在本机上维护一张路由表，因此导致网络性能较差。同时在该模式之下，跨容器网络的端口冲突和端口占用问题也会非常明显。</li>
+</ul>
+</blockquote>
+<div align="center"><img src="/2023/06/07/Docker/Bridge端口转发.PNG"></div> 
+
+<blockquote>
+<ul>
+<li>2、扁平网络：当业务网络和管理网络需要隔离，让服务器拥有多张网卡，一部分网卡绑定在一起支撑业务网络通信，一部分用来支撑管理网络。或者在一些混合部署模式下，我们想要使两部分无缝对接，一般来说都是将Docker容器网络和物理网络直接通过交换价来打通，将这两部分统一为一张扁平化网络。但这种模式容器的IP地址的分配和回收是一个很大的问题，管理不便。</li>
+</ul>
+</blockquote>
+<div align="center"><img src="/2023/06/07/Docker/扁平网络.PNG"></div> 
+
+<blockquote>
+<ul>
+<li>3、Flannel模式：这种模式的范式为建立隧道和VXLAN，打通不同的宿主机，再通过软件功能和分布式存储做软件交换机，跨宿主机做报文传输，本质上就是SDN技术。Flannel模式就是通过分布式存储etcd在集群环境下维护一张全局路由表，然后每台宿主机上会运行一个flanneld守护进程，负责和etcd交互，拿到全局路由表，同时监听本宿主机上的所有容器报文，执行类似交换机的路由转发操作。优点是功能丰富，跨主机通信能力强，缺点是维护成本高，有一定的性能损耗。</li>
+</ul>
+</blockquote>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="center">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="center">当前时间：</strong>2023-06-07 16:06:80</a>
+        <br>
+        <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
