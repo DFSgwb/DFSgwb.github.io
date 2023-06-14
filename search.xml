@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Spring cloud</title>
+      <link href="/2023/06/07/Spring_cloud/"/>
+      <url>/2023/06/07/Spring_cloud/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Spring-Cloud架构"><a href="#Spring-Cloud架构" class="headerlink" title="Spring Cloud架构"></a>Spring Cloud架构</h2><div align="center"><img src="/2023/06/07/Spring_cloud/SpringCloud技术架构.PNG"></div> <h2 id="Spring-Cloud特性"><a href="#Spring-Cloud特性" class="headerlink" title="Spring Cloud特性"></a>Spring Cloud特性</h2><h3 id="Spring-Cloud-Context：ApplicationContext"><a href="#Spring-Cloud-Context：ApplicationContext" class="headerlink" title="Spring Cloud Context：ApplicationContext"></a>Spring Cloud Context：ApplicationContext</h3><blockquote><ul><li>1.Bootstrap:对于主程序来说是一个父级上下文，它支持从外部资源中加载配置文件，和解密本地外部配置文件中的属性，Bootstrap上下午和应用上下文将共享一个环境，这是所有Spring应用程序的外部属性，一般来说，Bootstrap上下文中的属性优先级比较高，所有不能被本地配置所覆盖。<br>Spring的上下文有一个特性，子级上下文将从父级中继承属性源和配置文件，如果通过SpringApplication或者SpringApplicationBuilder来构建应用程序上下文，那么Bootstrap上下文将会成为该应用程序上下文的父级上下文</li></ul></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> 后端 </tag>
+            
+            <tag> Spring cloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker</title>
       <link href="/2023/06/07/Docker/"/>
       <url>/2023/06/07/Docker/</url>
@@ -66,7 +95,7 @@
       <link href="/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/"/>
       <url>/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/</url>
       
-        <content type="html"><![CDATA[<h3 id="MySQL的执行过程"><a href="#MySQL的执行过程" class="headerlink" title="MySQL的执行过程"></a>MySQL的执行过程</h3><blockquote><p>1:连接器<br>2:查询缓存<br>3:解析SQL<br>4:执行SQL</p></blockquote><div align="center"><img src="/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/MySQL架构.PNG"></div>MySql的架构有两层：Server层和存储引擎层<blockquote><p>Server层：负责建立连接，分析和执行SQL<br>存储引擎层：负责数据的存储和提取，5.5以上的版本默认使用InnoDb</p></blockquote><p>MySql的连接是基于TCP协议进行传输的，所以在连接过程中会进行三次握手。</p><p>查看当前MySQL服务被多少个客户连接了，直接使用命令show processlist，默认空闲连接的最大时长是8小时也就是28880秒。默认最大连接数量是151个。</p><p>MySQL中的长连接和短连接</p><pre><code>// 短连接连接 mysql 服务（TCP 三次握手）执行sql断开 mysql 服务（TCP 四次挥手）// 长连接:缺点占用内存连接 mysql 服务（TCP 三次握手）执行sql执行sql执行sql....断开 mysql 服务（TCP 四次挥手）</code></pre><p>解决长连接占用内存的问题：</p><blockquote><p>1.定期断开长连接<br>2.客户端主动重置连接：MySQL 5.7 版本实现了 mysql_reset_connection() 函数的接口，注意这是接口函数不是命令，那么当客户端执行了一个很大的操作后，在代码里调用 mysql_reset_connection 函数来重置连接，达到释放内存的效果。这个过程不需要重连和重新做权限验证，但是会将连接恢复到刚刚创建完时的状态。</p></blockquote><h3 id="解析SQL"><a href="#解析SQL" class="headerlink" title="解析SQL"></a>解析SQL</h3><p>解析器完成SQL的解析工作，解析器通过语法分析和词法分析实现解析工作。解析器只负责构建语法树和检查语法，但是不会去查表或者字段存不存在。这个工作是由执行SQL的prepare阶段完成对于表或者字段是否存在的判断。</p><p>不过，对于 MySQL 5.7 判断表或字段是否存在的工作，是在词法分析&amp;语法分析之后，prepare 阶段之前做的。结论都一样，不是在解析器里做的。正因为 MySQL 5.7 代码结构不好，所以 MySQL 8.0 代码结构变化很大，后来判断表或字段是否存在的工作就被放入到 prepare 阶段做了。</p><h3 id="执行SQL"><a href="#执行SQL" class="headerlink" title="执行SQL"></a>执行SQL</h3><p>执行语句的三个流程</p><blockquote><p>prepare 阶段，也就是预处理阶段；<br>optimize 阶段，也就是优化阶段；优化器主要负责将 SQL 查询语句的执行方案确定下来<br>execute 阶段，也就是执行阶段；</p></blockquote>]]></content>
+        <content type="html"><![CDATA[<h3 id="MySQL的执行过程"><a href="#MySQL的执行过程" class="headerlink" title="MySQL的执行过程"></a>MySQL的执行过程</h3><blockquote><p>1:连接器<br>2:查询缓存<br>3:解析SQL<br>4:执行SQL</p></blockquote><div align="center"><img src="/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/MySQL架构.PNG"></div>MySql的架构有两层：Server层和存储引擎层<blockquote><p>Server层：负责建立连接，分析和执行SQL<br>存储引擎层：负责数据的存储和提取，5.5以上的版本默认使用InnoDb</p></blockquote><p>MySql的连接是基于TCP协议进行传输的，所以在连接过程中会进行三次握手。</p><p>查看当前MySQL服务被多少个客户连接了，直接使用命令show processlist，默认空闲连接的最大时长是8小时也就是28880秒。默认最大连接数量是151个。</p><p>MySQL中的长连接和短连接</p><pre><code>// 短连接连接 mysql 服务（TCP 三次握手）执行sql断开 mysql 服务（TCP 四次挥手）// 长连接:缺点占用内存连接 mysql 服务（TCP 三次握手）执行sql执行sql执行sql....断开 mysql 服务（TCP 四次挥手）</code></pre><p>解决长连接占用内存的问题：</p><blockquote><p>1.定期断开长连接<br>2.客户端主动重置连接：MySQL 5.7 版本实现了 mysql_reset_connection() 函数的接口，注意这是接口函数不是命令，那么当客户端执行了一个很大的操作后，在代码里调用 mysql_reset_connection 函数来重置连接，达到释放内存的效果。这个过程不需要重连和重新做权限验证，但是会将连接恢复到刚刚创建完时的状态。</p></blockquote><h3 id="解析SQL"><a href="#解析SQL" class="headerlink" title="解析SQL"></a>解析SQL</h3><p>解析器完成SQL的解析工作，解析器通过语法分析和词法分析实现解析工作。解析器只负责构建语法树和检查语法，但是不会去查表或者字段存不存在。这个工作是由执行SQL的prepare阶段完成对于表或者字段是否存在的判断。</p><p>不过，对于 MySQL 5.7 判断表或字段是否存在的工作，是在词法分析&amp;语法分析之后，prepare 阶段之前做的。结论都一样，不是在解析器里做的。正因为 MySQL 5.7 代码结构不好，所以 MySQL 8.0 代码结构变化很大，后来判断表或字段是否存在的工作就被放入到 prepare 阶段做了。</p><h3 id="执行SQL"><a href="#执行SQL" class="headerlink" title="执行SQL"></a>执行SQL</h3><p>执行语句的三个流程</p><blockquote><p>prepare 阶段，也就是预处理阶段；<br>optimize 阶段，也就是优化阶段；优化器主要负责将 SQL 查询语句的执行方案确定下来<br>execute 阶段，也就是执行阶段；</p></blockquote><h4 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h4><p>执行器和存储引擎的交互过程：</p><blockquote><p>主键索引查询<br>全表扫描<br>索引下推</p></blockquote><p>主键扫描 例如语句：</p><pre><code class="sql">select * from product where id = 1;</code></pre><blockquote><p>执行器第一次查询，会调用 read_first_record 函数指针指向的函数，因为优化器选择的访问类型为 const，这个函数指针被指向为 InnoDB 引擎索引查询的接口，把条件 id &#x3D; 1 交给存储引擎，让存储引擎定位符合条件的第一条记录。<br>存储引擎通过主键索引的 B+ 树结构定位到 id &#x3D; 1的第一条记录，如果记录是不存在的，就会向执行器上报记录找不到的错误，然后查询结束。如果记录是存在的，就会将记录返回给执行器；<br>执行器从存储引擎读到记录后，接着判断记录是否符合查询条件，如果符合则发送给客户端，如果不符合则跳过该记录。<br>执行器查询的过程是一个 while 循环，所以还会再查一次，但是这次因为不是第一次查询了，所以会调用 read_record 函数指针指向的函数，因为优化器选择的访问类型为 const，这个函数指针被指向为一个永远返回 - 1 的函数，所以当调用该函数的时候，执行器就退出循环，也就是结束查询了。</p></blockquote><p>索引下推：在没有索引下推时，每查询到一条二级索引记录都要进行回表的操作，然后将记录返回给Server，接着Server再判断其是否满足其对应的下一个限制条件。在引入索引下推技术后，每次查询到一条耳机索引记录时，先不进行回表操作，而是先判断该记录是否满足其他限制条件，如果满足就执行回表，将完成的记录返回给Server层。如果不满足就跳过该记录。</p><h2 id="MySQL是如何存储的"><a href="#MySQL是如何存储的" class="headerlink" title="MySQL是如何存储的"></a>MySQL是如何存储的</h2><p>MySQL存储的行为是由存储引擎实现的，MySQL支持多种不同的存储引擎，不同的存储引擎保存文件自然也不同。InnoDB是我们常用的存储引擎，也是MySQL默认的存储引擎。查看MySQL数据的文件存放位置：</p><pre><code class="sql">show variables like &#39;datadir&#39;</code></pre><p>MySQL数据库文件中一共有三个文件:</p><blockquote><p>db.opt:用来存储当前数据库的默认字符集和字符校验规则<br>t_order.frm：t_order的表结构会保存在这个文件。在MySQL中建立一张表都会生成一个.frm文件，该文件是用来保存每个表的元数据信息的，主要包含表结构定义。<br>t_order.ibd：t_order的表数据会保存在这个文件。表数据既可以存在共享表空间文件（文件名：ibdata1）里，也可以存放在独占表空间文件（文件名：表名字.ibd）这个行为是由参数innodb_file_per_table控制的，若设置了参数innodb_file_per_table为1，则会将存储的数据、索引等信息单独存储在一个独占表空间，从MySQL5.6.6版本开始，它的默认值就是1了，因此从这个版本之后， MySQL中每一张表的数据都存放在一个独立的.ibd文件</p></blockquote><h3 id="表空间文件的结构"><a href="#表空间文件的结构" class="headerlink" title="表空间文件的结构"></a>表空间文件的结构</h3><p>表空间由段(segment),区(extent),页(page),行(row)组成，InnoDB存储引擎的逻辑存储结构如下所示：</p><div align="center"><img src="/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/表空间文件的结构.PNG"></div><blockquote><p>行(row)：数据库表中的记录都是按行存储的，每行记录根据不同的行格式，有不同的存储结构。<br>页(page)：数据库的读取时按页为单位来读取的，因为按行来读取效率非常低。当需要读一条记录的时候，并不是将这个行记录从磁盘中读取出来，而是以页为单位整体读入内存。每个页的大小默认为16kb，也就是说最多能保证16kb的连续存储空间。页是InnoDB最小单元，意味着数据库每次读写都是以16kb为单位的，一次最少从磁盘中读取16kb的内容到内存中。<br>区(extent)：B+树中每一层都是通过双向链表连接起来的,如果是以页为单位来分配存储空间,那么链表中相邻的两个页之间的物理位置并不是连续的,可能离得非常远,那么磁盘查询时就会有大量的随机I&#x2F;O,随机I&#x2F;O是非常慢的,为了解决这个问题,就是让链表中相邻的页的物理位置也相邻,这样就可以使用顺序I&#x2F;O了。具体过程是：在表中数据量大的时候，为某个索引分配空间的时候就不再按页为单位分配了，而是按区为单位分配,每个区的大小为1MB,对于16KB来说,连续的64个页就会被划分为一个区。<br>段(segment)：表空间是由各个段组成的，段是由多个区构成的，段一般分为数据段，索引段和回滚段。其中数据段存放B+树的叶子节点的区的集合，索引段存放B+树的非叶子节点的区的集合，回滚段存放的是回滚数据的区的集合。</p></blockquote><h3 id="InnoDB行格式"><a href="#InnoDB行格式" class="headerlink" title="InnoDB行格式"></a>InnoDB行格式</h3><blockquote><p>Redundant:非常古老，现在已经被废弃了<br>Compact：紧凑的行格式，MySQL的默认格式<br>Dynamic<br>Compressed</p></blockquote><h4 id="Compact格式"><a href="#Compact格式" class="headerlink" title="Compact格式"></a>Compact格式</h4><div align="center"><img src="/2023/06/05/%E5%9B%BE%E8%A7%A3MySQL/Compact行格式.PNG"></div>记录的额外数据：变长字段长度，NULL值列表，记录头信息<p>变长字段的真实数据占用的字节数会按照列的顺序逆序存放：这个设计是有想法的，主要是因为「记录头信息」中指向下一个记录的指针，指向的是下一条记录的「记录头信息」和「真实数据」之间的位置，这样的好处是向左读就是记录头信息，向右读就是真实数据，比较方便。</p><p>「变长字段长度列表」中的信息之所以要逆序存放，是因为这样可以使得位置靠前的记录的真实数据和数据对应的字段长度信息可以同时在一个 CPU Cache Line 中，这样就可以提高 CPU Cache 的命中率</p><h3 id="NULL值列表"><a href="#NULL值列表" class="headerlink" title="NULL值列表"></a>NULL值列表</h3><p>表中的某些列可能会存储 NULL 值，如果把这些 NULL 值都放到记录的真实数据中会比较浪费空间，所以 Compact 行格式把这些值为 NULL 的列存储到 NULL值列表中。</p><p>如果存在允许 NULL 值的列，则每个列对应一个二进制位（bit），二进制位按照列的顺序逆序排列。</p><blockquote><p>二进制位的值为1时，代表该列的值为NULL。<br>二进制位的值为0时，代表该列的值不为NULL。</p></blockquote><h4 id="记录的真实数据"><a href="#记录的真实数据" class="headerlink" title="记录的真实数据"></a>记录的真实数据</h4><p>真实数据部分除了定义的字段，还有三个隐藏字段：</p><blockquote><p>row_id:如果建表时指定了主键或者唯一约束将不再有这一字段，这是非必需的字段，默认占用6字节内存<br>trx_id:事务id，表示这个数据是由哪个事务生成的，必需字段，占用6字节内存<br>roll_pointer:记录上一版本的指针，必须字段，占用7字节</p></blockquote><p>MySQL 规定除了 TEXT、BLOBs 这种大对象类型之外，其他所有的列（不包括隐藏列和记录头信息）占用的字节长度加起来不能超过 65535 个字节。这个最大长度指的是一行，而不是一列。而在varchar(n)中的n最大值表示的最大存储字符数，而非字节数。</p>]]></content>
       
       
       <categories>
