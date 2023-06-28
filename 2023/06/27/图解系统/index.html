@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>图解系统 | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>图解系统</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/27
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                计算机基础
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #ff7d73">后端</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" style="color: #00bcd4">计算机系统</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h3 id="冯诺依曼模型"><a href="#冯诺依曼模型" class="headerlink" title="冯诺依曼模型"></a>冯诺依曼模型</h3><p>计算机基本的五个结构：运算器，控制器，存储器，输入设备，输出设备。<br>内存：程序和数据的存储位置，存储的基本单位是字节</p>
+<p>中央处理器(CPU)：负责程序的运行和控制，是计算机的核心部件，由运算器和控制器组成,运算器负责算术运算和逻辑运算，控制器负责控制程序的执行。控制单元复杂控制CPU工作，逻辑运算单元负责计算，寄存器根据种类的不同所对应的功能也不尽相同。</p>
+<blockquote>
+<p>通用寄存器：用来存放需要进行运算的数据<br>程序计数器：用来存放下一条指令的地址。注意所存放的不是下一条指令，此时指令还在内存中，而是下一条指令的地址。<br>指令寄存器：用来存放当前正在执行的指令</p>
+</blockquote>
+<p>总线：用于CPU和其他部件之间的信息传递，分为数据总线，地址总线，控制总线。使用顺序一般是首先要通过「地址总线」来指定内存的地址，然后通过「控制总线」控制是读或写命令，最后通过「数据总线」来传输数据；</p>
+<blockquote>
+<p>数据总线：用于读写内存的数据<br>地址总线：用于指定CPU将要操作的内存地址<br>控制总线：用于发送和接受信号，比如中断，设备复位等信号，CPU收到信号后自然进行相应，这时也需要控制总线。</p>
+</blockquote>
+<p>输入设备：负责将外部信息转换成计算机可识别的信息<br>输出设备：负责将计算机处理的信息转换成人们可识别的信息</p>
+<p>CPU Cache的数据结构和读取过程是什么样的？</p>
+<blockquote>
+<p>CPU Cache是由多个Cache Line组成的，Cache Line是CPU从内存读取数据的基本单位，而Cache Line是由各种标志(Tag)+数据块(Data Block)组成的，Tag用于标识该Cache Line所对应的内存地址，Data Block则是真正存放数据的地方。当CPU需要从内存中读取数据时，首先会根据地址找到对应的Cache Line，然后再根据Tag判断该Cache Line中是否存放了需要的数据，如果存放了，就直接从Data Block中读取数据，如果没有存放，就需要从内存中读取数据，然后将数据存放到Data Block中，同时更新Tag。</p>
+</blockquote>
+<p>CPU访问内存数据是一小块一小块数据读取的，这个块的大小取决于coherency_line_size的值大小，一般是64字节，在内存中这一块数据被称为内存块，读取的时候我们要拿到数据所在的内存块地址。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="center">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="center">当前时间：</strong>2023-06-28 20:06:85</a>
+        <br>
+        <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
