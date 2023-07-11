@@ -181,12 +181,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #00a596">后端</a>
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #00bcd4">后端</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="color: #03a9f4">计算机网络</a>
+                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="color: #ffa2c4">计算机网络</a>
             </span>
             
         </span>
@@ -222,6 +222,18 @@
 <p>IP 头部</p>
 <div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/IP头部.PNG"></div>
 
+<p>IP 数据包：IP 头部+TCP 头部+HTTP 头部+HTTP 数据</p>
+<div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/IP数据包.PNG"></div>
+
+<p>最后实现两边输出还要再封装一层 MAC 头部，MAC 头部是以太网使用的头部，包含接收方和发送方的 MAC 地址，以太网的数据帧格式如下：</p>
+<div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/MAC头部.PNG"></div>
+
+<p>使用 ARP 协议实现两点之间的 MAC 地址映射，ARP 协议的工作原理如下：</p>
+<div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/ARP协议.PNG"></div>
+
+<p>网络包只是存放在内存中的一串二进制数字信息，没有办法直接发送给对方。因此，我们需要将数字信息转换为电信号，才能在网线上传输，也就是说，这才是真正的数据发送过程。这一过程的实现是由网卡实现的，网卡是计算机的一块硬件，它的作用是将数字信息转换为电信号，然后通过网线发送出去。负责执行这一操作的是网卡，要控制网卡还需要靠网卡驱动程序。</p>
+<p>网卡驱动获取网络包之后，会将其复制到网卡内的缓存区中，接着会在其开头加上报头和起始帧分界符，在末尾加上用于检测错误的帧校验序列。</p>
+
     </div>
     
     
@@ -236,7 +248,7 @@
     <div align="center">
         <strong align="center">本文作者：</strong>GWB</a> 
         <br>
-        <strong align="center">当前时间：</strong>2023-07-10 08:07:97</a>
+        <strong align="center">当前时间：</strong>2023-07-11 21:07:06</a>
         <br>
         <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
         <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>

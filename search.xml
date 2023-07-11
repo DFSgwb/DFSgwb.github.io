@@ -4,11 +4,73 @@
   
     
     <entry>
+      <title>leetcode 1911</title>
+      <link href="/2023/07/11/leetcode1011/"/>
+      <url>/2023/07/11/leetcode1011/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><blockquote><p>一个下标从 0 开始的数组的$交替和$定义为$偶数$下标处元素之和减去$奇数$下标处元素之和。比如，数组[4,2,5,3]的交替和为(4 + 5) - (2 + 3) &#x3D; 4 。</p></blockquote><blockquote><p>给你一个数组 nums ，请你返回 nums 中任意子序列的最大$交替和$（子序列的下标重新从 0 开始编号）。</p></blockquote><blockquote><p>一个数组的$子序列$是从原数组中删除一些元素（可能一个元素都不删除）后剩余元素不改变顺序得到的序列。比方说，[2,7,4] 是 [4,2,3,7,2,1,4] 的一个子序列（加粗元素），但是 [2,4,2] 不是</p></blockquote><h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>示例 1：</p><blockquote><p>输入：nums &#x3D; [4,2,5,3]<br>输出：7<br>解释：最优子序列为 [4,2,5] ，交替和为 (4 + 5) - 2 &#x3D; 7 。</p></blockquote><p>示例 2:</p><blockquote><p>输入：nums &#x3D; [5,6,7,8]<br>输出：8<br>解释：最优子序列为 [8] ，交替和为 8 。</p></blockquote><p>示例 3:</p><blockquote><p>输入：nums &#x3D; [6,2,1,2,4,5]<br>输出：10<br>解释：最优子序列为 [6,1,5] ，交替和为 (6 + 5) - 1 &#x3D; 10 。</p></blockquote><h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><blockquote><ul><li>$1 &lt;&#x3D; nums.length &lt;&#x3D; 10^5$<br>1 &lt;&#x3D; nums[i] &lt;&#x3D; $10^5$</li></ul></blockquote><h3 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h3><pre><code class="Cpp">#include &lt;bits/stdc++.h&gt;using namespace std;class Solution&#123;public:    long long maxAlternatingSum(vector&lt;int&gt; &amp;nums)    &#123;        long long res = 0;        long long ans = nums[0];        for (int i = 0; i &lt; nums.size(); i++)        &#123;            ans = max(ans, res + nums[i]);            res = max(res, ans - nums[i]);        &#125;        return ans;    &#125;&#125;;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> ACM </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>leetcode 16</title>
+      <link href="/2023/07/10/leetcode16/"/>
+      <url>/2023/07/10/leetcode16/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><blockquote><p>给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。</p></blockquote><h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>示例 1：</p><blockquote><p>输入：nums &#x3D; [-1,2,1,-4], target &#x3D; 1<br>输出：2<br>解释：与 target 最接近的和是 2 (-1 + 2 + 1 &#x3D; 2) 。</p></blockquote><p>示例 2:</p><blockquote><p>输入：nums &#x3D; [0,0,0], target &#x3D; 1<br>输出：0</p></blockquote><p>提示：</p><blockquote><ul><li>3 &lt;&#x3D; nums.length &lt;&#x3D; $10^3$</li><li>$-10^3$ &lt;&#x3D; nums[i] &lt;&#x3D; $10^3$</li><li>$-10^4$ &lt;&#x3D; target &lt;&#x3D; $10^4$</li></ul></blockquote><h3 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h3><p>最先想三重暴力试一下</p><pre><code class="Cpp">class Solution &#123;public:    int threeSumClosest(vector&lt;int&gt;&amp; nums, int target) &#123;         int res = 0, n = nums.size(), diff = INT_MAX;        for (int i = 0; i &lt; n - 2; i++)        &#123;            for (int j = i + 1; j &lt; n - 1; j++)            &#123;                for (int k = j + 1; k &lt; n; k++)                &#123;                    int sum = nums[i] + nums[j] + nums[k];                    if (abs(sum - target) &lt; diff)                    &#123;                        diff = abs(sum - target);                        res = sum;                    &#125;                &#125;            &#125;        &#125;        return res;    &#125;&#125;;</code></pre><p>然后发现，确实是会被卡部分测试样例，看来 O($n^3$)的算法复杂度是不可行的，得想办法优化一下，于是想到了双指针法，先排序，然后固定一个数，另外两个数用双指针法，这样时间复杂度就是$O(n^2)$了</p><pre><code class="Cpp">class Solution &#123;public:    int threeSumClosest(vector&lt;int&gt;&amp; nums, int target) &#123;        int res = 0, n = nums.size(), diff = INT_MAX;        sort(nums.begin(), nums.end());        for(int i=0;i&lt;n-1;i++)&#123;            int l = i+1, r = n-1;            while(l&lt;r)&#123;                int sum = nums[i] + nums[l] + nums[r];                if(abs(sum-target)&lt;diff)&#123;                    diff = abs(sum-target);                    res = sum;                &#125;                if(sum&lt;target) l++;                if(sum&gt;target) r--;                if(sum==target) return res;            &#125;        &#125;        return res;    &#125;&#125;;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每日一题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> ACM </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>图解网络</title>
       <link href="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/"/>
       <url>/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/</url>
       
-        <content type="html"><![CDATA[<h3 id="TCP-x2F-IP-网络模型"><a href="#TCP-x2F-IP-网络模型" class="headerlink" title="TCP&#x2F;IP 网络模型"></a>TCP&#x2F;IP 网络模型</h3><blockquote><p>1.应用层：HTTP、FTP、SMTP、DNS,工作在操作系统中的用户态，传输层则工作在内核态</p></blockquote><blockquote><p>2.传输层：TCP、UDP，为应用层提供网络支持的</p></blockquote><blockquote><p>3.网络层：IP，为传输层提供网络支持的。</p></blockquote><p>IP 地址分为两种意义：网络号和主机号，网络号用来标识网络，主机号用来标识主机。IP 地址分为 A、B、C、D、E 五类，其中 A、B、C 三类用于标识主机，D 类用于多播，E 类保留。</p><p>子网掩码计算网络地址和主机地址的方法：将 IP 地址和子网掩码转换成二进制，然后将 IP 地址和子网掩码按位与运算，得到的结果就是网络地址。</p><blockquote><p>4.网络接口层：ARP、RARP、ICMP，为网络层提供网络支持的。</p></blockquote><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/网络数据封装过程.PNG"></div><p>DNS 服务器的作用：专门报出来 Web 服务器域名和 ip 地址之间的映射关系，将域名转换成 IP 地址。</p><p>协议栈</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/协议栈.PNG"></div><p>TCP 报文格式</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/TCP报文.PNG"></div><p>TCP 分割数据：当 HTTP 请求消息比较长，超过 MSS 的长度，这时 TCP 就要将 HTTP 请求消息分割成多个 TCP 报文段进行传输，这就是 TCP 分割数据。</p><p>MTU：链路层的最大传输单元，是链路层所能通过的最大帧的大小，单位是字节。MTU 的大小是固定的，一般为 1500 字节。由 IP 头部和 TCP 头部组成的报文段的长度称为 MSS（Maximum Segment Size，最大分段大小），MSS 的大小是可变的，一般为 1460 字节。TCP 报文段的首部长度是 20 字节，如果 TCP 报文段的 MSS 为 1460 字节，那么 TCP 报文段的长度就是 1480 字节，如果 TCP 报文段的 MSS 为 1000 字节，那么 TCP 报文段的长度就是 1020 字节。</p><p>IP 头部</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/IP头部.PNG"></div>]]></content>
+        <content type="html"><![CDATA[<h3 id="TCP-x2F-IP-网络模型"><a href="#TCP-x2F-IP-网络模型" class="headerlink" title="TCP&#x2F;IP 网络模型"></a>TCP&#x2F;IP 网络模型</h3><blockquote><p>1.应用层：HTTP、FTP、SMTP、DNS,工作在操作系统中的用户态，传输层则工作在内核态</p></blockquote><blockquote><p>2.传输层：TCP、UDP，为应用层提供网络支持的</p></blockquote><blockquote><p>3.网络层：IP，为传输层提供网络支持的。</p></blockquote><p>IP 地址分为两种意义：网络号和主机号，网络号用来标识网络，主机号用来标识主机。IP 地址分为 A、B、C、D、E 五类，其中 A、B、C 三类用于标识主机，D 类用于多播，E 类保留。</p><p>子网掩码计算网络地址和主机地址的方法：将 IP 地址和子网掩码转换成二进制，然后将 IP 地址和子网掩码按位与运算，得到的结果就是网络地址。</p><blockquote><p>4.网络接口层：ARP、RARP、ICMP，为网络层提供网络支持的。</p></blockquote><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/网络数据封装过程.PNG"></div><p>DNS 服务器的作用：专门报出来 Web 服务器域名和 ip 地址之间的映射关系，将域名转换成 IP 地址。</p><p>协议栈</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/协议栈.PNG"></div><p>TCP 报文格式</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/TCP报文.PNG"></div><p>TCP 分割数据：当 HTTP 请求消息比较长，超过 MSS 的长度，这时 TCP 就要将 HTTP 请求消息分割成多个 TCP 报文段进行传输，这就是 TCP 分割数据。</p><p>MTU：链路层的最大传输单元，是链路层所能通过的最大帧的大小，单位是字节。MTU 的大小是固定的，一般为 1500 字节。由 IP 头部和 TCP 头部组成的报文段的长度称为 MSS（Maximum Segment Size，最大分段大小），MSS 的大小是可变的，一般为 1460 字节。TCP 报文段的首部长度是 20 字节，如果 TCP 报文段的 MSS 为 1460 字节，那么 TCP 报文段的长度就是 1480 字节，如果 TCP 报文段的 MSS 为 1000 字节，那么 TCP 报文段的长度就是 1020 字节。</p><p>IP 头部</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/IP头部.PNG"></div><p>IP 数据包：IP 头部+TCP 头部+HTTP 头部+HTTP 数据</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/IP数据包.PNG"></div><p>最后实现两边输出还要再封装一层 MAC 头部，MAC 头部是以太网使用的头部，包含接收方和发送方的 MAC 地址，以太网的数据帧格式如下：</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/MAC头部.PNG"></div><p>使用 ARP 协议实现两点之间的 MAC 地址映射，ARP 协议的工作原理如下：</p><div align="center"><img src="/2023/07/06/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/ARP协议.PNG"></div><p>网络包只是存放在内存中的一串二进制数字信息，没有办法直接发送给对方。因此，我们需要将数字信息转换为电信号，才能在网线上传输，也就是说，这才是真正的数据发送过程。这一过程的实现是由网卡实现的，网卡是计算机的一块硬件，它的作用是将数字信息转换为电信号，然后通过网线发送出去。负责执行这一操作的是网卡，要控制网卡还需要靠网卡驱动程序。</p><p>网卡驱动获取网络包之后，会将其复制到网卡内的缓存区中，接着会在其开头加上报头和起始帧分界符，在末尾加上用于检测错误的帧校验序列。</p>]]></content>
       
       
       <categories>
