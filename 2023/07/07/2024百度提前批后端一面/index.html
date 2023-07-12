@@ -181,12 +181,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #00bcd4">面试</a>
+                <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #00a596">面试</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #00a596">后端</a>
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #00bcd4">后端</a>
             </span>
             
         </span>
@@ -332,6 +332,18 @@ vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target)&#123;
     return res;
 &#125;
 </code></pre>
+<h3 id="MySQL-为什么使用-B-树作为索引？为什么不是-B-树，红黑树"><a href="#MySQL-为什么使用-B-树作为索引？为什么不是-B-树，红黑树" class="headerlink" title="MySQL 为什么使用 B+树作为索引？为什么不是 B 树，红黑树"></a>MySQL 为什么使用 B+树作为索引？为什么不是 B 树，红黑树</h3><p>MySQL 使用 B+树作为索引的原因有以下几点：</p>
+<ol>
+<li><p>B+树有更好的磁盘读写性能：B+树内部节点不存储数据，只存储索引信息，而叶子节点按照索引顺序存储数据，这种结构可以使得磁盘读写更加连续，减少磁盘寻道时间，提高 IO 性能。</p>
+</li>
+<li><p>B+树有更好的范围查询性能：B+树的叶子节点形成有序链表，可以很方便地进行范围查询。而 B 树和红黑树则需要在树中进行中序遍历或者回溯来获取范围查询的结果。</p>
+</li>
+<li><p>B+树有更高的节点利用率：B+树的内部节点不存储数据，只存储索引信息，因此相比于 B 树和红黑树，B+树可以存储更多的索引信息，提高了节点的利用率，减少了树的高度，提高了查询性能。</p>
+</li>
+<li><p>B+树有更好的顺序访问性能：B+树的叶子节点形成有序链表，可以很方便地进行顺序访问，适合于范围扫描等操作。</p>
+</li>
+</ol>
+<p>综上所述，B+树相比于 B 树和红黑树在磁盘读写性能、范围查询性能、节点利用率和顺序访问性能等方面都有优势，因此 MySQL 选择使用 B+树作为索引结构。</p>
 
     </div>
     
@@ -347,7 +359,7 @@ vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target)&#123;
     <div align="center">
         <strong align="center">本文作者：</strong>GWB</a> 
         <br>
-        <strong align="center">当前时间：</strong>2023-07-12 17:07:73</a>
+        <strong align="center">当前时间：</strong>2023-07-12 17:07:51</a>
         <br>
         <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
         <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
