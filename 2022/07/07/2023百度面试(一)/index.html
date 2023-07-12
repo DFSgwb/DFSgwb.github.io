@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>2023百度面试(一) | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>2023百度面试(一)</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/7/7
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E9%9D%A2%E8%AF%95/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                面试
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #ffa2c4">面试</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #ffa2c4">后端</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h3 id="shiro-的组件"><a href="#shiro-的组件" class="headerlink" title="shiro 的组件"></a>shiro 的组件</h3><p>Apache Shiro 是一个强大且易于使用的 Java 安全框架，提供了身份验证、授权、加密和会话管理等安全组件。Shiro 的组件包括：</p>
+<blockquote>
+<ul>
+<li>Subject：Subject 是 Shiro 的核心组件，代表了当前用户的安全操作。Subject 可以是一个人、一台机器或者一个后台任务。</li>
+<li>SecurityManager：SecurityManager 是 Shiro 的安全管理器，负责管理所有 Subject 的安全操作。SecurityManager 是 Shiro 的核心组件，它协调着所有的安全操作。</li>
+<li>Authenticator：Authenticator 是 Shiro 的身份验证器，用于验证用户的身份。Authenticator 可以使用多种身份验证方式，例如用户名和密码、数字证书、单点登录等。</li>
+<li>Authorizer：Authorizer 是 Shiro 的授权器，用于授权用户的访问权限。Authorizer 可以使用多种授权方式，例如基于角色的访问控制、基于权限的访问控制等。</li>
+<li>Realm：Realm 是 Shiro 的数据源，用于获取用户的身份信息和访问控制信息。Realm 可以从数据库、LDAP、文件等数据源中获取用户信息和访问控制信息。</li>
+<li>SessionManager：SessionManager 是 Shiro 的会话管理器，用于管理用户的会话信息。SessionManager 可以管理用户的登录状态、超时时间、会话 ID 等信息。</li>
+<li>CacheManager：CacheManager 是 Shiro 的缓存管理器，用于缓存用户的身份信息和访问控制信息。CacheManager 可以使用多种缓存方式，例如内存缓存、Ehcache 缓存、Redis 缓存等。</li>
+</ul>
+</blockquote>
+<p>通过这些组件的协作，Shiro 可以为 Java 应用程序提供全面的安全保护。</p>
+<h3 id="分布式一致算法"><a href="#分布式一致算法" class="headerlink" title="分布式一致算法"></a>分布式一致算法</h3><p>分布式一致算法是一种用于解决分布式系统中数据一致性问题的算法。在分布式系统中，由于各个节点之间的通信延迟、网络故障等原因，可能会导致数据的不一致性，即不同节点上的数据可能不一致或者不完整。分布式一致算法旨在保证分布式系统中的数据在不同节点之间保持一致。</p>
+<p>常见的分布式一致算法包括：</p>
+<ol>
+<li><p>Paxos 算法：Paxos 算法是一种经典的分布式一致算法，它通过选举一个主节点来决定数据的更新和复制过程，保证了数据的一致性。Paxos 算法具有高可用性和容错性，但是实现较为复杂。</p>
+<blockquote>
+<p>1.选举一个 proposer 节点，提出一个提案，提案包含提案编号和提案内容。<br>2.proposer 节点将提案发送给所有的 acceptor 节点。<br>3.Acceptors 节点接收到提案后，如果提案编号大于当前的提案编号，则接受提案，并将自己的 Accepted proposal number 和 Accepted proposal value 更新为当前的提案编号和提案内容。 4.并将提案内容广播给所有的 learner 节点。<br>5.learner 节点接收到提案内容后，将提案内容更新到自己的状态机中。也就确定了最终的提案内容。<br>如果 Proposer 节点在一段时间内没有收到超过半数的 Acceptor 节点的回复，则重新发起提案，提案编号加 1，重新开始提案流程。</p>
+</blockquote>
+</li>
+</ol>
+<pre><code class="java">//简易实现
+import java.util.HashMap;
+import java.util.Map;
+public class Paxos&#123;
+    private int proposalNumber;
+    private int acceptedValue;
+    private Map&lt;Integer, Integer&gt; acceptors;
+    public Paxos()&#123;
+        proposalNumber = 0;
+        acceptedValue = -1;
+        acceptors = new HashMap&lt;&gt;();
+    &#125;
+    public void prepare(int proposalNumber)&#123;
+        if(proposalNumber &gt; this.proposalNumber)&#123;
+            this.proposalNumber = proposalNumber;
+        &#125;
+        int maxAcceptedValue = -1;
+        int maxAcceptedProposalNumber = 0;
+        for(int acceptor : acceptors.keySet())&#123;
+            int acceptedProposalNumber = acceptors.get(acceptor);
+            if (acceptedProposalNumber &gt; maxAcceptedProposalNumber) &#123;
+                maxAcceptedProposalNumber = acceptedProposalNumber;
+                maxAcceptedValue = acceptor;
+            &#125;
+        &#125;
+        if (maxAcceptedProposalNumber &gt;= proposalNumber) &#123;
+            System.out.println(&quot;Proposal rejected&quot;);
+        &#125; else &#123;
+            System.out.println(&quot;Proposal accepted&quot;);
+            acceptors.put(proposalNumber, maxAcceptedValue);
+        &#125;
+    &#125;
+    public void accept(int proposalNumber, int value) &#123;
+        if (proposalNumber &gt;= this.proposalNumber) &#123;
+            this.proposalNumber = proposalNumber;
+            acceptedValue = value;
+            System.out.println(&quot;Accepted value: &quot; + value);
+        &#125; else &#123;
+            System.out.println(&quot;Proposal rejected&quot;);
+        &#125;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        Paxos paxos = new Paxos();
+        paxos.prepare(1);
+        paxos.accept(1, 10);
+        paxos.prepare(2);
+        paxos.accept(2, 20);
+        paxos.prepare(3);
+        paxos.accept(3, 30);
+    &#125;
+&#125;
+</code></pre>
+<ol start="2">
+<li><p>Raft 算法：Raft 算法是一种相对简单的分布式一致算法，它将分布式系统中的节点划分为 Leader、Follower 和 Candidate 三种角色，通过选举 Leader 来实现数据一致性。Raft 算法相对于 Paxos 算法来说更易于理解和实现。</p>
+</li>
+<li><p>ZooKeeper 算法：ZooKeeper 是一个分布式协调服务，它提供了一套高级 API，可以用于解决分布式系统中的一致性问题。ZooKeeper 使用了 ZAB（ZooKeeper Atomic Broadcast）协议来实现数据的一致性。是一种基于 Paxos 算法的分布式一致性算法，用于解决分布式系统中的数据一致性问题。ZooKeeper 算法的核心思想是通过多轮投票来选举一个 Leader 节点，并保证多个节点之间的数据一致性。ZooKeeper 算法在分布式系统中得到了广泛的应用，例如 Hadoop、Kafka 等分布式系统都使用了 ZooKeeper 算法来实现数据一致性和选举机制。</p>
+</li>
+<li><p>Gossip 算法：Gossip 算法是一种基于流言的分布式一致算法，它通过节点之间的通信来实现数据的一致性。Gossip 算法具有高可用性和容错性，但是实现较为复杂。</p>
+</li>
+</ol>
+<p>这些分布式一致算法都有各自的特点和适用场景，选择合适的算法需要根据具体的分布式系统的需求和特点来决定。</p>
+<h3 id="zookeeper-那些能参与投票，leader-能投票吗"><a href="#zookeeper-那些能参与投票，leader-能投票吗" class="headerlink" title="zookeeper 那些能参与投票，leader 能投票吗"></a>zookeeper 那些能参与投票，leader 能投票吗</h3><p>在 ZooKeeper 中，只有 follower 和 observer 节点可以参与投票，而 leader 节点不能投票。当一个 ZooKeeper 集群启动时，所有节点都是 follower 节点。当选举开始时，每个 follower 节点会给自己投票，并且它们还会发送投票请求给其他节点。每个节点会在收到大多数节点的投票后选择一个 leader。一旦选举完成，节点中的一个 follower 会成为 leader，而其他节点则成为 follower 或 observer。leader 节点负责处理客户端请求，并将更新的状态复制到其他节点上。follower 节点则会接受并复制 leader 节点的状态。需要注意的是，observer 节点与 follower 节点的功能相似，但它们不参与选举过程，也不具有投票权。它们只是被动地接收和复制 leader 节点的状态。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="center">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="center">当前时间：</strong>2023-07-12 15:07:65</a>
+        <br>
+        <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
