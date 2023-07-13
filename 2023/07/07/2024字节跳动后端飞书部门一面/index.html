@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>2024字节跳动后端飞书面试 | DFSgwb</title>
+        <meta name="author" content="GWB" />
+        <meta name="description" content="我的技术分享" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link rel="icon" href="/images/avatar.jpg" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    
+    <body>
+        
+        <div id="layout">
+            
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+            
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>DFSGWB</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about/">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives/">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories/">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DFSGWB</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>2024字节跳动后端飞书面试</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/7/7
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E9%9D%A2%E8%AF%95/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                面试
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%9D%A2%E8%AF%95/" style="color: #ff7d73">面试</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%90%8E%E7%AB%AF/" style="color: #ffa2c4">后端</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h3><h3 id="进程间通信方式"><a href="#进程间通信方式" class="headerlink" title="进程间通信方式"></a>进程间通信方式</h3><p>进程间的通信方式有以下几种：</p>
+<blockquote>
+<ol>
+<li>管道（Pipe）：管道是一种半双工的通信方式，可以在具有亲缘关系的进程之间进行通信。</li>
+<li>命名管道（Named Pipe）：命名管道也是一种半双工的通信方式，但可以在没有亲缘关系的进程之间进行通信。</li>
+<li>信号（Signal）：信号是一种异步的通信方式，用于通知进程发生了某个事件。</li>
+<li>消息队列（Message Queue）：消息队列是一种可以在没有亲缘关系的进程之间传递消息的通信方式。</li>
+<li>共享内存（Shared Memory）：共享内存是一种高效的通信方式，多个进程可以直接访问同一块内存区域。</li>
+<li>信号量（Semaphore）：信号量用于实现进程间的互斥和同步，多个进程可以通过对信号量的操作来实现对共享资源的访问控制。</li>
+<li>套接字（Socket）：套接字是一种网络编程中常用的通信方式，可以在不同的主机之间进行进程间的通信。</li>
+</ol>
+</blockquote>
+<p>这些通信方式各有优劣，选择适合的通信方式取决于具体的应用场景和需求。</p>
+<h4 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h4><p>管道通信是一种进程间通信的方式，它利用操作系统提供的管道机制，将一个进程的输出连接到另一个进程的输入，从而实现两个进程之间的通信。</p>
+<p>管道通信有两种类型：无名管道和命名管道。</p>
+<ol>
+<li><p>无名管道（Anonymous Pipe）：无名管道是一种匿名的管道通信方式，它只能用于具有亲缘关系的进程间通信。无名管道通常是单向的，即数据只能从一个进程流向另一个进程。在无名管道中，一个进程可以将数据写入管道的写端，另一个进程则可以从管道的读端读取数据。无名管道通常用于父子进程之间的通信。无名管道可以使用 pipe 系统调用创建，创建后会返回两个文件描述符，一个用于读取数据，一个用于写入数据。在使用无名管道进行通信时，需要注意以下几点：</p>
+<blockquote>
+<p>无名管道是一种半双工的通信方式，即数据只能在一个方向上传输。<br>无名管道只能用于具有亲缘关系的进程间通信，即父进程和子进程之间的通信。<br>无名管道的数据传输是基于字节流的，没有消息边界，因此需要在数据中添加消息边界或者使用其他方式进行消息分割。<br>无名管道的容量是有限的，如果写入数据的速度过快，可能会导致管道写满，从而阻塞写入进程。</p>
+</blockquote>
+</li>
+<li><p>命名管道（Named Pipe）：命名管道是一种具有名称的管道通信方式，它可以用于任意进程之间的通信。命名管道可以在文件系统中创建一个特殊的文件，进程可以通过打开该文件来进行通信。命名管道可以实现双向通信，即两个进程可以同时进行读写操作。命名管道通常用于无亲缘关系的进程之间的通信。</p>
+</li>
+</ol>
+<p>管道通信方式简单、高效，但也有一些限制。例如，无名管道只能用于具有亲缘关系的进程间通信，而命名管道在创建和销毁时需要一些额外的操作。此外，管道通信方式只能实现一对一的通信，无法实现一对多或多对多的通信。</p>
+<h3 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h3><p>套接字是一种网络编程中常用的通信方式，它可以在不同的主机之间进行进程间的通信。套接字通信方式可以实现一对一、一对多和多对多的通信。套接字通常用于客户端和服务器之间的通信，客户端通过套接字向服务器发送请求，服务器则通过套接字向客户端发送响应。套接字通信方式可以实现高效、可靠的进程间通信，但也需要注意一些安全和性能方面的问题，例如网络拥塞、数据丢失、数据篡改等。因此，在使用套接字进行通信时，需要进行一定的安全和性能优化。</p>
+<p>套接字的特点：</p>
+<blockquote>
+<ol>
+<li>套接字通信方式可以实现一对一、一对多和多对多的通信。因此可以满足不同的通信需求。</li>
+<li>套接字通信方式可以在不同的主机之间进行通信，因此可以满足分布式系统的通信需求。</li>
+<li>套接字通信方式可以使用不同的协议，例如 TCP 和 UDP 协议，因此可以满足不同的通信需求。</li>
+<li>套接字的通信方式需要进行地址绑定，监听，连接等操作，因此使用起来比较复杂。</li>
+</ol>
+</blockquote>
+<p>使用步骤：</p>
+<blockquote>
+<ol>
+<li>创建套接字：使用 socket 系统调用创建套接字，创建时需要指定套接字的类型，例如 TCP 或 UDP。</li>
+<li>绑定地址：使用 bind 系统调用将套接字绑定到一个地址上，例如 IP 地址和端口号。</li>
+<li>监听连接：使用 listen 系统调用监听连接请求，等待客户端的连接。</li>
+<li>接受连接：使用 accept 系统调用接受客户端的连接请求，建立与客户端的连接。</li>
+<li>收发数据：使用 read 和 write 系统调用收发数据，或者使用 send 和 recv 系统调用收发数据。</li>
+<li>关闭连接：使用 close 系统调用关闭连接，释放资源。</li>
+</ol>
+</blockquote>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div align="center">
+        <strong align="center">本文作者：</strong>GWB</a> 
+        <br>
+        <strong align="center">当前时间：</strong>2023-07-13 10:07:77</a>
+        <br>
+        <strong align="center">版权声明：本文由gwb原创,本博客所有文章除特别声明外,均采用</strong>
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        国际许可协议。
+        <br>
+        <strong>转载请注明出处！</strong>
+    </div>
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 DFSgwb
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;GWB
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+            </div>
+            </transition>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1895164923&auto=1&height=66"></iframe>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src='/js/main.js'></script>
+        <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+        <script src='/js/fireworks.min.js'></script>
+        <!--<div id="cursor"></div>
+        <link rel="stylesheet" href="../source/css/cursor.min.css" />
+        <script src='/js/cursor.min.js'></script>-->
+        <canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+        <script src='/js/background.min.js'></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
